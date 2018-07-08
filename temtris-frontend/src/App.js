@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
+import PlayGround from './components/PlayGround';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        리액트
-      </div>
+      <PlayGround/>
     );
   }
 }
