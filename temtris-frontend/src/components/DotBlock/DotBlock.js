@@ -5,7 +5,7 @@ import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
 const DotBlock = ({dot}) => {
-  return <span className={cx('dot-block')}/>
+  return <span className={cx('dot-block', DotBlock.colorPalette[dot])}/>
 }
 
 DotBlock.EMPTY = 0;

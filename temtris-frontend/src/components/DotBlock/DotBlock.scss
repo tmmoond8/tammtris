@@ -2,9 +2,12 @@
 
 .dot-block {
   display: inline-block;
-  width: 1.4rem;
-  height: 1.4rem;
+  width: 1.0rem;
+  height: 1.0rem;
   border: solid 1px $oc-gray-5;
   margin-right: -1px;
   margin-bottom: -1px;
+  &.black {
+    background: black;
+  }
 }
