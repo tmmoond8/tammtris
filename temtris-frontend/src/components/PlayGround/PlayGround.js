@@ -1,6 +1,8 @@
-import React , {Component, Fragment} from 'react';
+import React , {Component} from 'react';
 import styles from './PlayGround.scss';
 import classNames from 'classnames/bind';
+import block from '../../viewModules/block';
+import sShape from '../../viewModules/sShape';
 import DotBlock from '../DotBlock';
 import GameDataManager from '../../utils/gameDataManager';
 const gameDataManager = new GameDataManager();
@@ -10,15 +12,17 @@ const cx = classNames.bind(styles);
 class PlayGround extends Component{
   constructor() {
     super();
+    let shape = new sShape();
     this.state = {
       gameData: gameDataManager.getGameData(),
-      playerBlocks: [
-        {dot: DotBlock.BLACK, xIdx: 3, yIdx: 4},
-        {dot: DotBlock.BLACK, xIdx: 3, yIdx: 3},
-      ],
+      playerBlocks: shape,
       init: false
     }
     gameDataManager.bind(this);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return PlayGround.toString(nextState.gameData) !== PlayGround.toString(this.state.gameData);
   }
 
   handleKeyPress = (e) => {
@@ -27,9 +31,9 @@ class PlayGround extends Component{
 
   render() {
     if(!this.state.init) {
-      const { gameData, playerBlocks } = this.state;
-      gameData[15][8] = DotBlock.BLACK;
-      playerBlocks.forEach(item => gameData[item.yIdx][item.xIdx] = item.dot);
+      let { gameData, playerBlocks } = this.state;
+      gameData[15][8] = block.BLACK;
+      playerBlocks.getShape().forEach(item => gameData[item.y][item.x] = item.dot);
       gameDataManager.setGameData(gameData)
       this.setState({
         init: true
@@ -56,7 +60,13 @@ class PlayGround extends Component{
   static renderLine (line) {
     return line.map(((dot, index) => <DotBlock dot={dot} key={index}/>));
   }
-
+  static toString(gameData) {
+    gameData.reduce((acculator, line) => {
+      acculator += line.join('');
+      return acculator;
+    }, '');
+    return gameData;
+  }
 }
 
 export default PlayGround;

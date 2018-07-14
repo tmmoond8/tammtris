@@ -1,18 +1,13 @@
 import React from 'react';
 import styles from './DotBlock.scss';
 import classNames from 'classnames/bind';
+import block from '../../viewModules/block';
 
 const cx = classNames.bind(styles);
 
 const DotBlock = ({dot}) => {
-  return <span className={cx('dot-block', DotBlock.colorPalette[dot])}/>
+  console.log(dot);
+  return <span className={cx('dot-block', block.getBlockColor(dot))}/>
 }
-
-DotBlock.EMPTY = 0;
-DotBlock.BLACK = 1;
-
-DotBlock.colorPalette = {};
-DotBlock.colorPalette[DotBlock.EMPTY] = 'transparent';
-DotBlock.colorPalette[DotBlock.BLACK] = 'black';
 
 export default DotBlock;
