@@ -5,6 +5,7 @@ import block from '../../viewModules/block';
 import sShape from '../../viewModules/sShape';
 import DotBlock from '../DotBlock';
 import GameDataManager from '../../utils/gameDataManager';
+import ShapeDataManager from '../../utils/shapeDataManager';
 const gameDataManager = new GameDataManager();
 
 const cx = classNames.bind(styles);
@@ -12,7 +13,7 @@ const cx = classNames.bind(styles);
 class PlayGround extends Component{
   constructor() {
     super();
-    let shape = new sShape();
+    let shape = ShapeDataManager.getRandomShape();
     this.state = {
       gameData: gameDataManager.getGameData(),
       playerBlocks: shape,

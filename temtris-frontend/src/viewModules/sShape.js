@@ -11,13 +11,8 @@ class sShape {
     this.rotationACC = 0;
   }
 
-  setBaseBlockPosition(x, y) {
-    this.baseBlock.x = x;
-    this.baseBlock.y = y;
-  }
-
   getShape() {
-    const rotation = this.rotationACC % 2;
+    const rotation = this.rotationACC % sShape.ROTATION_STATUS.length;
     if( rotation === 0) {
       return this.getHorizenShape();
     } else if (rotation === 1) {
@@ -28,9 +23,9 @@ class sShape {
   getVerticleShape() {
     const { x, y } = this.baseBlock;
     const verticle = [];
+    verticle.push(new block(x, y, sShape.BLOCK_COLOR));
     verticle.push(new block(x + 1, y + 1, sShape.BLOCK_COLOR));
     verticle.push(new block(x + 1, y, sShape.BLOCK_COLOR));
-    verticle.push(new block(x, y, sShape.BLOCK_COLOR));
     verticle.push(new block(x, y - 1, sShape.BLOCK_COLOR));
     return verticle;
   }
@@ -38,10 +33,10 @@ class sShape {
   getHorizenShape() {
     const { x, y } = this.baseBlock;
     const verticle = [];
+    verticle.push(new block(x, y, sShape.BLOCK_COLOR));
     verticle.push(new block(x - 1, y + 1, sShape.BLOCK_COLOR));
     verticle.push(new block(x, y + 1, sShape.BLOCK_COLOR));
     verticle.push(new block(x + 1, y, sShape.BLOCK_COLOR));
-    verticle.push(new block(x, y, sShape.BLOCK_COLOR));
     return verticle;
   }
 }

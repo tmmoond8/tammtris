@@ -1,5 +1,7 @@
 import block from '../viewModules/block';
-import sShape from './../viewModules/sShape';
+import shapeDataManager from './shapeDataManager';
+import sShape from '../viewModules/sShape';
+import stickShape from '../viewModules/stickShape';
 
 class GameDatamanager {
   constructor() {
@@ -79,7 +81,7 @@ class GameDatamanager {
       case 'ArrowDown':
         handleMove(playerBlocks, (block) => {
           return {...block, y: block.y + 1}
-        }, () => { this.playGroundComponent.setState({playerBlocks: new sShape()})});
+        }, () => { this.playGroundComponent.setState({playerBlocks: shapeDataManager.getRandomShape()})});
         break;
       default:
         break;
