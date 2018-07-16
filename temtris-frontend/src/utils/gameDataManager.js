@@ -14,46 +14,27 @@ class GameDatamanager {
   }
 
   handleKeyPress(key, playerBlocks) {
-    const handleMove = (playerBlocks, moveFunc, stopCallback) => {
 
-      const gameData = this.gameData.map(line => line.map(dot => dot));
-      let nextPlayerBlocks = playerBlocks.getShape().map(item => {
-        gameData[item.y][item.x] = block.EMPTY;
-        return moveFunc(item);
-      });
-
-      nextPlayerBlocks = nextPlayerBlocks.map(item => {
-        let { x, y, dot } = item;
-        if(x < 0 || x >= this.sizeX || y < 0 || y >= this.sizeY || gameData[y][x] !== block.EMPTY ) {
-          return undefined;
-        }
-        gameData[y][x] = dot;
-        return item;
-      })
-      if(nextPlayerBlocks.includes(undefined)) {
-        stopCallback && stopCallback();
-        return;
-      }
-      this.gameData = gameData;
-      this.playerBlocks = Object.deepCopy(playerBlocks);
-      this.playerBlocks.baseBlock = Object.assign(Object.create(playerBlocks.baseBlock), moveFunc(playerBlocks.baseBlock));
-      this.playGroundComponent.setState({
-        gameData: gameData,
-        playerBlocks: this.playerBlocks
-      })
-    }
-
-    const handleRotation = (playerBlocks) => {
+    const handleArrowKey = (playerBlocks, playerBlocksFunc, stopCallback) => {
       const gameData = this.gameData.map(line => line.map(dot => dot));
       playerBlocks.getShape().forEach(item => {
         gameData[item.y][item.x] = block.EMPTY;
       });
-      const nextPlayerBlocks = Object.deepCopy(playerBlocks);
-      nextPlayerBlocks.rotationACC++;
+
+      const nextPlayerBlocks = playerBlocksFunc(playerBlocks);
+      
+      for (const item of nextPlayerBlocks.getShape()) {
+        let { x, y } = item;
+        if(x < 0 || x >= this.sizeX || y < 0 || y >= this.sizeY || gameData[y][x] !== block.EMPTY ) {
+          stopCallback && stopCallback();
+          return;
+        }
+      }
 
       nextPlayerBlocks.getShape().forEach(item => {
         gameData[item.y][item.x] = item.dot;
-      });
+      })
+
       this.gameData = gameData;
       this.playerBlocks = nextPlayerBlocks;
       this.playGroundComponent.setState({
@@ -61,24 +42,34 @@ class GameDatamanager {
         playerBlocks: nextPlayerBlocks
       })
     }
-
+    
     switch(key) {
       case 'ArrowLeft': 
-        handleMove(playerBlocks, (block) => {
-          return {...block, x: block.x - 1}
+        handleArrowKey(playerBlocks, (playerBlocks) => {          
+          const nextPlayerBlocks = Object.deepCopy(playerBlocks);
+          nextPlayerBlocks.baseBlock = Object.assign(Object.create(playerBlocks.baseBlock), {x: nextPlayerBlocks.baseBlock.x - 1});
+          return nextPlayerBlocks;
         });
         break;
       case 'ArrowRight':
-        handleMove(playerBlocks, (block) => {
-          return {...block, x: block.x + 1}
+        handleArrowKey(playerBlocks, (playerBlocks) => {          
+          const nextPlayerBlocks = Object.deepCopy(playerBlocks);
+          nextPlayerBlocks.baseBlock = Object.assign(Object.create(playerBlocks.baseBlock), {x: nextPlayerBlocks.baseBlock.x + 1});
+          return nextPlayerBlocks;
         });
         break;
       case 'ArrowUp':
-        handleRotation(playerBlocks);
+        handleArrowKey(playerBlocks, (playerBlocks) => {          
+          const nextPlayerBlocks = Object.deepCopy(playerBlocks);
+          nextPlayerBlocks.rotationACC++;
+          return nextPlayerBlocks;
+        });
         break;
       case 'ArrowDown':
-        handleMove(playerBlocks, (block) => {
-          return {...block, y: block.y + 1}
+        handleArrowKey(playerBlocks, (playerBlocks) => {          
+          const nextPlayerBlocks = Object.deepCopy(playerBlocks);
+          nextPlayerBlocks.baseBlock = Object.assign(Object.create(playerBlocks.baseBlock), {y: nextPlayerBlocks.baseBlock.y + 1});
+          return nextPlayerBlocks;
         }, () => { this.playGroundComponent.setState({playerBlocks: shapeDataManager.getRandomShape()})});
         break;
       default:
