@@ -1,8 +1,7 @@
 import React , {Component} from 'react';
 import styles from './PlayGround.scss';
 import classNames from 'classnames/bind';
-import block from '../../viewModules/block';
-import sShape from '../../viewModules/sShape';
+import block from '../../models/block';
 import DotBlock from '../DotBlock';
 import GameDataManager from '../../utils/gameDataManager';
 import ShapeDataManager from '../../utils/shapeDataManager';

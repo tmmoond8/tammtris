@@ -1,10 +1,10 @@
-import sShape from '../viewModules/sShape';
-import stickShape from '../viewModules/stickShape';
-import zShape from '../viewModules/zShape';
-import squareShape from '../viewModules/squareShape';
-import tankShape from '../viewModules/tankShape';
-import ganaShape from '../viewModules/ganaShape';
-import noogooShape from '../viewModules/noogooShape';
+import sShape from '../models/sShape';
+import stickShape from '../models/stickShape';
+import zShape from '../models/zShape';
+import squareShape from '../models/squareShape';
+import tankShape from '../models/tankShape';
+import ganaShape from '../models/ganaShape';
+import noogooShape from '../models/noogooShape';
 
 class shapeDataManager {
   constructor() {}

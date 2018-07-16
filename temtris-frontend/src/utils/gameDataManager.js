@@ -1,7 +1,5 @@
-import block from '../viewModules/block';
+import block from '../models/block';
 import shapeDataManager from './shapeDataManager';
-import sShape from '../viewModules/sShape';
-import stickShape from '../viewModules/stickShape';
 
 class GameDatamanager {
   constructor() {
