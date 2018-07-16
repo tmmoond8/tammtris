@@ -32,7 +32,8 @@ class PlayGround extends Component{
   render() {
     if(!this.state.init) {
       let { gameData, playerBlocks } = this.state;
-      gameData[15][8] = block.BLACK;
+      gameData[19] = gameData[18].map(item => block.BLACK);
+      gameData[19][3] = block.EMPTY;
       playerBlocks.getShape().forEach(item => gameData[item.y][item.x] = item.dot);
       gameDataManager.setGameData(gameData)
       this.setState({

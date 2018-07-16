@@ -4,7 +4,7 @@ import shapeDataManager from './shapeDataManager';
 class GameDatamanager {
   constructor() {
     this.sizeX = 10;
-    this.sizeY = 19;
+    this.sizeY = 20;
     this.gameData = GameDatamanager.defaultGameData();
     this.playerBlocks;
   }
@@ -70,7 +70,32 @@ class GameDatamanager {
           const nextPlayerBlocks = Object.deepCopy(playerBlocks);
           nextPlayerBlocks.baseBlock = Object.assign(Object.create(playerBlocks.baseBlock), {y: nextPlayerBlocks.baseBlock.y + 1});
           return nextPlayerBlocks;
-        }, () => { this.playGroundComponent.setState({playerBlocks: shapeDataManager.getRandomShape()})});
+        }, () => { 
+          let gameData = this.gameData.map(line => {
+            if(line.includes(block.EMPTY)) {
+              return line.map(dot => dot)
+            } else {
+              return null;
+            }
+          });
+          gameData = gameData.filter(item => item !== null);
+          while(gameData.length < this.sizeY) {
+            gameData.unshift(GameDatamanager.defaultLine());
+          }
+
+          const playerBlocks = shapeDataManager.getRandomShape();
+          playerBlocks.getShape().forEach(item => {
+            gameData[item.y][item.x] = item.dot;
+          });
+
+          this.gameData = gameData;
+          this.playerBlocks = playerBlocks;
+          this.playGroundComponent.setState({
+            gameData: gameData,
+            playerBlocks: playerBlocks
+          }
+        
+        )});
         break;
       default:
         break;
@@ -92,7 +117,7 @@ class GameDatamanager {
     return '1234567890'.split('').map( item => block.EMPTY);
   }
   static defaultGameData() {
-    return '1234567890123456789'.split('').map( item => GameDatamanager.defaultLine());
+    return '12345678901234567890'.split('').map( item => GameDatamanager.defaultLine());
   }
 }
 
