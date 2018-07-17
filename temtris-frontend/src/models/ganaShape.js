@@ -3,7 +3,7 @@ import block from './block';
 class ganaShape {
   static DEFAULT_X = 4;
   static DEFAULT_Y = 2;
-  static BLOCK_COLOR = block.BLACK;
+  static BLOCK_COLOR = block.GRAPE;
   static ROTATION_STATUS = ['up', 'left', 'down', 'right'];
 
   constructor(x, y) {

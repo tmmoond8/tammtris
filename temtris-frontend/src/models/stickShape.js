@@ -3,7 +3,7 @@ import block from './block';
 class stickShape {
   static DEFAULT_X = 4;
   static DEFAULT_Y = 0;
-  static BLOCK_COLOR = block.BLACK;
+  static BLOCK_COLOR = block.RED;
   static ROTATION_STATUS = ['horizen', 'verticle'];
 
   constructor(x, y) {

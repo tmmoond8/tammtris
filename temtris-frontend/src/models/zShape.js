@@ -3,7 +3,7 @@ import block from './block';
 class zShape {
   static DEFAULT_X = 5;
   static DEFAULT_Y = 1;
-  static BLOCK_COLOR = block.BLACK;
+  static BLOCK_COLOR = block.ORANGE;
   static ROTATION_STATUS = ['horizen', 'verticle'];
 
   constructor(x, y) {

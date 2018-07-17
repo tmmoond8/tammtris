@@ -3,7 +3,7 @@ import block from './block';
 class squareShape {
   static DEFAULT_X = 4;
   static DEFAULT_Y = 0;
-  static BLOCK_COLOR = block.BLACK;
+  static BLOCK_COLOR = block.BLUE;
   static ROTATION_STATUS = ['nomal'];
 
   constructor(x, y) {

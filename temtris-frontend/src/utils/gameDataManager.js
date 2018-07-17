@@ -94,7 +94,6 @@ class GameDatamanager {
             gameData: gameData,
             playerBlocks: playerBlocks
           }
-        
         )});
         break;
       default:

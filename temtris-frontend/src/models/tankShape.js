@@ -3,7 +3,7 @@ import block from './block';
 class tankShape {
   static DEFAULT_X = 4;
   static DEFAULT_Y = 1;
-  static BLOCK_COLOR = block.BLACK;
+  static BLOCK_COLOR = block.GREEN;
   static ROTATION_STATUS = ['right', 'up', 'left', 'down'];
 
   constructor(x, y) {

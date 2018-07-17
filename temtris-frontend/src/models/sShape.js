@@ -3,7 +3,7 @@ import block from './block';
 class sShape {
   static DEFAULT_X = 4;
   static DEFAULT_Y = 1;
-  static BLOCK_COLOR = block.BLACK;
+  static BLOCK_COLOR = block.CYAN;
   static ROTATION_STATUS = ['horizen', 'verticle'];
 
   constructor(x, y) {

@@ -1,13 +1,56 @@
 @import 'utils';
+$RED : #FF0000;
+$GRAPE : #862E9C;
+$GREEN : #2B8A3E;
+$YELLOW : #FFD43B;
+$ORANGE : #D9480F;
+$BLUE : #1864AB;
+$CYAN : #3BC9DB;
 
 .dot-block {
   display: inline-block;
   width: 1.0rem;
   height: 1.0rem;
-  border: solid 1px $oc-gray-5;
+  border: solid 0.1px $oc-gray-3;
   margin-right: -1px;
   margin-bottom: -1px;
+  &.red {
+    border: solid 0.1px $RED;
+    background: -webkit-linear-gradient(-225deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.0470588) 50%), -webkit-linear-gradient(45deg, rgba(0,0,0,0) 50%, rgba(255,255,255,0.2) 50%), -webkit-linear-gradient(-225deg, $RED 0, $RED 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-135deg, $RED 0, $RED 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-45deg, $RED 0, $RED 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-225deg, $RED 0, $RED 25%, rgba(0,0,0,0) 25%), $RED;
+  }
+
+  &.grape {
+    border: solid 0.1px $GRAPE;
+    background: -webkit-linear-gradient(-225deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.0470588) 50%), -webkit-linear-gradient(45deg, rgba(0,0,0,0) 50%, rgba(255,255,255,0.2) 50%), -webkit-linear-gradient(-225deg, $GRAPE 0, $GRAPE 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-135deg, $GRAPE 0, $GRAPE 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-45deg, $GRAPE 0, $GRAPE 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-225deg, $GRAPE 0, $GRAPE 25%, rgba(0,0,0,0) 25%), $GRAPE;
+  }
+
+  &.green {
+    border: solid 0.1px $GREEN;
+    background: -webkit-linear-gradient(-225deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.0470588) 50%), -webkit-linear-gradient(45deg, rgba(0,0,0,0) 50%, rgba(255,255,255,0.2) 50%), -webkit-linear-gradient(-225deg, $GREEN 0, $GREEN 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-135deg, $GREEN 0, $GREEN 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-45deg, $GREEN 0, $GREEN 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-225deg, $GREEN 0, $GREEN 25%, rgba(0,0,0,0) 25%), $GREEN;
+  }
+
+  &.yellow {
+    border: solid 0.1px $YELLOW;
+    background: -webkit-linear-gradient(-225deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.0470588) 50%), -webkit-linear-gradient(45deg, rgba(0,0,0,0) 50%, rgba(255,255,255,0.2) 50%), -webkit-linear-gradient(-225deg, $YELLOW 0, $YELLOW 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-135deg, $YELLOW 0, $YELLOW 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-45deg, $YELLOW 0, $YELLOW 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-225deg, $YELLOW 0, $YELLOW 25%, rgba(0,0,0,0) 25%), $YELLOW;
+  }
+
+  &.orange {
+    border: solid 0.1px $ORANGE;
+    background: -webkit-linear-gradient(-225deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.0470588) 50%), -webkit-linear-gradient(45deg, rgba(0,0,0,0) 50%, rgba(255,255,255,0.2) 50%), -webkit-linear-gradient(-225deg, $ORANGE 0, $ORANGE 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-135deg, $ORANGE 0, $ORANGE 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-45deg, $ORANGE 0, $ORANGE 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-225deg, $ORANGE 0, $ORANGE 25%, rgba(0,0,0,0) 25%), $ORANGE;
+  }
+
+  &.blue {
+    border: solid 0.1px $BLUE;
+    background: -webkit-linear-gradient(-225deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.0470588) 50%), -webkit-linear-gradient(45deg, rgba(0,0,0,0) 50%, rgba(255,255,255,0.2) 50%), -webkit-linear-gradient(-225deg, $BLUE 0, $BLUE 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-135deg, $BLUE 0, $BLUE 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-45deg, $BLUE 0, $BLUE 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-225deg, $BLUE 0, $BLUE 25%, rgba(0,0,0,0) 25%), $BLUE;
+  }
+
+  &.cyan {
+    border: solid 0.1px $CYAN;
+    background: -webkit-linear-gradient(-225deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.0470588) 50%), -webkit-linear-gradient(45deg, rgba(0,0,0,0) 50%, rgba(255,255,255,0.2) 50%), -webkit-linear-gradient(-225deg, $CYAN 0, $CYAN 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-135deg, $CYAN 0, $CYAN 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-45deg, $CYAN 0, $CYAN 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-225deg, $CYAN 0, $CYAN 25%, rgba(0,0,0,0) 25%), $CYAN;
+  }
+
   &.black {
-    background: black;
+    border: solid 0.1px $oc-red-9;
+    background: -webkit-linear-gradient(-225deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.0470588) 50%), -webkit-linear-gradient(45deg, rgba(0,0,0,0) 50%, rgba(255,255,255,0.2) 50%), -webkit-linear-gradient(-225deg, #FF0000 0, #FF0000 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-135deg, #FF0000 0, #FF0000 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-45deg, #FF0000 0, #FF0000 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-225deg, #FF0000 0, #FF0000 25%, rgba(0,0,0,0) 25%), #ff0000;
   }
 }

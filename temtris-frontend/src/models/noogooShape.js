@@ -3,7 +3,7 @@ import block from './block';
 class noogooShape {
   static DEFAULT_X = 5;
   static DEFAULT_Y = 2;
-  static BLOCK_COLOR = block.BLACK;
+  static BLOCK_COLOR = block.YELLOW;
   static ROTATION_STATUS = ['up', 'left', 'down', 'right'];
 
   constructor(x, y) {
