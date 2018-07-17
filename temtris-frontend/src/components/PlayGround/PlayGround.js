@@ -14,7 +14,7 @@ class PlayGround extends Component{
     super();
     let shape = ShapeDataManager.getRandomShape();
     this.state = {
-      gameData: gameDataManager.getGameData(),
+      gameData: GameDataManager.defaultGameData(),
       playerBlocks: shape,
       init: false
     }
@@ -26,7 +26,7 @@ class PlayGround extends Component{
   }
 
   handleKeyPress = (e) => {
-    gameDataManager.handleKeyPress(e.key, this.state.playerBlocks);
+    gameDataManager.handleKeyPress(e.nativeEvent.code, this.state.playerBlocks);
   }
 
   render() {
