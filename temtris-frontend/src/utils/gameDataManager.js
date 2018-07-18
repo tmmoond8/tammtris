@@ -7,15 +7,32 @@ class GameDatamanager {
 
   constructor() {
     this.gameData = GameDatamanager.defaultGameData();
-    this.playerBlocks;
+    this.playerBlocks = [];
+    this.gameLoop;
   }
 
   bind(playGroundComponent) {
     this.playGroundComponent = playGroundComponent;
   }
 
-  handleKeyPress(key, playerBlocks) {
+  play(handleArrowKey, blockStop) {
+    if(!this.gameLoop) {
+      this.gameLoop = setInterval(() => {
+        let { gameData, playerBlocks } = this;
+        handleArrowKey(playerBlocks, (_playerBlocks) => {          
+          const nextPlayerBlocks = Object.deepCopy(_playerBlocks);
+          nextPlayerBlocks.baseBlock = Object.assign(Object.create(_playerBlocks.baseBlock), {..._playerBlocks.baseBlock, y: _playerBlocks.baseBlock.y + 1});
+          playerBlocks = nextPlayerBlocks;
+          return nextPlayerBlocks;
+        }, blockStop);
+      }, 500) 
+      return;
+    }
 
+
+  }
+
+  handleKeyPress(key, playerBlocks) {
     const handleArrowKey = (playerBlocks, playerBlocksFunc, stopCallback) => {
       const gameData = this.gameData.map(line => line.map(dot => dot));
       playerBlocks.getShape().forEach(item => {
@@ -69,6 +86,8 @@ class GameDatamanager {
         playerBlocks: playerBlocks
       }
     )}
+
+    this.play(handleArrowKey, blockStop);
     
     switch(key) {
       case 'ArrowLeft': 
@@ -110,10 +129,6 @@ class GameDatamanager {
       default:
         break;
     }
-  }
-
-  getGameData() {
-    return this.gameData;
   }
 
   setGameData(gameData) {
