@@ -16,20 +16,18 @@ class GameDatamanager {
   }
 
   play(handleArrowKey, blockStop) {
-    if(!this.gameLoop) {
-      this.gameLoop = setInterval(() => {
-        let { gameData, playerBlocks } = this;
-        handleArrowKey(playerBlocks, (_playerBlocks) => {          
-          const nextPlayerBlocks = Object.deepCopy(_playerBlocks);
-          nextPlayerBlocks.baseBlock = Object.assign(Object.create(_playerBlocks.baseBlock), {..._playerBlocks.baseBlock, y: _playerBlocks.baseBlock.y + 1});
-          playerBlocks = nextPlayerBlocks;
-          return nextPlayerBlocks;
-        }, blockStop);
-      }, 500) 
+    if(this.gameLoop) {
       return;
     }
-
-
+    this.gameLoop = setInterval(() => {
+      let { gameData, playerBlocks } = this;
+      handleArrowKey(playerBlocks, (_playerBlocks) => {          
+        const nextPlayerBlocks = Object.deepCopy(_playerBlocks);
+        nextPlayerBlocks.baseBlock = Object.assign(Object.create(_playerBlocks.baseBlock), {..._playerBlocks.baseBlock, y: _playerBlocks.baseBlock.y + 1});
+        playerBlocks = nextPlayerBlocks;
+        return nextPlayerBlocks;
+      }, blockStop);
+    }, 500) 
   }
 
   handleKeyPress(key, playerBlocks) {
@@ -139,10 +137,10 @@ class GameDatamanager {
   }
 
   static defaultLine() {
-    return '1234567890'.split('').map( item => block.EMPTY);
+    return ' '.repeat(GameDatamanager.SIZE_X).split('').map( item => block.EMPTY);
   }
   static defaultGameData() {
-    return '12345678901234567890'.split('').map( item => GameDatamanager.defaultLine());
+    return ' '.repeat(GameDatamanager.SIZE_Y).split('').map( item => GameDatamanager.defaultLine());
   }
 }
 
