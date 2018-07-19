@@ -40,10 +40,11 @@ class PlayGround extends Component{
         init: true
       })
     }
+    const { gameGroundData } = this.props;
 
     return (
       <div tabIndex="0" className={cx('play-ground')} onKeyDown={this.handleKeyPress}>
-        {PlayGround.renderAllLine(this.state.gameData)}
+        {PlayGround.renderAllLine(gameGroundData)}
       </div>
     )
   }
@@ -68,6 +69,11 @@ class PlayGround extends Component{
     }, '');
     return gameData;
   }
+}
+
+PlayGround.defaultProps = {
+  gameGroundData: GameDataManager.defaultGameData(),
+  playerBlocks: ShapeDataManager.getRandomShape()
 }
 
 export default PlayGround;

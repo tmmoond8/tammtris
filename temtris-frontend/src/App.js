@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import PlayGround from './components/PlayGround';
+import PlayGroundContainer from './containers/PlayGroundContainer';
 
 class App extends Component {
   render() {
     return (
-      <PlayGround/>
+      <PlayGroundContainer/>
     );
   }
 }
