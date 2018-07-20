@@ -1,47 +1,17 @@
 import React , {Component} from 'react';
 import styles from './PlayGround.scss';
 import classNames from 'classnames/bind';
-import block from '../../models/block';
 import DotBlock from '../DotBlock';
-import GameDataManager from '../../utils/gameDataManager';
-import ShapeDataManager from '../../utils/shapeDataManager';
-const gameDataManager = new GameDataManager();
 
 const cx = classNames.bind(styles);
 
 class PlayGround extends Component{
-  constructor() {
-    super();
-    let shape = ShapeDataManager.getRandomShape();
-    this.state = {
-      gameData: GameDataManager.defaultGameData(),
-      playerBlocks: shape,
-      init: false
-    }
-    gameDataManager.bind(this);
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return PlayGround.toString(nextState.gameData) !== PlayGround.toString(this.state.gameData);
-  }
-
   handleKeyPress = (e) => {
-    gameDataManager.handleKeyPress(e.nativeEvent.code, this.state.playerBlocks);
+    this.props.onPlayerKeyDown(e.nativeEvent.code);
   }
 
   render() {
-    if(!this.state.init) {
-      let { gameData, playerBlocks } = this.state;
-      gameData[19] = gameData[18].map(item => block.BLACK);
-      gameData[19][3] = block.EMPTY;
-      playerBlocks.getShape().forEach(item => gameData[item.y][item.x] = item.dot);
-      gameDataManager.setGameData(gameData)
-      this.setState({
-        init: true
-      })
-    }
     const { gameGroundData } = this.props;
-
     return (
       <div tabIndex="0" className={cx('play-ground')} onKeyDown={this.handleKeyPress}>
         {PlayGround.renderAllLine(gameGroundData)}
@@ -69,11 +39,6 @@ class PlayGround extends Component{
     }, '');
     return gameData;
   }
-}
-
-PlayGround.defaultProps = {
-  gameGroundData: GameDataManager.defaultGameData(),
-  playerBlocks: ShapeDataManager.getRandomShape()
 }
 
 export default PlayGround;

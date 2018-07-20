@@ -1,35 +1,41 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
 import PlayGround from '../components/PlayGround';
 import * as playGroundActions from '../store/modules/playGround'
 
 class PlayGroundContainer extends Component {
-  handleGameGroundData = () => {
-    this.props.setGameGroundData();
+
+  handlePlayerKeyDown = (keyCode) => {
+    this.props.PlayGroundActions().playerKeyDown(keyCode);
+    // !this.isGameStart && this.props.PlayGroundActions().gameStart()
   }
 
-  handlePlayerBlocks = () => {
-    this.props.setPlayerBlocks();
+  handleGameStart = () => {
+    this.props.PlayGroundActions().gameStart();
   }
 
   render() {
-    const { handleGameGroundData, handlePlayerBlocks } = this;
-    const { gameGroundData } = this.props;
+    const { handlePlayerKeyDown, handleGameStart } = this;
+    const { gameGroundData, playerBlocks} = this.props;
 
     return (
       <PlayGround
         gameGroundData={gameGroundData}
-        onSetGameGroundData = {this.handleGameGroundData}
-        onSetPlayerBlocks = {this.handlePlayerBlocks}
+        playerBlocks={playerBlocks}
+        onPlayerKeyDown = {handlePlayerKeyDown}
+        onGameStart = {handleGameStart}
       />
     );
   }
 }
 
 export default connect(
-  (state) => { gameGroundData: state.playGround.gameGroundData},
-  (dispatch) => {
-    setGameGroundData: () => dispatch(playGroundActions.setGameGroundData())
-    setPlayerBlocks: () => dispatch(playGroundActions.setPlayerBlocks)
-  }
+  (state) => ({ 
+    gameGroundData: state.playGround.gameGroundData,
+    playerBlocks: state.playGround.playerBlocks
+  }),
+  (dispatch) => ({
+    PlayGroundActions: () => bindActionCreators(playGroundActions, dispatch)
+  })
 )(PlayGroundContainer);

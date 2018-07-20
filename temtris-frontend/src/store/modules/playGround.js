@@ -1,28 +1,55 @@
 import { createAction, handleActions } from 'redux-actions';
-import gameDataManager from '../../utils/gameDataManager';
+import GameDataManager from '../../utils/gameDataManager';
+import ShapeDataManager from '../../utils/shapeDataManager';
 
 // actions types
 
-const SET_GAME_GROUND_DATA = 'gamePlay/SET_GAME_GROUND_DATA';
-const SET_PLAYER_BLOCKS = 'gamePlay/SET_PLAYER_BLOCKS';
+const PLAYER_KEY_DOWN = 'gamePlay/PLAYER_KEY_DOWN';
+const GAME_START = 'gamePlay/GAME_START';
+const AUTO_DOWN = 'gamePlay/AUTO_DOWN';
 
 // action creator
-export const setGameGroundData = createAction(SET_GAME_GROUND_DATA);
-export const setPlayerBlocks = createAction(SET_PLAYER_BLOCKS);
+export const playerKeyDown = createAction(PLAYER_KEY_DOWN);
+export const gameStart = createAction(GAME_START);
+export const autoDown = createAction(AUTO_DOWN);
+
+
+const playerBlocks = ShapeDataManager.getRandomShape();
+const gameData = GameDataManager.defaultGameData();
+playerBlocks.getShape().forEach(item => {
+  gameData[item.y][item.x] = item.dot;
+});
 
 const initialState = {
-  gameGroundData: gameDataManager.defaultGameData(),
-  palyerBlocks: []
+  gameGroundData: gameData,
+  playerBlocks: playerBlocks,
+  isGameStart: false
 }
 
 // reducer
 export default handleActions({
-  [SET_GAME_GROUND_DATA]: (state, action) => {
-    const { playload: gameGroundData } = action;
-    return state.set('gameGroundData', gameGroundData);
+  [PLAYER_KEY_DOWN]: (state, action) => {
+    const { payload: keyCode } = action;
+    const { gameGroundData, playerBlocks } = GameDataManager.handleKeyPress(keyCode, state);
+    return {
+      ...state,
+      gameGroundData,
+      playerBlocks
+    }
   },
-  [SET_PLAYER_BLOCKS]: (state, action) => {
-    const { payload: playerBlocks } = action;
-    return state.set('playerBlocks', playerBlocks);
+  [GAME_START]: (state, action) => {
+    if(state.isGameStart) return state;
+    return {
+      ...state,
+      isGameStart: !state.isGameStart
+    }
+  },
+  [AUTO_DOWN]: (state, action) => {
+    const { gameGroundData, playerBlocks } = GameDataManager.handleKeyPress("ArrowDown", state);
+    return {
+      ...state,
+      gameGroundData,
+      playerBlocks
+    }
   }
 }, initialState);
