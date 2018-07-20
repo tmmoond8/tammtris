@@ -7,8 +7,9 @@ import * as playGroundActions from '../store/modules/playGround'
 class PlayGroundContainer extends Component {
 
   handlePlayerKeyDown = (keyCode) => {
-    this.props.PlayGroundActions().playerKeyDown(keyCode);
-    // !this.isGameStart && this.props.PlayGroundActions().gameStart()
+    const playGroundActions = this.props.PlayGroundActions();
+    playGroundActions.playerKeyDown(keyCode);
+    playGroundActions.gameStart(() => playGroundActions.playerKeyDown('ArrowDown'));
   }
 
   handleGameStart = () => {

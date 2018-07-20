@@ -6,12 +6,10 @@ import ShapeDataManager from '../../utils/shapeDataManager';
 
 const PLAYER_KEY_DOWN = 'gamePlay/PLAYER_KEY_DOWN';
 const GAME_START = 'gamePlay/GAME_START';
-const AUTO_DOWN = 'gamePlay/AUTO_DOWN';
 
 // action creator
 export const playerKeyDown = createAction(PLAYER_KEY_DOWN);
 export const gameStart = createAction(GAME_START);
-export const autoDown = createAction(AUTO_DOWN);
 
 
 const playerBlocks = ShapeDataManager.getRandomShape();
@@ -39,17 +37,11 @@ export default handleActions({
   },
   [GAME_START]: (state, action) => {
     if(state.isGameStart) return state;
+    const { payload: autoDown } = action;
+    setInterval(autoDown, 500);
     return {
       ...state,
       isGameStart: !state.isGameStart
     }
   },
-  [AUTO_DOWN]: (state, action) => {
-    const { gameGroundData, playerBlocks } = GameDataManager.handleKeyPress("ArrowDown", state);
-    return {
-      ...state,
-      gameGroundData,
-      playerBlocks
-    }
-  }
 }, initialState);

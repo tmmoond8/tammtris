@@ -1,6 +1,5 @@
 import block from '../models/block';
 import shapeDataManager from './shapeDataManager';
-import * as playGroundActions from '../store/modules';
 
 class GameDatamanager {
   static SIZE_X = 10;
@@ -74,9 +73,6 @@ class GameDatamanager {
   }
 
   static handleKeyPress(key, state) {
-    
-
-    // this.play(handleArrowKey, blockStop);
     
     switch(key) {
       case 'ArrowLeft': 
