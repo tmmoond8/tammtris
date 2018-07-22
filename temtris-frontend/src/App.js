@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import PlayGroundContainer from './containers/PlayGroundContainer';
+import { BrowserRouter, Route } from 'react-router-dom';
+import GamePlayPage from './components/pages/GamePlayPage/GamePlayPage';
 
 class App extends Component {
   render() {
     return (
-      <PlayGroundContainer/>
+      <BrowserRouter>
+        <Route exact path="/" component={GamePlayPage}/>
+      </BrowserRouter>
     );
   }
 }

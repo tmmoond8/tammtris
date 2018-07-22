@@ -10,28 +10,30 @@ class PlayGround extends Component{
     this.props.onPlayerKeyDown(e.nativeEvent.code);
   }
 
-  render() {
-    const { gameGroundData } = this.props;
-    return (
-      <div tabIndex="0" className={cx('play-ground')} onKeyDown={this.handleKeyPress}>
-        {PlayGround.renderAllLine(gameGroundData)}
-      </div>
-    )
-  }
-
-  static renderAllLine(gameData) {
+  renderAllLine(gameData) {
     return (
       <div className={cx('play-ground')}>
         {gameData.map((line, index) => (
-          <div className={cx('block-line')} key={index}>{PlayGround.renderLine(line)}</div>
+          <div className={cx('block-line', this.props.view)} key={index}>{this.renderLine(line)}</div>
         ))}
       </div>
     )
   }
 
-  static renderLine (line) {
-    return line.map(((dot, index) => <DotBlock dot={dot} key={index}/>));
+  renderLine (line) {
+    return line.map(((dot, index) => <DotBlock dot={dot} key={index} small={this.props.view}/>));
   }
+
+  render() {
+    const { gameGroundData } = this.props;
+    const styles = this.props.view ? {} : { tabIndex: "0"};
+    return (
+      <div tabIndex className={cx('play-ground')} onKeyDown={this.handleKeyPress} {...styles}>
+        {this.renderAllLine(gameGroundData)}
+      </div>
+    )
+  }
+
   static toString(gameData) {
     gameData.reduce((acculator, line) => {
       acculator += line.join('');

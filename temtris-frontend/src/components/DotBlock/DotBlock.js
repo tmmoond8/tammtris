@@ -7,8 +7,11 @@ const cx = classNames.bind(styles);
 
 class DotBlock extends Component {
   render() {
-    console.log('dot');
-    return <span className={cx('dot-block', block.getBlockColor(this.props.dot))}/>
+    const color = block.getBlockColor(this.props.dot);
+    const small = this.props.small ? 'small' : '';
+    return <span className={cx('dot-block',
+      block.getBlockColor(this.props.dot), small
+    )}/>
   }
 }
 

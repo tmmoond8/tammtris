@@ -53,4 +53,9 @@ $CYAN : #3BC9DB;
     border: solid 0.1px $oc-red-9;
     background: -webkit-linear-gradient(-225deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.0470588) 50%), -webkit-linear-gradient(45deg, rgba(0,0,0,0) 50%, rgba(255,255,255,0.2) 50%), -webkit-linear-gradient(-225deg, #FF0000 0, #FF0000 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-135deg, #FF0000 0, #FF0000 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-45deg, #FF0000 0, #FF0000 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-225deg, #FF0000 0, #FF0000 25%, rgba(0,0,0,0) 25%), #ff0000;
   }
+
+  &.small {
+    width: .5rem;
+    height: .5rem;
+  }
 }

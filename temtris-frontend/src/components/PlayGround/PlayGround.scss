@@ -1,7 +1,9 @@
 .play-ground {
   .block-line {
     height: 1.0rem;
+    &.view {
+      height: .5rem;
+    }
   }
-  padding: 3rem;
+  padding: 1rem;
 }
-
