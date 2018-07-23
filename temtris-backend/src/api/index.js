@@ -1,13 +1,9 @@
 const apiRouter = require('express').Router();
 const gamePlayRouter = require('./gamePlay');
+const loginRouter = require('./login');
 
-apiRouter.get('/', (req, res) => { res.send('api')});
-apiRouter.get('/gamePlay', (req, res) => {
-  res.send('game play')
-})
-
-apiRouter.get('/gamePlay/test' , (req, res) => { 
-  res.send('test');
-})
-apiRouter.get('/test', gamePlayRouter);
-module.exports = apiRouter;
+module.exports = (app, prefix) => {
+  app.use(`${prefix}/gamePlay`, gamePlayRouter);
+  app.use(`${prefix}/login`, loginRouter);
+  return apiRouter;
+};
