@@ -25,11 +25,12 @@ class PlayGround extends Component{
   }
 
   render() {
-    const { gameGroundData } = this.props;
+    const { gameGroundData, userInfo } = this.props;
     const styles = this.props.view ? {} : { tabIndex: "0"};
     return (
-      <div tabIndex className={cx('play-ground')} onKeyDown={this.handleKeyPress} {...styles}>
+      <div className={cx('play-ground', this.props.view)} onKeyDown={this.handleKeyPress} {...styles}>
         {this.renderAllLine(gameGroundData)}
+        {userInfo && <p>{userInfo.emoji} {userInfo.name}</p>}
       </div>
     )
   }

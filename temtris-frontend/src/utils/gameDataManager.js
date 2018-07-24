@@ -11,7 +11,7 @@ class GameDatamanager {
       return;
     }
     this.gameLoop = setInterval(() => {
-      let { gameData, playerBlocks } = this;
+      let { playerBlocks } = this;
       handleArrowKey(playerBlocks, (_playerBlocks) => {          
         const nextPlayerBlocks = Object.deepCopy(_playerBlocks);
         nextPlayerBlocks.baseBlock = Object.assign(Object.create(_playerBlocks.baseBlock), {..._playerBlocks.baseBlock, y: _playerBlocks.baseBlock.y + 1});

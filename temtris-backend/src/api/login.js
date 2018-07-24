@@ -3,9 +3,9 @@ const userManager = require('../lib/userManager');
 const socketClient = require('../lib/socketServer');
 
 loginRouter.get('/join', (req, res) => { 
-  userManager.addGuest();
+  const ueser = userManager.addGuest();
   console.dir(userManager.userList);
-  res.send('join')
+  res.send(ueser);
 })
 
 loginRouter.get('/clear', (req, res) => { 

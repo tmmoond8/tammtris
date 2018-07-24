@@ -9,7 +9,7 @@ class OtherPlayGrounds extends React.Component {
 
   renderPlayGround = () => {
     this.props.gameGroundData.forEach(item => console.log(item))
-    return this.props.gameGroundData.map((gameGroundData, idx) => <div><PlayGround key={idx} gameGroundData={gameGroundData} view='view'/></div>)
+    return this.props.gameGroundData.map((gameGroundData, idx) => <PlayGround key={idx} gameGroundData={gameGroundData} view='view'/>)
   }
 
   render() {

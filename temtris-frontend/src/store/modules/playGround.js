@@ -6,10 +6,12 @@ import ShapeDataManager from '../../utils/shapeDataManager';
 
 const PLAYER_KEY_DOWN = 'gamePlay/PLAYER_KEY_DOWN';
 const GAME_START = 'gamePlay/GAME_START';
+const PLAYER_INFO = 'gamePlay/PLAYER_INFO';
 
 // action creator
 export const playerKeyDown = createAction(PLAYER_KEY_DOWN);
 export const gameStart = createAction(GAME_START);
+export const playerInfo = createAction(PLAYER_INFO);
 
 
 const playerBlocks = ShapeDataManager.getRandomShape();
@@ -21,6 +23,7 @@ playerBlocks.getShape().forEach(item => {
 const initialState = {
   gameGroundData: gameData,
   playerBlocks: playerBlocks,
+  userInfo: {name: 'geust', emoji: '🐗'},
   isGameStart: false
 }
 
@@ -44,4 +47,11 @@ export default handleActions({
       isGameStart: !state.isGameStart
     }
   },
+  [PLAYER_INFO]: (state, action) => {
+    const { payload: userInfo } = action;
+    return {
+      ...state,
+      userInfo
+    }
+  }
 }, initialState);

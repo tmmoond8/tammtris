@@ -7,7 +7,6 @@ import ganaShape from '../models/ganaShape';
 import noogooShape from '../models/noogooShape';
 
 class shapeDataManager {
-  constructor() {}
   static shapes = [
     sShape, stickShape, zShape, squareShape, tankShape, ganaShape, noogooShape
   ]
