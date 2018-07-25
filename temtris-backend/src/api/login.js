@@ -1,6 +1,5 @@
 const loginRouter = require('express').Router();
 const userManager = require('../lib/userManager');
-const socketClient = require('../lib/socketServer');
 
 loginRouter.get('/join', (req, res) => { 
   const ueser = userManager.addGuest();

@@ -4,7 +4,7 @@ const server = require('http').createServer(app);
 const socketIO = require('socket.io')(server);
 const api = require('./api/index');
 const io = require('./lib/socketServer')(socketIO);
-const cors = require('cors')
+const cors = require('cors');
 
 app.use(cors());
 app.use((req, res, next) => {
@@ -12,4 +12,4 @@ app.use((req, res, next) => {
   next();
 });
 app.use('/api', api(app, '/api'));
-app.listen('8080');
+server.listen('8080');

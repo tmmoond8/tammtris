@@ -1,14 +1,30 @@
-// import io from 'socket.io-client';
 const userManager = require('./userManager');
 
 const MESSAGE_TYPE = {
   BROADCAST: 0,
   NOTIFY: 32
 }
+class Message {
+    constructor(user, message, type) {
+        this.user = user;
+        this.message = message || '';
+        this.type = type | MESSAGE_TYPE.BROADCAST;
+    }
 
+    setMessageId() {
+        this.messageId = Message.createMessageId();
+    };
+
+    static createMessageId() {
+        const toDay = new Date().toISOString().slice(0,19)
+            .replace(/-/g,"").replace(/t/gi, "").replace(/:/g, "");
+        return toDay + Math.floor((1 + Math.random()) * 31);
+    }
+}
 
 module.exports = function(io) {
   io.on('connection', (socket) => {
+      console.log('---------------[OUT] ----- socket ON')
       socket.on('join', (response) => {
           join(socket, response);
       });
@@ -34,27 +50,15 @@ module.exports = function(io) {
       console.log('---- [JOIN] ----- ', 'openChatting', newUser.id);
       io.sockets.emit('join', newUser);
       socket['temtris'] = {id: response.userId};
-      // io.sockets.emit('cubecode-game-one', cubeCodeGameManager.getGame().boards);
-      // io.sockets.emit('userList', userManager.getUserList());
-      // notify(socket, newUser.name + '님이 입장 하였습니다', MESSAGE_TYPE.NOTIFY);
   };
   const message = (socket, msg) => {
       msg.messageId = Message.createMessageId();
       io.sockets.emit('message', msg);
-      if (cubeCodeGameManager.getGame().collectAnswer === msg.message) {
-          cubeCodeGameManager.clearGame();
-          userManager.scoreUp(socket.cubecode.id);
-          console.log(cubeCodeGameManager.getGame());
-          io.sockets.emit('cubecode-game-one', cubeCodeGameManager.getGame().boards);
-          notify(socket, `${msg.user.emoji + ' ' + msg.user.name} 님께서 정답을 맞추셨습니다. 정답은 '${msg.message}' 입니다.`, MESSAGE_TYPE.NOTIFY);
-          io.sockets.emit('userList', userManager.getUserList());
-      }
       console.dir(msg);
   };
 
   const notify = (socket, msg, type) => {
       const message = new Message(null, msg, type);
-      // message.setMessageId();
       io.sockets.emit('notify', message);
   }
 };
