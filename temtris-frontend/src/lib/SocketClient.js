@@ -1,7 +1,6 @@
 import io from 'socket.io-client';
 
 let socket = io('http://localhost:8080');
-// console.log('socket io client', Config.socketClient.baseURL);
 socket.on('connect', () => {
     console.log('socket connect');
 });
@@ -34,7 +33,7 @@ class Message {
 
     static createMessageId = () => {
         const toDay = new Date().toISOString()
-        //.replace(/-/g,"").replace(/t/gi, "").replace(/:/g, "");
+        // .replace(/-/g,"").replace(/t/gi, "").replace(/:/g, "");
         console.log(toDay);
         return toDay// + Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
     }

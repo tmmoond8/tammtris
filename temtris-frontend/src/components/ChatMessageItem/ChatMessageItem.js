@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
 import {MESSAGE_TYPE} from '../../lib/SocketClient';
+import styles from './ChatMessageItem.scss';
+import classNames from 'classnames/bind';
+
+const cx = classNames.bind(styles);
 
 class ChatMessageItem extends Component {
     constructor(props) {
@@ -22,7 +26,7 @@ class ChatMessageItem extends Component {
     broadcast(msg) {
         return (
             <div>
-                <span className="Chat-UserName">
+                <span className={cx('chat-username')}>
                     {msg.user.emoji} {msg.user.name}
                 </span>
                 <span>{msg.message}</span>
@@ -40,7 +44,7 @@ class ChatMessageItem extends Component {
 
     render() {
         return (
-            <li className="Chat-Message-Item">
+            <li className={cx('chat-message-item')}>
                 {this.message(this.props.message)}
             </li>
         )

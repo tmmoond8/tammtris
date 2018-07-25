@@ -26,7 +26,7 @@ class ChatMessageInput extends Component {
 
     render() {
         return (
-             <input type="text" className="Chat-Message-Input" placeholder="Type here..." 
+             <input type="text" className="chat-message-input" placeholder="Type here..." 
              value={this.state.message}
              onChange={e => this.handleChangeMessageInput(e.target.value)}
              onKeyPress={e => this.handleKeyPress.bind(this)(e.key)}

@@ -38,17 +38,18 @@ module.exports = function(io) {
       socket.on('disconnect', () => {
           if (socket.temtris) {
               console.log('---- [OUT] ----', userManager.removeUser(socket.temtris.id));
-              io.sockets.emit('userList', userManager.getUserList());
+            //   io.sockets.emit('userList', userManager.getUserList());
           }
       });
   });
 
   const join = (socket, response) => {
       socket.join('openChatting');
-      const newUser = userManager.addGuest();
+      const newUser = userManager.addGuest(response.userId);
       socket.join(newUser.id);
       console.log('---- [JOIN] ----- ', 'openChatting', newUser.id);
       io.sockets.emit('join', newUser);
+      io.sockets.emit(newUser.id, newUser);
       socket['temtris'] = {id: response.userId};
   };
   const message = (socket, msg) => {

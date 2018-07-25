@@ -4,43 +4,22 @@ import { bindActionCreators } from 'redux';
 import PlayGround from '../components/PlayGround';
 import Chat from '../components/Chat';
 import * as playGroundActions from '../store/modules/playGround'
-import gameAPI from '../api/gamePlay';
-import io from 'socket.io-client';
 
 class PlayGroundContainer extends Component {
 
   handlePlayerKeyDown = (keyCode) => {
-    const playGroundActions = this.props.PlayGroundActions();
-    playGroundActions.playerKeyDown(keyCode);
-    playGroundActions.gameStart(() => playGroundActions.playerKeyDown('ArrowDown'));
+    const PlayGroundActions = this.props.PlayGroundActions();
+    PlayGroundActions.playerKeyDown(keyCode);
+    PlayGroundActions.gameStart(() => PlayGroundActions.playerKeyDown('ArrowDown'));
   }
 
   handleGameStart = () => {
     this.props.PlayGroundActions().gameStart();
   }
 
-  componentDidMount() {
-    gameAPI.join().then((response) => {
-      const playGroundActions = this.props.PlayGroundActions();
-      playGroundActions.playerInfo(response.data);
-    }).catch((err) => {
-      console.log(err);
-    })
-    
-
-    let socket = io('http://localhost:8080');
-    // console.log('socket io client', Config.socketClient.baseURL);
-    socket.on('connect', () => {
-        console.log('socket connect');
-    });
-    socket.on('disconnect', () => {
-        console.log('socket disconnect');
-    });
-  }
-
   render() {
     const { handlePlayerKeyDown, handleGameStart } = this;
-    const { gameGroundData, playerBlocks, userInfo, chattingMessages} = this.props;
+    const { gameGroundData, playerBlocks, userInfo, chattingMessages, PlayGroundActions} = this.props;
 
     return (
       <div>
@@ -51,7 +30,7 @@ class PlayGroundContainer extends Component {
           onPlayerKeyDown = {handlePlayerKeyDown}
           onGameStart = {handleGameStart}
         />
-        <Chat userInfo={userInfo} chattingMessages={chattingMessages}/>
+        <Chat userInfo={userInfo} chattingMessages={chattingMessages} PlayGroundActions={PlayGroundActions}/>
       </div>
       
     );
