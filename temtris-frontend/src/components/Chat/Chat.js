@@ -5,6 +5,7 @@ import SocketClient, { Message } from '../../lib/SocketClient';
 import uuid from 'uuid/v1';
 import styles from './Chat.scss';
 import className from 'classnames/bind';
+import gameAPI from '../../api/gamePlay';
 
 const cx = className.bind(styles);
 
@@ -14,19 +15,7 @@ class Chat extends Component {
     const userId = uuid();
     this.handleSendMessage = this.handleSendMessage.bind(this)
     SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
-
-    SocketClient.sendMessage('join', {
-        userId: userId,
-        chattingRoom: 'openChatting'
-    });
-
-    SocketClient.addEventOn(userId, (data) => {
-        props.PlayGroundActions().playerInfo(data);
-    });
-
-    SocketClient.addEventOn('message', (msg) => {
-        props.PlayGroundActions().chattingMessages({...msg, userInfo: props.userInfo})
-    });
+    this.actions = props.PlayGroundActions();
   };
 
     componentWillReceiveProps(nextProps) {
@@ -41,6 +30,28 @@ class Chat extends Component {
         const message = new Message(this.props.userInfo, msg);
         SocketClient.sendMessage('message', message);
     };
+
+    componentDidMount() {
+        // join으로 id 정보를 받은 후 socket을 연결
+        gameAPI.join().then((response) => {
+            const userInfo = response.data;
+            console.dir(userInfo)
+            SocketClient.sendMessage('join', {
+                userInfo,
+                chattingRoom: 'openChatting'
+            });
+
+            SocketClient.addEventOn(userInfo.id, (data) => {
+                this.actions.playerInfo(data);
+            });
+
+            SocketClient.addEventOn('message', (msg) => {
+                this.actions.chattingMessages({...msg, userInfo})
+            });
+        }).catch(err => {
+            console.error(err);
+        })
+    }
 
     render() {
         return (

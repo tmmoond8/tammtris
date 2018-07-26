@@ -6,13 +6,13 @@ import ShapeDataManager from '../../utils/shapeDataManager';
 
 const PLAYER_KEY_DOWN = 'gamePlay/PLAYER_KEY_DOWN';
 const GAME_START = 'gamePlay/GAME_START';
-const PLAYER_INFO = 'gamePlay/PLAYER_INFO';
+const USER_INFO = 'gamePlay/USER_INFO';
 const CHATTING_MESSAGES = 'gamePlay/CHATTING_MESSAGE';
 
 // action creator
 export const playerKeyDown = createAction(PLAYER_KEY_DOWN);
 export const gameStart = createAction(GAME_START);
-export const playerInfo = createAction(PLAYER_INFO);
+export const userInfo = createAction(USER_INFO);
 export const chattingMessages = createAction(CHATTING_MESSAGES);
 
 
@@ -50,7 +50,7 @@ export default handleActions({
       isGameStart: !state.isGameStart
     }
   },
-  [PLAYER_INFO]: (state, action) => {
+  [USER_INFO]: (state, action) => {
     const { payload: userInfo } = action;
     return {
       ...state,

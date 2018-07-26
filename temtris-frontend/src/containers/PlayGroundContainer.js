@@ -4,17 +4,35 @@ import { bindActionCreators } from 'redux';
 import PlayGround from '../components/PlayGround';
 import Chat from '../components/Chat';
 import * as playGroundActions from '../store/modules/playGround'
+import gameAPI from '../api/gamePlay';
 
 class PlayGroundContainer extends Component {
 
+  constructor(props) {
+    super(props);
+    this.playGroundActions = this.props.PlayGroundActions();
+  }
+
   handlePlayerKeyDown = (keyCode) => {
-    const PlayGroundActions = this.props.PlayGroundActions();
-    PlayGroundActions.playerKeyDown(keyCode);
-    PlayGroundActions.gameStart(() => PlayGroundActions.playerKeyDown('ArrowDown'));
+    this.playGroundActions.playerKeyDown(keyCode);
+    this.playGroundActions.gameStart(() => this.playGroundActions.playerKeyDown('ArrowDown'));
   }
 
   handleGameStart = () => {
-    this.props.PlayGroundActions().gameStart();
+    this.playGroundActions.gameStart();
+  }
+
+
+  componentDidMount() {
+    // join으로 id 정보를 받은 후 socket을 연결
+
+    gameAPI.join().then((response) => {
+        const userInfo = response.data;
+        console.log(this);
+        this.playGroundActions.userInfo(userInfo);
+    }).catch(err => {
+        console.error(err);
+    })
   }
 
   render() {

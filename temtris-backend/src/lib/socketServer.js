@@ -44,13 +44,12 @@ module.exports = function(io) {
   });
 
   const join = (socket, response) => {
-      socket.join('openChatting');
-      const newUser = userManager.addGuest(response.userId);
-      socket.join(newUser.id);
-      console.log('---- [JOIN] ----- ', 'openChatting', newUser.id);
-      io.sockets.emit('join', newUser);
-      io.sockets.emit(newUser.id, newUser);
-      socket['temtris'] = {id: response.userId};
+    const { userInfo, chattingRoom } = response
+      socket.join(chattingRoom);
+      socket.join(userInfo.id);
+      console.log('---- [JOIN] ----- ', chattingRoom, userInfo.id);
+      io.sockets.emit('join', userInfo);
+      socket['temtris'] = {id: userInfo.id};
   };
   const message = (socket, msg) => {
       msg.messageId = Message.createMessageId();

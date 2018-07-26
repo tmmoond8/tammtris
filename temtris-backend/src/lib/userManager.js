@@ -1,3 +1,5 @@
+const uuid = require('uuid/v1');
+
 const Emoji = {
   monkey: { name: 'monkey', emoji: '🐵'}, dog: { name: 'dog', emoji: '🐶'},
   cat: { name: 'cat', emoji: '🐱'}, lion: { name: 'lion', emoji: '🦁'},
@@ -7,8 +9,8 @@ const Emoji = {
 }
 
 class User {
-  constructor(id, name, emoji) {
-    this.id = id;
+  constructor(name, emoji) {
+    this.id = uuid();
     this.name = name;
     this.emoji = emoji;
   }
@@ -19,13 +21,13 @@ class UserManager {
     this.userList = [];
   }
 
-  addUser({id, name, emoji}) {
+  addUser({name, emoji}) {
     this.userList.push(new user(id, name, emoji));
   }
 
   addGuest(id) {
     const emoji = Emoji[Object.keys(Emoji)[Math.floor(Math.random() * Object.keys(Emoji).length)]];
-    const user = new User(id, emoji.name, emoji.emoji);
+    const user = new User(emoji.name, emoji.emoji);
     this.userList.push(user);
     return user;
   }
