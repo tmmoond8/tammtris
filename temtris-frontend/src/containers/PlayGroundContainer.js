@@ -2,14 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import PlayGround from '../components/PlayGround';
+import OtherPlayGrounds from '../components/OtherPlayGrounds';
 import Chat from '../components/Chat';
 import * as playGroundActions from '../store/modules/playGround'
+import gameAPI from '../api/gamePlay';
+import GameDataManager from '../utils/gameDataManager';
+import block from '../models/block';
+
 
 class PlayGroundContainer extends Component {
 
   constructor(props) {
     super(props);
-    console.log('playGroundContainer');
     this.playGroundActions = this.props.PlayGroundActions();
   }
 
@@ -22,13 +26,17 @@ class PlayGroundContainer extends Component {
     this.playGroundActions.gameStart();
   }
 
-  componentWillReceiveProps(nextProps) {
-    nextProps.userInfo && nextProps.userInfo(this.props.userInfo);
+  componentDidMount() {
+    gameAPI.join().then((response) => {
+      this.playGroundActions.userInfo(response.data);
+    }).catch(err => {
+        console.error(err);
+    })
   }
 
   render() {
     const { handlePlayerKeyDown, handleGameStart } = this;
-    const { gameGroundData, playerBlocks, userInfo, chattingMessages, PlayGroundActions} = this.props;
+    const { gameGroundData, playerBlocks, userInfo, chattingMessages, PlayGroundActions, allGroundData} = this.props;
 
     return (
       <div>
@@ -40,6 +48,7 @@ class PlayGroundContainer extends Component {
           onGameStart = {handleGameStart}
         />
         <Chat userInfo={userInfo} chattingMessages={chattingMessages} PlayGroundActions={PlayGroundActions}/>
+        <OtherPlayGrounds allGroundData={allGroundData}/>
       </div>
       
     );
@@ -51,7 +60,8 @@ export default connect(
     gameGroundData: state.playGround.gameGroundData,
     playerBlocks: state.playGround.playerBlocks,
     chattingMessages: state.playGround.chattingMessages,
-    userInfo: state.playGround.userInfo
+    userInfo: state.playGround.userInfo,
+    allGroundData: state.playGround.allGroundData
   }),
   (dispatch) => ({
     PlayGroundActions: () => bindActionCreators(playGroundActions, dispatch)

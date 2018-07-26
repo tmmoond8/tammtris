@@ -8,12 +8,14 @@ const PLAYER_KEY_DOWN = 'gamePlay/PLAYER_KEY_DOWN';
 const GAME_START = 'gamePlay/GAME_START';
 const USER_INFO = 'gamePlay/USER_INFO';
 const CHATTING_MESSAGES = 'gamePlay/CHATTING_MESSAGE';
+const ALL_GROUND_DATA = 'gamePlay/ALL_GROUND_DATA';
 
 // action creator
 export const playerKeyDown = createAction(PLAYER_KEY_DOWN);
 export const gameStart = createAction(GAME_START);
 export const userInfo = createAction(USER_INFO);
 export const chattingMessages = createAction(CHATTING_MESSAGES);
+export const allGroundData = createAction(ALL_GROUND_DATA);
 
 
 const playerBlocks = ShapeDataManager.getRandomShape();
@@ -27,7 +29,8 @@ const initialState = {
   playerBlocks: playerBlocks,
   userInfo: {name: 'geust', emoji: '🐗'},
   chattingMessages: [],
-  isGameStart: false
+  isGameStart: false,
+  allGroundData: [{userId: 'absf', gameData}, {userId: 'absf', gameData}]
 }
 
 // reducer
@@ -62,6 +65,13 @@ export default handleActions({
     return {
       ...state,
       chattingMessages: state.chattingMessages.concat(message)
+    }
+  },
+  [ALL_GROUND_DATA]: (state, action) => {
+    const { payload: allGroundData } = action;
+    return {
+      ...state,
+      allGroundData
     }
   }
 }, initialState);

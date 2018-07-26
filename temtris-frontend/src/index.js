@@ -7,6 +7,10 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import './styles/base.scss';
 
+Object.prototype.deepCopy = function(target) {
+  
+}
+
 ReactDOM.render(
   <Provider store={store}>
     <App />  
