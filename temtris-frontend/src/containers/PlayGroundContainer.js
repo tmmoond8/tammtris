@@ -4,12 +4,12 @@ import { bindActionCreators } from 'redux';
 import PlayGround from '../components/PlayGround';
 import Chat from '../components/Chat';
 import * as playGroundActions from '../store/modules/playGround'
-import gameAPI from '../api/gamePlay';
 
 class PlayGroundContainer extends Component {
 
   constructor(props) {
     super(props);
+    console.log('playGroundContainer');
     this.playGroundActions = this.props.PlayGroundActions();
   }
 
@@ -22,17 +22,8 @@ class PlayGroundContainer extends Component {
     this.playGroundActions.gameStart();
   }
 
-
-  componentDidMount() {
-    // join으로 id 정보를 받은 후 socket을 연결
-
-    gameAPI.join().then((response) => {
-        const userInfo = response.data;
-        console.log(this);
-        this.playGroundActions.userInfo(userInfo);
-    }).catch(err => {
-        console.error(err);
-    })
+  componentWillReceiveProps(nextProps) {
+    nextProps.userInfo && nextProps.userInfo(this.props.userInfo);
   }
 
   render() {
