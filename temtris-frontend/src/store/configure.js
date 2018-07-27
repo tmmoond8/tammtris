@@ -1,8 +1,8 @@
-import { createStore } from 'redux';
-import modules from './modules';
+import { createStore, combineReducers } from 'redux';
+import { defaultModules} from './modules';
 
 const configure = () => {
-  const store = createStore(modules);
+  const store = createStore(combineReducers(defaultModules));
   return store;
 }
 

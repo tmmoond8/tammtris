@@ -12,7 +12,7 @@ class Chat extends Component {
     super(props);
     this.handleSendMessage = this.handleSendMessage.bind(this)
     SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
-    this.actions = props.PlayGroundActions();
+    this.broadcastActions = props.PlayGroundActions();
 
     const { userInfo } = props;
 
@@ -21,22 +21,10 @@ class Chat extends Component {
         chattingRoom: 'openChatting'
     });
 
-    SocketClient.addEventOn(userInfo.id, (data) => {
-        this.actions.playerInfo(data);
-    });
-
     SocketClient.addEventOn('message', (msg) => {
-        this.actions.chattingMessages({...msg, userInfo})
+        this.broadcastActions.chattingMessages({...msg, userInfo})
     });
   };
-
-    componentWillReceiveProps(nextProps) {
-        // if (nextProps !== this.state.user) {
-        //     this.setState({
-        //         user: nextProps.user
-        //     })
-        // }
-    };
 
     handleSendMessage = (msg) => {
         const message = new Message(this.props.userInfo, msg);

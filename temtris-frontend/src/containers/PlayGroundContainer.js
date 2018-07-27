@@ -4,17 +4,17 @@ import { bindActionCreators } from 'redux';
 import PlayGround from '../components/PlayGround';
 import OtherPlayGrounds from '../components/OtherPlayGrounds';
 import Chat from '../components/Chat';
-import * as playGroundActions from '../store/modules/playGround'
+import Actions from '../store/modules'
 import gameAPI from '../api/gamePlay';
-import GameDataManager from '../utils/gameDataManager';
-import block from '../models/block';
 
 
 class PlayGroundContainer extends Component {
 
   constructor(props) {
     super(props);
+    this.broadcastActions = this.props.BroadCastActions();
     this.playGroundActions = this.props.PlayGroundActions();
+    // this.broadcastActions.chattingMessages('sadadad');
   }
 
   handlePlayerKeyDown = (keyCode) => {
@@ -54,16 +54,17 @@ class PlayGroundContainer extends Component {
     );
   }
 }
-
+console.dir(Actions);
 export default connect(
   (state) => ({ 
     gameGroundData: state.playGround.gameGroundData,
     playerBlocks: state.playGround.playerBlocks,
-    chattingMessages: state.playGround.chattingMessages,
     userInfo: state.playGround.userInfo,
-    allGroundData: state.playGround.allGroundData
+    chattingMessages: state.broadcast.chattingMessages,
+    allGroundData: state.broadcast.allGroundData
   }),
   (dispatch) => ({
-    PlayGroundActions: () => bindActionCreators(playGroundActions, dispatch)
+    PlayGroundActions: () => bindActionCreators(Actions.playGround, dispatch),
+    BroadCastActions: () => bindActionCreators(Actions.broadcast, dispatch)
   })
 )(PlayGroundContainer);
