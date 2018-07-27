@@ -24,18 +24,20 @@ const initialState = {
   gameGroundData: gameData,
   playerBlocks: playerBlocks,
   userInfo: {name: 'geust', emoji: '🐗'},
-  isGameStart: false
+  isGameStart: false,
+  downStop: false
 }
 
 // reducer
 export default handleActions({
   [PLAYER_KEY_DOWN]: (state, action) => {
     const { payload: keyCode } = action;
-    const { gameGroundData, playerBlocks } = GameDataManager.handleKeyPress(keyCode, state);
+    const { gameGroundData, playerBlocks, downStop } = GameDataManager.handleKeyPress(keyCode, state);
     return {
       ...state,
       gameGroundData,
-      playerBlocks
+      playerBlocks,
+      downStop
     }
   },
   [GAME_START]: (state, action) => {

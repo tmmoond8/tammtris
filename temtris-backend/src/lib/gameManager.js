@@ -1,21 +1,21 @@
-class gameData {
-  constructor({id, gameData}) {
-    this.id = id;
-    this.gameData = gameData;
-  }
-}
-
 class gameManager {
   constructor() {
     this.gameData = [];
   }
 
-  addGame({id, gameData}) {
-    this.gameData.push(new gameData(id, gameData));
+  find(userId) {
+    let index = this.gameData.findIndex(item => userId === item.userId);
+    if(index !== -1) return index;
+    return this.gameData.findIndex(item => !item) === -1 ? this.gameData.length : this.gameData.findIndex(item => !item);
   }
 
-  removeGame(id) {
-    this.gameData = this.gameData.filter(item => item.id !== id);
+  put({userId, gameData}) {
+    const nextIndex = this.find(userId);
+    this.gameData[nextIndex] = {userId, gameData};
+  }
+
+  remove({userId}) {
+    this.gameData = this.gameData.filter(item => item.userId !== userId);
   }
 }
 

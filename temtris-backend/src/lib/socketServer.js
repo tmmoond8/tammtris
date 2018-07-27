@@ -1,4 +1,5 @@
 const userManager = require('./userManager');
+const gameManager = require('./gameManager');
 
 const MESSAGE_TYPE = {
   BROADCAST: 0,
@@ -32,8 +33,10 @@ module.exports = function(io) {
       socket.on('message', (msg) => {
           message(socket, msg);
       });
-      socket.on('test', (msg) => {
-          console.log(msg);
+
+      socket.on('gameData', (response) => {
+        gameData(response);
+
       });
       socket.on('disconnect', () => {
           if (socket.temtris) {
@@ -54,7 +57,11 @@ module.exports = function(io) {
   const message = (socket, msg) => {
       msg.messageId = Message.createMessageId();
       io.sockets.emit('message', msg);
-      console.dir(msg);
+  };
+
+  const gameData = (response) => {
+    gameManager.put(response);
+    io.sockets.emit('gameData', gameManager.gameData);
   };
 
   const notify = (socket, msg, type) => {

@@ -6,7 +6,7 @@ import OtherPlayGrounds from '../components/OtherPlayGrounds';
 import Chat from '../components/Chat';
 import Actions from '../store/modules'
 import gameAPI from '../api/gamePlay';
-
+import SocketClient from '../lib/SocketClient';
 
 class PlayGroundContainer extends Component {
 
@@ -14,6 +14,11 @@ class PlayGroundContainer extends Component {
     super(props);
     this.broadcastActions = this.props.BroadCastActions();
     this.playGroundActions = this.props.PlayGroundActions();
+    SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
+    
+    SocketClient.addEventOn('gameData', (response) => {
+      this.broadcastActions.allGroundData(response)
+  });
   }
 
   handlePlayerKeyDown = (keyCode) => {
@@ -31,6 +36,16 @@ class PlayGroundContainer extends Component {
     }).catch(err => {
         console.error(err);
     })
+  }
+
+  componentWillUpdate(nextProps) {
+    if(nextProps.downStop) {
+      console.dir(nextProps);
+      SocketClient.sendMessage('gameData', {
+        userId: nextProps.userInfo.id,
+        gameData: nextProps.gameGroundData
+      });
+    }
   }
 
   render() {
@@ -59,6 +74,7 @@ export default connect(
     gameGroundData: state.playGround.gameGroundData,
     playerBlocks: state.playGround.playerBlocks,
     userInfo: state.playGround.userInfo,
+    downStop: state.playGround.downStop,
     chattingMessages: state.broadcast.chattingMessages,
     allGroundData: state.broadcast.allGroundData
   }),
