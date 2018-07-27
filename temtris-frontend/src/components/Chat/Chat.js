@@ -12,9 +12,8 @@ class Chat extends Component {
     super(props);
     this.handleSendMessage = this.handleSendMessage.bind(this)
     SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
-    this.broadcastActions = props.PlayGroundActions();
 
-    const { userInfo } = props;
+    const { userInfo, broadcastActions } = props;
 
     SocketClient.sendMessage('join', {
         userInfo,
@@ -22,7 +21,7 @@ class Chat extends Component {
     });
 
     SocketClient.addEventOn('message', (msg) => {
-        this.broadcastActions.chattingMessages({...msg, userInfo})
+        broadcastActions.chattingMessages({...msg, userInfo})
     });
   };
 

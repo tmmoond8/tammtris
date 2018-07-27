@@ -14,7 +14,6 @@ class PlayGroundContainer extends Component {
     super(props);
     this.broadcastActions = this.props.BroadCastActions();
     this.playGroundActions = this.props.PlayGroundActions();
-    // this.broadcastActions.chattingMessages('sadadad');
   }
 
   handlePlayerKeyDown = (keyCode) => {
@@ -35,8 +34,8 @@ class PlayGroundContainer extends Component {
   }
 
   render() {
-    const { handlePlayerKeyDown, handleGameStart } = this;
-    const { gameGroundData, playerBlocks, userInfo, chattingMessages, PlayGroundActions, allGroundData} = this.props;
+    const { handlePlayerKeyDown, handleGameStart, broadcastActions } = this;
+    const { gameGroundData, playerBlocks, userInfo, chattingMessages, allGroundData} = this.props;
 
     return (
       <div>
@@ -47,14 +46,14 @@ class PlayGroundContainer extends Component {
           onPlayerKeyDown = {handlePlayerKeyDown}
           onGameStart = {handleGameStart}
         />
-        <Chat userInfo={userInfo} chattingMessages={chattingMessages} PlayGroundActions={PlayGroundActions}/>
+        <Chat userInfo={userInfo} chattingMessages={chattingMessages} broadcastActions={broadcastActions}/>
         <OtherPlayGrounds allGroundData={allGroundData}/>
       </div>
       
     );
   }
 }
-console.dir(Actions);
+
 export default connect(
   (state) => ({ 
     gameGroundData: state.playGround.gameGroundData,
