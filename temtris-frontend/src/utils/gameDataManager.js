@@ -1,25 +1,31 @@
 import block from '../models/block';
 import shapeDataManager from './shapeDataManager';
 
-class GameDatamanager {
+class GameDataManager {
   static SIZE_X = 10;
   static SIZE_Y = 20;
 
-
-  static play(handleArrowKey, blockStop) {
-    if(this.gameLoop) {
-      return;
-    }
-    this.gameLoop = setInterval(() => {
-      let { playerBlocks } = this;
-      handleArrowKey(playerBlocks, (_playerBlocks) => {          
-        const nextPlayerBlocks = Object.deepCopy(_playerBlocks);
-        nextPlayerBlocks.baseBlock = Object.assign(Object.create(_playerBlocks.baseBlock), {..._playerBlocks.baseBlock, y: _playerBlocks.baseBlock.y + 1});
-        playerBlocks = nextPlayerBlocks;
-        return nextPlayerBlocks;
-      }, blockStop);
-    }, 500) 
+  static GAME_STATE = {
+    READY: 'READY',
+    PLAY: 'PLAY',
+    GAME_OVER: 'GAME_OVER'
   }
+
+  static gamePlay = (function() {
+    let gameState = GameDataManager.GAME_STATE.GAME_READY;
+    let gameLoop;
+    return {
+      play: (autoDown) => {
+        if(gameState !== GameDataManager.GAME_STATE.PLAY) {
+          gameState = GameDataManager.GAME_STATE.PLAY;
+          gameLoop = setInterval(autoDown, 500);
+        }
+      },
+      stop: () => {
+        clearInterval(gameLoop);
+      }
+    }
+  })()
 
    static handleArrowKey = (state, playerBlocksFunc, stopCallback) => {
      const { gameGroundData, playerBlocks } = state;
@@ -32,7 +38,7 @@ class GameDatamanager {
     
     for (const item of nextPlayerBlocks.getShape()) {
       let { x, y } = item;
-      if(x < 0 || x >= GameDatamanager.SIZE_X || y < 0 || y >= GameDatamanager.SIZE_Y || gameData[y][x] !== block.EMPTY ) {
+      if(x < 0 || x >= GameDataManager.SIZE_X || y < 0 || y >= GameDataManager.SIZE_Y || gameData[y][x] !== block.EMPTY ) {
         return stopCallback ? stopCallback(state) : { gameGroundData, playerBlocks };
       }
     }
@@ -57,18 +63,24 @@ class GameDatamanager {
       }
     });
     nextGameData = nextGameData.filter(item => item !== null);
-    while(nextGameData.length < GameDatamanager.SIZE_Y) {
-      nextGameData.unshift(GameDatamanager.defaultLine());
+    while(nextGameData.length < GameDataManager.SIZE_Y) {
+      nextGameData.unshift(GameDataManager.defaultLine());
     }
 
     const nextPlayerBlocks = shapeDataManager.getRandomShape();
+    let gameState = GameDataManager.GAME_STATE.PLAY;
     nextPlayerBlocks.getShape().forEach(item => {
+      if(nextGameData[item.y][item.x] !== block.EMPTY) {
+        gameState = GameDataManager.GAME_STATE.GAME_OVER;
+        console.log('game stop');
+      }
       nextGameData[item.y][item.x] = item.dot;
     });
     return {
       gameGroundData: nextGameData,
       playerBlocks: nextPlayerBlocks,
-      downStop: true
+      downStop: true, 
+      gameState
     }
   }
 
@@ -76,36 +88,36 @@ class GameDatamanager {
     
     switch(key) {
       case 'ArrowLeft': 
-        return GameDatamanager.handleArrowKey(state, (_playerBlocks) => {          
+        return GameDataManager.handleArrowKey(state, (_playerBlocks) => {          
           const nextPlayerBlocks = Object.assign(Object.create(_playerBlocks), _playerBlocks);
           nextPlayerBlocks.baseBlock = Object.assign(Object.create(_playerBlocks.baseBlock), {..._playerBlocks.baseBlock, x: _playerBlocks.baseBlock.x - 1});
           return nextPlayerBlocks;
         });
       case 'ArrowRight':
-        return GameDatamanager.handleArrowKey(state, (_playerBlocks) => {          
+        return GameDataManager.handleArrowKey(state, (_playerBlocks) => {          
           const nextPlayerBlocks = Object.assign(Object.create(_playerBlocks), _playerBlocks);
           nextPlayerBlocks.baseBlock = Object.assign(Object.create(_playerBlocks.baseBlock), {..._playerBlocks.baseBlock, x: _playerBlocks.baseBlock.x + 1});
           return nextPlayerBlocks;
         });
       case 'ArrowUp':
-        return GameDatamanager.handleArrowKey(state, (_playerBlocks) => {          
+        return GameDataManager.handleArrowKey(state, (_playerBlocks) => {          
           const nextPlayerBlocks = Object.assign(Object.create(_playerBlocks), _playerBlocks);
           nextPlayerBlocks.rotationACC++;
           return nextPlayerBlocks;
         });
       case 'ArrowDown':
-        return GameDatamanager.handleArrowKey(state, (_playerBlocks) => {          
+        return GameDataManager.handleArrowKey(state, (_playerBlocks) => {          
           const nextPlayerBlocks = Object.assign(Object.create(_playerBlocks), _playerBlocks);
           nextPlayerBlocks.baseBlock = Object.assign(Object.create(_playerBlocks.baseBlock), {..._playerBlocks.baseBlock, y: _playerBlocks.baseBlock.y + 1});
           return nextPlayerBlocks;
-        }, GameDatamanager.blockStop);
+        }, GameDataManager.blockStop);
       case 'Space':
         const moveDown = (state) => {
-          return GameDatamanager.handleArrowKey(state, (_playerBlocks) => {          
+          return GameDataManager.handleArrowKey(state, (_playerBlocks) => {          
             const nextPlayerBlocks = Object.assign(Object.create(_playerBlocks), _playerBlocks);
             nextPlayerBlocks.baseBlock = Object.assign(Object.create(_playerBlocks.baseBlock), {..._playerBlocks.baseBlock, y: _playerBlocks.baseBlock.y + 1});
             return nextPlayerBlocks;
-          }, GameDatamanager.blockStop)
+          }, GameDataManager.blockStop)
         }
         let nextState = state;
         while(true) {
@@ -120,11 +132,11 @@ class GameDatamanager {
   }
 
   static defaultLine() {
-    return ' '.repeat(GameDatamanager.SIZE_X).split('').map( item => block.EMPTY);
+    return ' '.repeat(GameDataManager.SIZE_X).split('').map( item => block.EMPTY);
   }
   static defaultGameData() {
-    return ' '.repeat(GameDatamanager.SIZE_Y).split('').map( item => GameDatamanager.defaultLine());
+    return ' '.repeat(GameDataManager.SIZE_Y).split('').map( item => GameDataManager.defaultLine());
   }
 }
 
-export default GameDatamanager;
+export default GameDataManager;

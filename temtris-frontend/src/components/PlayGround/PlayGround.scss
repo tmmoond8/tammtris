@@ -1,4 +1,7 @@
+@import 'utils';
+
 .play-ground {
+  flex: 1 300rem;
   padding: 1rem;
   .block-line {
     height: 1.0rem;

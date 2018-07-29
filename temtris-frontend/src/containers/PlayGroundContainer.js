@@ -10,6 +10,10 @@ import SocketClient from '../lib/SocketClient';
 
 class PlayGroundContainer extends Component {
 
+  state = {
+    downStop: false
+  }
+
   constructor(props) {
     super(props);
     this.broadcastActions = this.props.BroadCastActions();
@@ -18,7 +22,7 @@ class PlayGroundContainer extends Component {
     
     SocketClient.addEventOn('gameData', (response) => {
       this.broadcastActions.allGroundData(response)
-  });
+    });
   }
 
   handlePlayerKeyDown = (keyCode) => {
@@ -39,12 +43,17 @@ class PlayGroundContainer extends Component {
   }
 
   componentWillUpdate(nextProps) {
+    console.log(nextProps.gameState);
     if(nextProps.downStop) {
-      console.dir(nextProps);
       SocketClient.sendMessage('gameData', {
         userId: nextProps.userInfo.id,
         gameData: nextProps.gameGroundData
       });
+    }
+    if(nextProps.gameState === 'GAME_OVER') {
+      console.log('gameOver');
+      this.playGroundActions.gameOver();
+      console.log(this.playGroundActions.gameOver);
     }
   }
 
@@ -76,7 +85,8 @@ export default connect(
     userInfo: state.playGround.userInfo,
     downStop: state.playGround.downStop,
     chattingMessages: state.broadcast.chattingMessages,
-    allGroundData: state.broadcast.allGroundData
+    allGroundData: state.broadcast.allGroundData,
+    gameState: state.playGround.gameState
   }),
   (dispatch) => ({
     PlayGroundActions: () => bindActionCreators(Actions.playGround, dispatch),
