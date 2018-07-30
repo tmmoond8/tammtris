@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
-import GameDataManager from '../../utils/gameDataManager';
+import GameDataManager, { GAME_STATE } from '../../utils/gameDataManager';
 import ShapeDataManager from '../../utils/shapeDataManager';
 
 // actions types
@@ -26,15 +26,17 @@ const initialState = {
   gameGroundData: gameData,
   playerBlocks: playerBlocks,
   userInfo: {name: 'geust', emoji: '🐗'},
-  gameState: GameDataManager.GAME_STATE.READY,
+  gameState: GAME_STATE.READY,
   downStop: false
 }
+
+const gameDataManager = new GameDataManager();
 
 // reducer
 export default handleActions({
   [PLAYER_KEY_DOWN]: (state, action) => {
     const { payload: keyCode } = action;
-    const { gameGroundData, playerBlocks, downStop, gameState } = GameDataManager.handleKeyPress(keyCode, state);
+    const { gameGroundData, playerBlocks, downStop, gameState } = gameDataManager.handleKeyPress(keyCode, state);
     return {
       ...state,
       gameGroundData,
@@ -44,20 +46,20 @@ export default handleActions({
     }
   },
   [GAME_START]: (state, action) => {
-    if(state.gameState === GameDataManager.GAME_STATE.PLAY) return state;
+    if(state.gameState === GAME_STATE.PLAY) return state;
     const { payload: autoDown } = action;
-    GameDataManager.gamePlay.play(autoDown)
+    gameDataManager.gamePlay.play(autoDown)
     return {
       ...state,
-      gameState: GameDataManager.GAME_STATE.PLAY
+      gameState: GAME_STATE.PLAY
     }
   },
   [GAME_OVER]: (state, action) => {
-    if(state.gameState === GameDataManager.GAME_STATE.GAME_OVER) return state;
-    GameDataManager.gamePlay.stop();
+    if(state.gameState === GAME_STATE.GAME_OVER) return state;
+    gameDataManager.gamePlay.stop();
     return {
       ...state,
-      gameState: GameDataManager.GAME_STATE.GAME_OVER
+      gameState: GAME_STATE.GAME_OVER
     }
   },
   [USER_INFO]: (state, action) => {

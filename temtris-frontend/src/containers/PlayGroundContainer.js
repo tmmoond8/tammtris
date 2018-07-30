@@ -38,22 +38,18 @@ class PlayGroundContainer extends Component {
     })
   }
 
-  componentDidUpdate(nextProps) {
-    if(nextProps.downStop && !this.props.playerBlocks.baseBlock.equlas(nextProps.playerBlocks.baseBlock)) {
-      console.dir('sddsadsds');
+  shouldComponentUpdate(nextProps) {
+    if(nextProps.downStop) {
+      if(this.props.playerBlocks.baseBlock.equlas(nextProps.playerBlocks.baseBlock)) {
+        return false;
+      }
       SocketClient.sendMessage('gameData', {
         userId: nextProps.userInfo.id,
         gameData: nextProps.gameGroundData
       });
     }
-  }
-
-  shouldComponentUpdate(nextProps) {
-    console.log('shouldComponentUpdate');
+    
     return true;
-    // const { gameGroundDataNext, playerBlocksNext, userInfoNext, chattingMessagesNext, gameStateNext, allGroundDataNext} = nextProps;
-    // const { gameGroundData, playerBlocks, userInfo, chattingMessages, gameState, allGroundData} = this.props;
-    // return gameGroundData !== gameGroundDataNext && playerBlocks !== playerBlocksNext && userInfo !== userInfoNext && chattingMessages !== chattingMessagesNext && gameState !== gameStateNext && allGroundData !== allGroundDataNext;
   }
 
   render() {
@@ -84,7 +80,7 @@ export default connect(
     playerBlocks: state.playGround.playerBlocks,
     userInfo: state.playGround.userInfo,
     gameState: state.playGround.gameState,
-    // downStop: state.playGround.downStop,
+    downStop: state.playGround.downStop,
     chattingMessages: state.broadcast.chattingMessages,
     allGroundData: state.broadcast.allGroundData
   }),

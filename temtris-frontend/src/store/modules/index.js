@@ -10,6 +10,6 @@ req.keys().forEach(key => {
   modules[moduleName] = req(key);
   defaultModules[moduleName] = req(key).default;
 });
-// console.log(req('./playGround.js'));
+
 export default modules;
 export { defaultModules };

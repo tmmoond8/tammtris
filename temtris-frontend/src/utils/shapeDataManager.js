@@ -13,6 +13,10 @@ class shapeDataManager {
   static getRandomShape() {
     return new shapeDataManager.shapes[Math.floor(Math.random()*2147483647 % shapeDataManager.shapes.length)]
   }
+
+  static equals(a, b) {
+    return (a.constructor.name === b.constructor.name && a.baseBlock.x === b.baseBlock.x && a.baseBlock.y === b.baseBlock.y)
+  }
 }
 
 export default shapeDataManager;
