@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 
-let socket = io('http://localhost:8080');
+let socket = io('http://localhost:14666');
 socket.on('connect', () => {
     console.log('socket connect');
 });
