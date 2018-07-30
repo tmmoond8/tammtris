@@ -10,10 +10,6 @@ import SocketClient from '../lib/SocketClient';
 
 class PlayGroundContainer extends Component {
 
-  state = {
-    downStop: false
-  }
-
   constructor(props) {
     super(props);
     this.broadcastActions = this.props.BroadCastActions();
@@ -42,24 +38,27 @@ class PlayGroundContainer extends Component {
     })
   }
 
-  componentWillUpdate(nextProps) {
-    console.log(nextProps.gameState);
-    if(nextProps.downStop) {
+  componentDidUpdate(nextProps) {
+    if(nextProps.downStop && !this.props.playerBlocks.baseBlock.equlas(nextProps.playerBlocks.baseBlock)) {
+      console.dir('sddsadsds');
       SocketClient.sendMessage('gameData', {
         userId: nextProps.userInfo.id,
         gameData: nextProps.gameGroundData
       });
     }
-    if(nextProps.gameState === 'GAME_OVER') {
-      console.log('gameOver');
-      this.playGroundActions.gameOver();
-      console.log(this.playGroundActions.gameOver);
-    }
+  }
+
+  shouldComponentUpdate(nextProps) {
+    console.log('shouldComponentUpdate');
+    return true;
+    // const { gameGroundDataNext, playerBlocksNext, userInfoNext, chattingMessagesNext, gameStateNext, allGroundDataNext} = nextProps;
+    // const { gameGroundData, playerBlocks, userInfo, chattingMessages, gameState, allGroundData} = this.props;
+    // return gameGroundData !== gameGroundDataNext && playerBlocks !== playerBlocksNext && userInfo !== userInfoNext && chattingMessages !== chattingMessagesNext && gameState !== gameStateNext && allGroundData !== allGroundDataNext;
   }
 
   render() {
     const { handlePlayerKeyDown, handleGameStart, broadcastActions } = this;
-    const { gameGroundData, playerBlocks, userInfo, chattingMessages, allGroundData} = this.props;
+    const { gameGroundData, playerBlocks, userInfo, chattingMessages, gameState, allGroundData} = this.props;
 
     return (
       <div>
@@ -69,6 +68,7 @@ class PlayGroundContainer extends Component {
           userInfo={userInfo}
           onPlayerKeyDown = {handlePlayerKeyDown}
           onGameStart = {handleGameStart}
+          gameState = {gameState}
         />
         <Chat userInfo={userInfo} chattingMessages={chattingMessages} broadcastActions={broadcastActions}/>
         <OtherPlayGrounds allGroundData={allGroundData}/>
@@ -83,10 +83,10 @@ export default connect(
     gameGroundData: state.playGround.gameGroundData,
     playerBlocks: state.playGround.playerBlocks,
     userInfo: state.playGround.userInfo,
-    downStop: state.playGround.downStop,
+    gameState: state.playGround.gameState,
+    // downStop: state.playGround.downStop,
     chattingMessages: state.broadcast.chattingMessages,
-    allGroundData: state.broadcast.allGroundData,
-    gameState: state.playGround.gameState
+    allGroundData: state.broadcast.allGroundData
   }),
   (dispatch) => ({
     PlayGroundActions: () => bindActionCreators(Actions.playGround, dispatch),

@@ -72,7 +72,7 @@ class GameDataManager {
     nextPlayerBlocks.getShape().forEach(item => {
       if(nextGameData[item.y][item.x] !== block.EMPTY) {
         gameState = GameDataManager.GAME_STATE.GAME_OVER;
-        console.log('game stop');
+        GameDataManager.gamePlay.stop();
       }
       nextGameData[item.y][item.x] = item.dot;
     });

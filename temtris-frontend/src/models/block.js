@@ -29,6 +29,10 @@ class block {
     this.dot = dot || block.EMPTY;
   }
 
+  equlas(object) {
+    return object.constructor.name === 'block' && object.x === this.x && object.y === this.y === object.dot === this.dot;
+  }
+
 }
 
 export default block;
