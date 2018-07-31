@@ -23,7 +23,9 @@ class PlayGroundContainer extends Component {
 
   handlePlayerKeyDown = (keyCode) => {
     this.playGroundActions.playerKeyDown(keyCode);
-    this.playGroundActions.gameStart(() => this.playGroundActions.playerKeyDown('ArrowDown'));
+    if(this.props.gameState === 'READY') {
+      this.playGroundActions.gameStart(() => this.playGroundActions.playerKeyDown('ArrowDown'));
+    }
   }
 
   handleGameStart = () => {

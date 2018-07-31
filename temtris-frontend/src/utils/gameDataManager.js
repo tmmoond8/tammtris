@@ -20,14 +20,15 @@ class GameDataManager {
   }
 
   gamePlay = (function() {
-    let gameState = GAME_STATE.GAME_READY;
+    let gameState = GAME_STATE.READY;
     let gameLoop;
     return {
       play: (autoDown) => {
-        if(gameState !== GAME_STATE.PLAY) {
+        if(gameState === GAME_STATE.READY) {
           gameState = GAME_STATE.PLAY;
           gameLoop = setInterval(autoDown, 500);
         }
+        return gameState;
       },
       stop: () => {
         clearInterval(gameLoop);
@@ -37,7 +38,6 @@ class GameDataManager {
 
    handleArrowKey = (state, playerBlocksFunc, stopCallback) => {
     const { gameGroundData, playerBlocks, gameState } = state;
-    console.log(state.gameState);
     const gameData = gameGroundData.map(line => line.map(dot => dot));
     playerBlocks.getShape().forEach(item => {
       gameData[item.y][item.x] = block.EMPTY;

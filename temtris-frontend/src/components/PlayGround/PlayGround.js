@@ -9,6 +9,10 @@ class PlayGround extends Component{
   handleKeyPress = (e) => {
     this.props.onPlayerKeyDown(e.nativeEvent.code);
   }
+  
+  shouldComponentUpdate(nextProps) {
+    return PlayGround.toString(this.props.gameGroundData) !== PlayGround.toString(nextProps.gameGroundData);
+  }
 
   renderAllLine(gameData) {
     return (
@@ -27,6 +31,7 @@ class PlayGround extends Component{
   render() {
     const { gameGroundData, userInfo } = this.props;
     const styles = this.props.view ? {} : { tabIndex: "0"};
+    console.log('playGround render');
     return (
       <div className={cx('play-ground', this.props.view)} onKeyDown={this.handleKeyPress} {...styles}>
         {this.renderAllLine(gameGroundData)}
@@ -36,11 +41,10 @@ class PlayGround extends Component{
   }
 
   static toString(gameData) {
-    gameData.reduce((acculator, line) => {
+    return gameData.reduce((acculator, line) => {
       acculator += line.join('');
       return acculator;
     }, '');
-    return gameData;
   }
 }
 
