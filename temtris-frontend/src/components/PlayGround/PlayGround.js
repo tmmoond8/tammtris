@@ -31,7 +31,6 @@ class PlayGround extends Component{
   render() {
     const { gameGroundData, userInfo } = this.props;
     const styles = this.props.view ? {} : { tabIndex: "0"};
-    console.log('playGround render');
     return (
       <div className={cx('play-ground', this.props.view)} onKeyDown={this.handleKeyPress} {...styles}>
         {this.renderAllLine(gameGroundData)}

@@ -42,20 +42,17 @@ export default handleActions({
       gameGroundData,
       playerBlocks,
       downStop,
-      gameState
+      gameState: gameState || state.gameState
     }
   },
   [GAME_START]: (state, action) => {
-    if(state.gameState === GAME_STATE.PLAY) return state;
     const { payload: autoDown } = action;
-    gameDataManager.gamePlay.play(autoDown)
     return {
       ...state,
-      gameState: GAME_STATE.PLAY
+      gameState: gameDataManager.gamePlay.play(autoDown)
     }
   },
   [GAME_OVER]: (state, action) => {
-    if(state.gameState === GAME_STATE.GAME_OVER) return state;
     gameDataManager.gamePlay.stop();
     return {
       ...state,
