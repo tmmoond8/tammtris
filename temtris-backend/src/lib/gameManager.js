@@ -14,11 +14,10 @@ class gameManager {
     this.gameData[nextIndex] = {userInfo, gameData};
   }
 
-  remove({userId}) {
+  remove(userId) {
     this.gameData = this.gameData.map(item => {
-      item && item.userInfo.id !== userId ? item: null
+      return item && item.userInfo.id !== userId ? item: null
     });
-    console.log(this.gameData);
   }
 }
 

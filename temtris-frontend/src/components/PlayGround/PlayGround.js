@@ -12,7 +12,7 @@ class PlayGround extends Component{
   }
   
   shouldComponentUpdate(nextProps) {
-    if(!nextProps.gameGroundData) {
+    if(!nextProps.gameGroundData || !nextProps.userInfo || !this.props.gameGroundData || this.props.userInfo) {
       return true;
     }
     return this.props.userInfo.id !== nextProps.userInfo.id ||
@@ -38,7 +38,7 @@ class PlayGround extends Component{
     const styles = this.props.view ? {} : { tabIndex: "0"};
     return (
       <div className={cx('play-ground', this.props.view)} onKeyDown={this.handleKeyPress} {...styles}>
-        {this.renderAllLine(gameGroundData)}
+        {this.renderAllLine(gameGroundData || GameDataManger.defaultGameData())}
         {userInfo && <p>{userInfo.emoji} {userInfo.name}</p>}
       </div>
     )

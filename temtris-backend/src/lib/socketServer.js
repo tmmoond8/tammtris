@@ -54,7 +54,6 @@ module.exports = function(io) {
   const out = (socket, response) => {
     if (socket.temtris) {
         console.log('disconnet')
-        console.dir(socket.temtris.id)
         console.log('---- [OUT] ----', userManager.removeUser(socket.temtris.id));
         gameManager.remove(socket.temtris.id);   
     }
