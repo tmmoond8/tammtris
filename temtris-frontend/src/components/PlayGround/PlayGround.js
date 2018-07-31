@@ -2,6 +2,7 @@ import React , {Component} from 'react';
 import styles from './PlayGround.scss';
 import classNames from 'classnames/bind';
 import DotBlock from '../DotBlock';
+import GameDataManger from '../../utils/gameDataManager';
 
 const cx = classNames.bind(styles);
 
@@ -11,7 +12,11 @@ class PlayGround extends Component{
   }
   
   shouldComponentUpdate(nextProps) {
-    return PlayGround.toString(this.props.gameGroundData) !== PlayGround.toString(nextProps.gameGroundData);
+    if(!nextProps.gameGroundData) {
+      return true;
+    }
+    return this.props.userInfo.id !== nextProps.userInfo.id ||
+    PlayGround.toString(this.props.gameGroundData) !== PlayGround.toString(nextProps.gameGroundData);
   }
 
   renderAllLine(gameData) {

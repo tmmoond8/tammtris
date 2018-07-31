@@ -25,7 +25,7 @@ class Message {
 
 module.exports = function(io) {
   io.on('connection', (socket) => {
-      console.log('---------------[OUT] ----- socket ON')
+      console.log('---------------[ON] ----- socket ON')
       socket.on('join', (response) => {
           join(socket, response);
       });
@@ -36,13 +36,9 @@ module.exports = function(io) {
 
       socket.on('gameData', (response) => {
         gameData(response);
-
       });
       socket.on('disconnect', () => {
-          if (socket.temtris) {
-              console.log('---- [OUT] ----', userManager.removeUser(socket.temtris.id));
-            //   io.sockets.emit('userList', userManager.getUserList());
-          }
+        out(socket);
       });
   });
 
@@ -50,10 +46,20 @@ module.exports = function(io) {
     const { userInfo, chattingRoom } = response
       socket.join(chattingRoom);
       socket.join(userInfo.id);
-      console.log('---- [JOIN] ----- ', chattingRoom, userInfo.id);
+      console.log('---- [JOIN] ----- ', chattingRoom);
       io.sockets.emit('join', userInfo);
       socket['temtris'] = {id: userInfo.id};
   };
+
+  const out = (socket, response) => {
+    if (socket.temtris) {
+        console.log('disconnet')
+        console.dir(socket.temtris.id)
+        console.log('---- [OUT] ----', userManager.removeUser(socket.temtris.id));
+        gameManager.remove(socket.temtris.id);   
+    }
+  }
+
   const message = (socket, msg) => {
       msg.messageId = Message.createMessageId();
       io.sockets.emit('message', msg);

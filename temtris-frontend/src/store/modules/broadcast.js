@@ -11,7 +11,7 @@ export const allGroundData = createAction(ALL_GROUND_DATA);
 
 const initialState = {
   chattingMessages: [],
-  allGroundData: [{userId: 'ababa', gameData: GameDataManager.defaultGameData()}]
+  allGroundData: []
 }
 
 // reducer

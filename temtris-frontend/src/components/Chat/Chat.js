@@ -15,11 +15,6 @@ class Chat extends Component {
 
     const { userInfo, broadcastActions } = props;
 
-    SocketClient.sendMessage('join', {
-        userInfo,
-        chattingRoom: 'openChatting'
-    });
-
     SocketClient.addEventOn('message', (msg) => {
         broadcastActions.chattingMessages({...msg, userInfo})
     });

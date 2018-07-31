@@ -34,7 +34,12 @@ class PlayGroundContainer extends Component {
 
   componentDidMount() {
     gameAPI.join().then((response) => {
-      this.playGroundActions.userInfo(response.data);
+      const {data: userInfo } = response;
+      this.playGroundActions.userInfo(userInfo);
+      SocketClient.sendMessage('join', {
+        userInfo,
+        chattingRoom: 'openChatting'
+      });
     }).catch(err => {
         console.error(err);
     })
@@ -46,7 +51,7 @@ class PlayGroundContainer extends Component {
         return false;
       }
       SocketClient.sendMessage('gameData', {
-        userId: nextProps.userInfo.id,
+        userInfo: nextProps.userInfo,
         gameData: nextProps.gameGroundData
       });
     }
@@ -71,7 +76,6 @@ class PlayGroundContainer extends Component {
         <Chat userInfo={userInfo} chattingMessages={chattingMessages} broadcastActions={broadcastActions}/>
         <OtherPlayGrounds allGroundData={allGroundData}/>
       </div>
-      
     );
   }
 }

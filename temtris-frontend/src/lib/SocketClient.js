@@ -33,8 +33,6 @@ class Message {
 
     static createMessageId = () => {
         const toDay = new Date().toISOString()
-        // .replace(/-/g,"").replace(/t/gi, "").replace(/:/g, "");
-        console.log(toDay);
         return toDay// + Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
     }
 }

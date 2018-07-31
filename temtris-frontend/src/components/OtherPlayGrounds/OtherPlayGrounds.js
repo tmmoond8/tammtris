@@ -8,7 +8,9 @@ const cx = classNames.bind(styles);
 class OtherPlayGrounds extends React.Component {
 
   renderPlayGround = () => {
-    return this.props.allGroundData.map((gameGroundData, idx) => <PlayGround key={idx} gameGroundData={gameGroundData.gameData} view='view'/>)
+    return this.props.allGroundData.map((gameGroundData, idx) => 
+      <PlayGround key={idx} gameGroundData={gameGroundData && gameGroundData.gameData} userInfo={gameGroundData && gameGroundData.userInfo} view='view'/>
+    )
   }
 
   render() {
