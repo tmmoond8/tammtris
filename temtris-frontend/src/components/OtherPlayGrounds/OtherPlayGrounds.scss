@@ -1,4 +1,8 @@
 .other-play-grounds {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: auto auto auto;
+
+  .other-play-grounds-item {
+    width: 10rem;
+  }
 }

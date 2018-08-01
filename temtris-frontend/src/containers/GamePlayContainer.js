@@ -3,12 +3,12 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import PlayGround from '../components/PlayGround';
 import OtherPlayGrounds from '../components/OtherPlayGrounds';
-import Chat from '../components/Chat';
+import GamePlay from '../components/GamePlay';
 import Actions from '../store/modules'
 import gameAPI from '../api/gamePlay';
 import SocketClient from '../lib/SocketClient';
 
-class PlayGroundContainer extends Component {
+class GamePlayContainer extends Component {
 
   constructor(props) {
     super(props);
@@ -64,18 +64,17 @@ class PlayGroundContainer extends Component {
     const { gameGroundData, playerBlocks, userInfo, chattingMessages, gameState, allGroundData} = this.props;
 
     return (
-      <div>
-        <PlayGround
-          gameGroundData={gameGroundData}
-          playerBlocks={playerBlocks}
-          userInfo={userInfo}
-          onPlayerKeyDown = {handlePlayerKeyDown}
-          onGameStart = {handleGameStart}
-          gameState = {gameState}
-        />
-        <Chat userInfo={userInfo} chattingMessages={chattingMessages} broadcastActions={broadcastActions}/>
-        <OtherPlayGrounds allGroundData={allGroundData}/>
-      </div>
+      <GamePlay 
+        gameGroundData={gameGroundData}
+        playerBlocks={playerBlocks}
+        userInfo={userInfo}
+        onPlayerKeyDown = {handlePlayerKeyDown}
+        onGameStart = {handleGameStart}
+        gameState = {gameState}
+        allGroundData={allGroundData}
+        chattingMessages={chattingMessages} 
+        broadcastActions={broadcastActions}
+      /> 
     );
   }
 }
@@ -94,4 +93,4 @@ export default connect(
     PlayGroundActions: () => bindActionCreators(Actions.playGround, dispatch),
     BroadCastActions: () => bindActionCreators(Actions.broadcast, dispatch)
   })
-)(PlayGroundContainer);
+)(GamePlayContainer);

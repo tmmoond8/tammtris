@@ -1,5 +1,4 @@
 import { createAction, handleActions } from 'redux-actions';
-import GameDataManager from '../../utils/gameDataManager';
 
 // actions type
 const CHATTING_MESSAGES = 'gamePlay/CHATTING_MESSAGE';
@@ -11,7 +10,7 @@ export const allGroundData = createAction(ALL_GROUND_DATA);
 
 const initialState = {
   chattingMessages: [],
-  allGroundData: []
+  allGroundData: [null, null, null, null, null, null]
 }
 
 // reducer

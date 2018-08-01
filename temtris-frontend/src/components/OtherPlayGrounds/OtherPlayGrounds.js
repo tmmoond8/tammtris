@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 import styles from './OtherPlayGrounds.scss';
 import classNames from 'classnames/bind';
 import PlayGround from '../PlayGround';
+import Blank from '../Blank';
 
 const cx = classNames.bind(styles);
 
-class OtherPlayGrounds extends React.Component {
+class OtherPlayGrounds extends Component {
 
   renderPlayGround = () => {
     return this.props.allGroundData.map((gameGroundData, idx) => 
-      <PlayGround key={idx} gameGroundData={gameGroundData && gameGroundData.gameData} userInfo={gameGroundData && gameGroundData.userInfo} view='view'/>
+      <div className={cx('other-play-grounds-item')}><PlayGround key={idx} gameGroundData={gameGroundData && gameGroundData.gameData} userInfo={gameGroundData && gameGroundData.userInfo} view='view'/></div>
     )
   }
 
@@ -17,7 +18,8 @@ class OtherPlayGrounds extends React.Component {
     return (
       <div className={cx('other-play-grounds')}> 
         { this.renderPlayGround() }
-      </div>
+        <Blank name="Next shapes"/>
+        </div>
     );
   }
 };
