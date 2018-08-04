@@ -2,11 +2,10 @@
 
 .play-ground {
   flex: 1 300rem;
-  padding: 1rem;
   .block-line {
-    height: 1.0rem;
+    height: block-sizes-for('normal');
     &.view {
-      height: .5rem;
+      height: block-sizes-for('view');
     }
   }
   &.view {
