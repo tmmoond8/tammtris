@@ -1,6 +1,6 @@
 class gameManager {
   constructor() {
-    this.gameData = [];
+    this.gameData = 'a'.repeat(5).split('a').map(() => null);
   }
 
   find(userId) {
