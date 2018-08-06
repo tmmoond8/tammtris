@@ -1,4 +1,9 @@
+@import 'utils';
+
 .game-play {
  display: flex;
  flex-direction: row; 
+ .game-play-myplace {
+     width: 10 * block-sizes-for('normal');
+ }
 }

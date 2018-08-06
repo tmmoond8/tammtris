@@ -1,8 +1,10 @@
+@import 'utils';
+
 .other-play-grounds {
   display: grid;
   grid-template-columns: auto auto auto;
 
   .other-play-grounds-item {
-    width: 10rem;
+    width: 11 * block-sizes-for('view');;
   }
 }

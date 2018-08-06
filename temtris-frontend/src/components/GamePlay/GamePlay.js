@@ -15,14 +15,16 @@ class GamePlay extends Component {
     return (
       <div className={cx('game-play')}>
         <OtherPlayGrounds allGroundData={allGroundData}/>
-        <PlayGround
-          gameGroundData = {gameGroundData}
-          playerBlocks = {playerBlocks}
-          userInfo = {userInfo}
-          onPlayerKeyDown = {onPlayerKeyDown}
-          onGameStart = {onGameStart}
-          gameState = {gameState}
-        />
+        <div className={cx('game-play-myplace')}>
+          <PlayGround
+            gameGroundData = {gameGroundData}
+            playerBlocks = {playerBlocks}
+            userInfo = {userInfo}
+            onPlayerKeyDown = {onPlayerKeyDown}
+            onGameStart = {onGameStart}
+            gameState = {gameState}
+          />
+        </div>
         <Chat userInfo={userInfo} chattingMessages={chattingMessages} broadcastActions={broadcastActions}/>
       </div>
     )
