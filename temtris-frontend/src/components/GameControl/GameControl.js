@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Blank from '../Blank';
 import classNames from 'classnames/bind';
 import styles from './GameControl.scss';
+import StartButton from '../StartButton';
+import SinglePlayButton from '../SinglePlayButton';
 
 const cx = classNames.bind(styles);
 
@@ -17,8 +19,8 @@ class GameControl extends Component {
           <Blank name='C'/>
           <Blank name='D'/>
         </div>
-        <div className={cx('game-control-start')}/>
-        <div className={cx('game-control-training')}/>
+       <StartButton/>
+       <SinglePlayButton/>
       </div>
     )
   }
