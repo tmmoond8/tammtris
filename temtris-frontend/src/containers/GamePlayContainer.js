@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
-import PlayGround from '../components/PlayGround';
-import OtherPlayGrounds from '../components/OtherPlayGrounds';
 import GamePlay from '../components/GamePlay';
 import Actions from '../store/modules'
 import gameAPI from '../api/gamePlay';
 import SocketClient from '../lib/SocketClient';
 
 class GamePlayContainer extends Component {
-
   constructor(props) {
     super(props);
     this.broadcastActions = this.props.BroadCastActions();

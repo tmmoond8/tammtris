@@ -7,13 +7,56 @@
 
 .team-select-item {
     flex: 1;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 3rem;
-    line-height: 3rem;
+    font-size: 1.3rem;
     padding-top: 2px;
+    &:hover {
+        font-size: 1.7rem;
+    }
+    cursor: pointer;
+}
+.team-select-icon {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 2px;
+    &:hover {
+        font-size: 1.7rem;
+    }
+    cursor: pointer;
+    border-radius: 50%;
 }
 
 .individual {
     color: $oc-pink-4;
-    background-color: aqua;
+    &.seledted {
+        background-color: $oc-yellow-4;
+        color: $oc-gray-0;
+    }
+}
+.red {
+    color: $oc-red-8;
+    &.seledted {
+        background-color: $oc-red-8;
+        color: $oc-gray-0;
+    }
+}
+.green {
+    color: $oc-green-8;
+    &.seledted {
+        background-color: $oc-green-8;
+        color: $oc-gray-0;
+    }
+}
+.blue {
+    color: $oc-blue-8;
+    &.seledted {
+        background-color: $oc-blue-8;
+        color: $oc-gray-0;
+    }
 }
