@@ -19,7 +19,7 @@ class TeamSelectRadioButton extends Component {
         const { selectItem, isSelected }  = this;
         return (
             <div className={cx('team-select-item')}>
-                <div className={cx('team-select-icon', name, {seledted: isSelected(name)})}
+                <div className={cx('team-select-icon', name, {selected: isSelected(name)})}
                     onClick={() => selectItem(name)}>
                     {icon}
                 </div>
