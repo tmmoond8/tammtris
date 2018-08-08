@@ -25,7 +25,6 @@ class GamePlay extends Component {
             gameState = {gameState}
           />
         </div>
-        <Chat userInfo={userInfo} chattingMessages={chattingMessages} broadcastActions={broadcastActions}/>
       </div>
     )
   }

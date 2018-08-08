@@ -12,6 +12,7 @@ class Chat extends Component {
     super(props);
     this.handleSendMessage = this.handleSendMessage.bind(this)
     SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
+    this.chattingRef = React.createRef();
 
     const { userInfo, broadcastActions } = props;
 
@@ -25,19 +26,26 @@ class Chat extends Component {
         SocketClient.sendMessage('message', message);
     };
 
+    componentDidUpdate() {
+        console.log('update');
+        this.chattingRef.current.scrollTop = this.chattingRef.current.scrollHeight;
+    }
+
     render() {
         return (
-            <div className="common-block">
-                <ul className={cx('chat-message-list')}>
+            <div className={cx('common-block')}>
+                <ul ref={this.chattingRef} className={cx('chat-message-list')}>
                     {this.props.chattingMessages.map((message) => {
                         return (
                             <ChatMessageItem key={message.messageId} message={message}/>
                         )
                     })}
                 </ul>
-                <ChatMessageInput
-                    onSendMessage={this.handleSendMessage}
-                />
+                <div className={cx('chat-input')}>
+                    <ChatMessageInput className={cx('test')}
+                        onSendMessage={this.handleSendMessage}
+                    />
+                </div>
             </div>
         )
     };

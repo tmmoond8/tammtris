@@ -30,32 +30,35 @@
     }
     cursor: pointer;
     border-radius: 50%;
+    &.selected {
+        box-shadow: 0 0.2rem 0.4rem 0 rgba(0,0,0,0.2);
+    }
 }
 
 .individual {
     color: $oc-pink-4;
-    &.seledted {
+    &.selected {
         background-color: $oc-yellow-4;
         color: $oc-gray-0;
     }
 }
 .red {
     color: $oc-red-8;
-    &.seledted {
+    &.selected {
         background-color: $oc-red-8;
         color: $oc-gray-0;
     }
 }
 .green {
     color: $oc-green-8;
-    &.seledted {
+    &.selected {
         background-color: $oc-green-8;
         color: $oc-gray-0;
     }
 }
 .blue {
     color: $oc-blue-8;
-    &.seledted {
+    &.selected {
         background-color: $oc-blue-8;
         color: $oc-gray-0;
     }
