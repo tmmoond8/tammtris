@@ -12,7 +12,7 @@ const cx = classNames.bind(styles);
 class GameControl extends Component {
   render() {
 
-    const { userInfo, chattingMessages, broadcastActions } = this.props;
+    const { userInfo, chattingMessages, broadcastActions, onGameStart } = this.props;
 
     return (
       <div className={cx('game-control')}>
@@ -20,7 +20,7 @@ class GameControl extends Component {
         <Chat userInfo={userInfo} chattingMessages={chattingMessages} broadcastActions={broadcastActions}/>
         <TeamSelectRadioButton/>
         <StartButton/>
-        <SinglePlayButton/>
+        <SinglePlayButton onGameStart={onGameStart}/>
       </div>
     )
   }

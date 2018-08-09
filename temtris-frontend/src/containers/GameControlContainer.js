@@ -11,13 +11,21 @@ class GameControlContainer extends Component {
     this.playGroundActions = this.props.PlayGroundActions();
   }
 
+  handleGameStart = (gameState) => {
+    this.playGroundActions.gameStart(() => this.playGroundActions.playerKeyDown('ArrowDown'));
+  }
+
   render() {
     
-    const { broadcastActions } = this;
+    const { handleGameStart } = this;
     const { userInfo, chattingMessages } = this.props;
 
     return (
-      <GameControl userInfo={userInfo} chattingMessages={chattingMessages} broadcastActions={broadcastActions}/>
+      <GameControl 
+        userInfo={userInfo} 
+        chattingMessages={chattingMessages}
+        onGameStart={handleGameStart}
+      />
     )
   }
 }

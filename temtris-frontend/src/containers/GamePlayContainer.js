@@ -20,14 +20,8 @@ class GamePlayContainer extends Component {
 
   handlePlayerKeyDown = (keyCode) => {
     this.playGroundActions.playerKeyDown(keyCode);
-    if(this.props.gameState === 'READY') {
-      this.playGroundActions.gameStart(() => this.playGroundActions.playerKeyDown('ArrowDown'));
-    }
   }
 
-  handleGameStart = () => {
-    this.playGroundActions.gameStart();
-  }
 
   componentDidMount() {
     gameAPI.join().then((response) => {
@@ -57,7 +51,7 @@ class GamePlayContainer extends Component {
   }
 
   render() {
-    const { handlePlayerKeyDown, handleGameStart, broadcastActions } = this;
+    const { handlePlayerKeyDown, broadcastActions } = this;
     const { gameGroundData, playerBlocks, userInfo, chattingMessages, gameState, allGroundData} = this.props;
 
     return (
@@ -66,7 +60,6 @@ class GamePlayContainer extends Component {
         playerBlocks={playerBlocks}
         userInfo={userInfo}
         onPlayerKeyDown = {handlePlayerKeyDown}
-        onGameStart = {handleGameStart}
         gameState = {gameState}
         allGroundData={allGroundData}
         chattingMessages={chattingMessages} 

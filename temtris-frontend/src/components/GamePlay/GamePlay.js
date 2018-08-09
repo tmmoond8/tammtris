@@ -4,13 +4,12 @@ import styles from './GamePlay.scss';
 
 import OtherPlayGrounds from '../OtherPlayGrounds';
 import PlayGround from '../PlayGround';
-import Chat from '../Chat';
 
 const cx = classNames.bind(styles);
 
 class GamePlay extends Component {
   render() {
-    const { gameGroundData, playerBlocks, userInfo, onPlayerKeyDown, onGameStart, gameState, allGroundData, chattingMessages, broadcastActions } = this.props;
+    const { gameGroundData, playerBlocks, userInfo, onPlayerKeyDown, gameState, allGroundData } = this.props;
 
     return (
       <div className={cx('game-play')}>
@@ -21,7 +20,6 @@ class GamePlay extends Component {
             playerBlocks = {playerBlocks}
             userInfo = {userInfo}
             onPlayerKeyDown = {onPlayerKeyDown}
-            onGameStart = {onGameStart}
             gameState = {gameState}
           />
         </div>

@@ -4,9 +4,14 @@ import styles from './SinglePlayButton.scss';
 const cx = className.bind(styles);
 
 class SinglePlayButton extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
+    const { onGameStart } = this.props;
     return (
-      <div className={cx('single-play-button')}>
+      <div onClick={onGameStart}  className={cx('single-play-button')}>
         single
       </div>
     );
