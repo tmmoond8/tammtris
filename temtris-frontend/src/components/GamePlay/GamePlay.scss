@@ -2,8 +2,9 @@
 
 .game-play {
  display: flex;
- flex-direction: row; 
+ flex-direction: row;
  .game-play-myplace {
-     width: 10 * block-sizes-for('normal');
+    margin: auto 1rem;
+    width: 10 * block-sizes-for('normal');
  }
 }

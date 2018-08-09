@@ -1,9 +1,11 @@
+@import 'utils';
+
 .common-block {
   flex: 1;
   position: relative;
 }
 .chat-message-list {
-  height: 12rem;
+  height: 13 * block-sizes-for('normal');
   margin: 0;
   overflow-y: scroll;
   padding: 0.5rem;

@@ -21,7 +21,7 @@ class PlayGround extends Component{
 
   renderAllLine(gameData) {
     return (
-      <div className={cx('play-ground')}>
+      <div>
         {gameData.map((line, index) => (
           <div className={cx('block-line', this.props.view)} key={index}>{this.renderLine(line)}</div>
         ))}

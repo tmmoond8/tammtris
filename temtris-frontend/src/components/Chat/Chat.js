@@ -14,10 +14,10 @@ class Chat extends Component {
     SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
     this.chattingRef = React.createRef();
 
-    const { userInfo, broadcastActions } = props;
+    const { onReceiveMessage } = props;
 
     SocketClient.addEventOn('message', (msg) => {
-        broadcastActions.chattingMessages({...msg, userInfo})
+        onReceiveMessage(msg);
     });
   };
 

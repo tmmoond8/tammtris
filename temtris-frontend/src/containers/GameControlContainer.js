@@ -15,9 +15,13 @@ class GameControlContainer extends Component {
     this.playGroundActions.gameStart(() => this.playGroundActions.playerKeyDown('ArrowDown'));
   }
 
+  handleReceiveMessage = (msg) => {
+    const { userInfo } = this.props;
+    this.broadcastActions.chattingMessages({...msg, userInfo})
+  }
+
   render() {
-    
-    const { handleGameStart } = this;
+    const { handleGameStart, handleReceiveMessage } = this;
     const { userInfo, chattingMessages } = this.props;
 
     return (
@@ -25,6 +29,7 @@ class GameControlContainer extends Component {
         userInfo={userInfo} 
         chattingMessages={chattingMessages}
         onGameStart={handleGameStart}
+        onReceiveMessage={handleReceiveMessage}
       />
     )
   }

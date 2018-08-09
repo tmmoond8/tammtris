@@ -1,4 +1,7 @@
+@import 'utils';
 .game-play-page {
   display: flex;
   flex-direction: row;
+  background-color: $oc-gray-1;
+  height: 28 * block-sizes-for('normal');
 }
