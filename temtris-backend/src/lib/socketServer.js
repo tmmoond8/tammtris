@@ -34,12 +34,17 @@ module.exports = function(io) {
           message(socket, msg);
       });
 
-      socket.on('gameData', (response) => {
+      socket.on('game_data', (response) => {
         gameData(response);
       });
+
       socket.on('disconnect', () => {
         out(socket);
       });
+
+      socket.on('game_start', () => {
+        gameState();
+      })
   });
 
   const join = (socket, response) => {
@@ -66,11 +71,15 @@ module.exports = function(io) {
 
   const gameData = (response) => {
     gameManager.put(response);
-    io.sockets.emit('gameData', gameManager.gameData);
+    io.sockets.emit('game_data', gameManager.gameData);
   };
 
   const notify = (socket, msg, type) => {
       const message = new Message(null, msg, type);
       io.sockets.emit('notify', message);
+  }
+
+  const gameState = () => {
+      io.sockets.emit('game_start', {});
   }
 };

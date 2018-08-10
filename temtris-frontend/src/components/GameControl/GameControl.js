@@ -12,15 +12,15 @@ const cx = classNames.bind(styles);
 class GameControl extends Component {
   render() {
 
-    const { userInfo, chattingMessages, onReceiveMessage, onGameStart } = this.props;
+    const { userInfo, chattingMessages, onReceiveMessage, onClickSingle, onClickMulti } = this.props;
 
     return (
       <div className={cx('game-control')}>
         <div className={cx('game-control-logo')}>temtris</div>
         <Chat userInfo={userInfo} chattingMessages={chattingMessages} onReceiveMessage={onReceiveMessage}/>
         <TeamSelectRadioButton/>
-        <StartButton/>
-        <SinglePlayButton onGameStart={onGameStart}/>
+        <StartButton onClickMulti={onClickMulti}/>
+        <SinglePlayButton onClickSingle={onClickSingle}/>
       </div>
     )
   }

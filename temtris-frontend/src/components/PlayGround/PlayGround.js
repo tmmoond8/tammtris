@@ -10,7 +10,7 @@ class PlayGround extends Component{
   handleKeyPress = (e) => {
     this.props.onPlayerKeyDown(e.nativeEvent.code);
   }
-  
+
   shouldComponentUpdate(nextProps) {
     if(!nextProps.gameGroundData || !nextProps.userInfo || !this.props.gameGroundData || this.props.userInfo) {
       return true;

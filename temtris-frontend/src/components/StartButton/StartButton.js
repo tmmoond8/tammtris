@@ -5,8 +5,9 @@ const cx = className.bind(styles);
 
 class StartButton extends Component {
   render() {
+    const { onClickMulti } = this.props;
     return (
-      <div className={cx('start-button')}>
+      <div onClick={onClickMulti} className={cx('start-button')}>
         start
       </div>
     );

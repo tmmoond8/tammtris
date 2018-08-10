@@ -46,10 +46,11 @@ export default handleActions({
     }
   },
   [GAME_START]: (state, action) => {
-    const { payload: autoDown } = action;
+    const { autoDown, mapData } = action.payload;
     return {
       ...state,
-      gameState: gameDataManager.gamePlay.play(autoDown)
+      gameState: gameDataManager.gamePlay.play(autoDown),
+      gameGroundData: GameDataManager.defaultGameData()
     }
   },
   [GAME_OVER]: (state, action) => {

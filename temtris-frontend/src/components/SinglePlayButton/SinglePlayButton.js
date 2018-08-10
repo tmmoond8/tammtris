@@ -9,9 +9,9 @@ class SinglePlayButton extends Component {
   }
 
   render() {
-    const { onGameStart } = this.props;
+    const { onClickSingle } = this.props;
     return (
-      <div onClick={onGameStart}  className={cx('single-play-button')}>
+      <div onClick={onClickSingle}  className={cx('single-play-button')}>
         single
       </div>
     );

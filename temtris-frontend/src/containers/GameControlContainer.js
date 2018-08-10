@@ -3,16 +3,34 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import GameControl from '../components/GameControl';
 import Actions from '../store/modules';
+import SocketClient from '../lib/SocketClient';
 
 class GameControlContainer extends Component {
   constructor(props) {
     super(props);
     this.broadcastActions = this.props.BroadCastActions();
     this.playGroundActions = this.props.PlayGroundActions();
+
+    SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
+
+    SocketClient.addEventOn('game_start', (response) => {
+      const { playGroundActions } = this;
+      playGroundActions.gameStart({
+        autoDown: () => playGroundActions.playerKeyDown('ArrowDown')
+      });
+    });
   }
 
-  handleGameStart = (gameState) => {
-    this.playGroundActions.gameStart(() => this.playGroundActions.playerKeyDown('ArrowDown'));
+  handleGameStart = () => {
+    const { playGroundActions } = this;
+    playGroundActions.gameStart({
+      autoDown: () => playGroundActions.playerKeyDown('ArrowDown')
+    });
+  }
+
+  handleMultiGameStart = () => {
+    const { userInfo } = this.props;
+    SocketClient.sendMessage('game_start', { userInfo });
   }
 
   handleReceiveMessage = (msg) => {
@@ -21,15 +39,16 @@ class GameControlContainer extends Component {
   }
 
   render() {
-    const { handleGameStart, handleReceiveMessage } = this;
+    const { handleGameStart, handleReceiveMessage, handleMultiGameStart } = this;
     const { userInfo, chattingMessages } = this.props;
 
     return (
       <GameControl 
         userInfo={userInfo} 
         chattingMessages={chattingMessages}
-        onGameStart={handleGameStart}
+        onClickSingle={handleGameStart}
         onReceiveMessage={handleReceiveMessage}
+        onClickMulti={handleMultiGameStart}
       />
     )
   }
