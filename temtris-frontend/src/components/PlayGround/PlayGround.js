@@ -2,6 +2,7 @@ import React , {Component} from 'react';
 import styles from './PlayGround.scss';
 import classNames from 'classnames/bind';
 import DotBlock from '../DotBlock';
+import UserPanel from '../UserPanel';
 import GameDataManger from '../../utils/gameDataManager';
 
 const cx = classNames.bind(styles);
@@ -37,9 +38,9 @@ class PlayGround extends Component{
     const { gameGroundData, userInfo } = this.props;
     const styles = this.props.view ? {} : { tabIndex: "0"};
     return (
-      <div className={cx('play-ground', this.props.view)} onKeyDown={this.handleKeyPress} {...styles}>
+      <div className={cx('play-ground', this.props.view)} onKeyDown={this.handleKeyPress} {...styles}>  
+        {userInfo &&  <UserPanel userInfo={userInfo}></UserPanel>}
         {this.renderAllLine(gameGroundData || GameDataManger.defaultGameData())}
-        {userInfo && <p>{userInfo.emoji} {userInfo.name}</p>}
       </div>
     )
   }

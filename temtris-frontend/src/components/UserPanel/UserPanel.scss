@@ -1,0 +1,18 @@
+@import 'utils';
+
+.user-info-panel {
+    display: flex;
+    direction: row;
+}
+
+.user-info-emoji {
+    font-size: 2 * block-sizes-for('normal');
+    flex: 1;
+}
+
+.user-info-name {
+    flex: 2;
+}
+.user-info-number {
+    flex: 2;
+}
