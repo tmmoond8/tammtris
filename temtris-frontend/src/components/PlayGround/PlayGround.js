@@ -35,11 +35,11 @@ class PlayGround extends Component{
   }
 
   render() {
-    const { gameGroundData, userInfo } = this.props;
-    const styles = this.props.view ? {} : { tabIndex: "0"};
+    const { gameGroundData, userInfo, view } = this.props;
+    const styles = view ? {} : { tabIndex: "0"};
     return (
       <div className={cx('play-ground', this.props.view)} onKeyDown={this.handleKeyPress} {...styles}>  
-        {userInfo &&  <UserPanel userInfo={userInfo}></UserPanel>}
+        <UserPanel userInfo={userInfo} view={view}/>
         {this.renderAllLine(gameGroundData || GameDataManger.defaultGameData())}
       </div>
     )

@@ -26,11 +26,11 @@ class GameDataManager {
 
 
   gamePlay = (function() {
-    let gameState = GAME_STATE.READY;
     let gameLoop;
     return {
-      play: (autoDown) => {
-        if(gameState === GAME_STATE.READY) {
+      play: (autoDown, gameState) => {
+        const readyState = [GAME_STATE.READY, GAME_STATE.GAME_OVER]
+        if(readyState.includes(gameState)) {
           gameState = GAME_STATE.PLAY;
           gameLoop = setInterval(autoDown, 500);
         }

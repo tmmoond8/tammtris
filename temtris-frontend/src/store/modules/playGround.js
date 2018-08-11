@@ -1,17 +1,20 @@
 import { createAction, handleActions } from 'redux-actions';
 import GameDataManager, { GAME_STATE } from '../../utils/gameDataManager';
 import ShapeDataManager from '../../utils/shapeDataManager';
+import block from '../../models/block';
 
 // actions types
 
 const PLAYER_KEY_DOWN = 'gamePlay/PLAYER_KEY_DOWN';
-const SINGLE_GAME_START = 'gamePlay/GAME_START';
+const SINGLE_GAME_START = 'gamePlay/SINGLE_GAME_START';
+const MULTI_GAME_START = 'gamePlay/MULTI_GAME_START';
 const GAME_OVER = 'gamePlay/GAME_OVER';
 const USER_INFO = 'gamePlay/USER_INFO';
 
 // action creator
 export const playerKeyDown = createAction(PLAYER_KEY_DOWN);
 export const singleGameStart = createAction(SINGLE_GAME_START);
+export const multiGameStart = createAction(MULTI_GAME_START);
 export const gameOver = createAction(GAME_OVER);
 export const userInfo = createAction(USER_INFO);
 
@@ -46,13 +49,15 @@ export default handleActions({
     }
   },
   [SINGLE_GAME_START]: (state, action) => {
+    const blockGameState = [GAME_STATE.PLAY];
+    if(blockGameState.includes(state.gameState)) return state;
     const { autoDown, mapData } = action.payload;
     const gameGroundData = mapData || GameDataManager.defaultGameData();
     const playerBlocks = ShapeDataManager.getRandomShape();
     GameDataManager.mergePlayerBlocks(gameGroundData, playerBlocks);
     return {
       ...state,
-      gameState: gameDataManager.gamePlay.play(autoDown),
+      gameState: gameDataManager.gamePlay.play(autoDown, state.gameState),
       gameGroundData,
       playerBlocks
     }
