@@ -5,18 +5,18 @@ import ShapeDataManager from '../../utils/shapeDataManager';
 // actions types
 
 const PLAYER_KEY_DOWN = 'gamePlay/PLAYER_KEY_DOWN';
-const GAME_START = 'gamePlay/GAME_START';
+const SINGLE_GAME_START = 'gamePlay/GAME_START';
 const GAME_OVER = 'gamePlay/GAME_OVER';
 const USER_INFO = 'gamePlay/USER_INFO';
 
 // action creator
 export const playerKeyDown = createAction(PLAYER_KEY_DOWN);
-export const gameStart = createAction(GAME_START);
+export const singleGameStart = createAction(SINGLE_GAME_START);
 export const gameOver = createAction(GAME_OVER);
 export const userInfo = createAction(USER_INFO);
 
 
-const playerBlocks = ShapeDataManager.getRandomShape();
+const playerBlocks = ShapeDataManager.getEmptyShape();
 const gameData = GameDataManager.defaultGameData();
 playerBlocks.getShape().forEach(item => {
   gameData[item.y][item.x] = item.dot;
@@ -45,12 +45,16 @@ export default handleActions({
       gameState: gameState || state.gameState
     }
   },
-  [GAME_START]: (state, action) => {
+  [SINGLE_GAME_START]: (state, action) => {
     const { autoDown, mapData } = action.payload;
+    const gameGroundData = mapData || GameDataManager.defaultGameData();
+    const playerBlocks = ShapeDataManager.getRandomShape();
+    GameDataManager.mergePlayerBlocks(gameGroundData, playerBlocks);
     return {
       ...state,
       gameState: gameDataManager.gamePlay.play(autoDown),
-      gameGroundData: GameDataManager.defaultGameData()
+      gameGroundData,
+      playerBlocks
     }
   },
   [GAME_OVER]: (state, action) => {

@@ -16,8 +16,14 @@ class GameDataManager {
     return ' '.repeat(SIZE_X).split('').map( item => block.EMPTY);
   }
   static defaultGameData() {
-    return ' '.repeat(SIZE_Y).split('').map( item => GameDataManager.defaultLine());
+    return' '.repeat(SIZE_Y).split('').map( item => GameDataManager.defaultLine());
   }
+  static mergePlayerBlocks(gameData, playerBlocks) {
+    playerBlocks.getShape().forEach(item => {
+      gameData[item.y][item.x] = item.dot;
+    });
+  }
+
 
   gamePlay = (function() {
     let gameState = GAME_STATE.READY;

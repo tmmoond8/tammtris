@@ -15,7 +15,7 @@ class GameControlContainer extends Component {
 
     SocketClient.addEventOn('game_start', (response) => {
       const { playGroundActions } = this;
-      playGroundActions.gameStart({
+      playGroundActions.singleGameStart({
         autoDown: () => playGroundActions.playerKeyDown('ArrowDown')
       });
     });
@@ -23,7 +23,7 @@ class GameControlContainer extends Component {
 
   handleGameStart = () => {
     const { playGroundActions } = this;
-    playGroundActions.gameStart({
+    playGroundActions.singleGameStart({
       autoDown: () => playGroundActions.playerKeyDown('ArrowDown')
     });
   }
@@ -40,7 +40,7 @@ class GameControlContainer extends Component {
 
   render() {
     const { handleGameStart, handleReceiveMessage, handleMultiGameStart } = this;
-    const { userInfo, chattingMessages } = this.props;
+    const { userInfo, chattingMessages, gameState } = this.props;
 
     return (
       <GameControl 
@@ -49,6 +49,7 @@ class GameControlContainer extends Component {
         onClickSingle={handleGameStart}
         onReceiveMessage={handleReceiveMessage}
         onClickMulti={handleMultiGameStart}
+        gameState={gameState}
       />
     )
   }
@@ -58,6 +59,7 @@ export default connect(
   (state) => ({ 
     userInfo: state.playGround.userInfo,
     chattingMessages: state.broadcast.chattingMessages,
+    gameState: state.playGround.gameState
   }),
   (dispatch) => ({
     PlayGroundActions: () => bindActionCreators(Actions.playGround, dispatch),
