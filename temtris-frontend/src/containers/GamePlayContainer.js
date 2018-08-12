@@ -5,6 +5,7 @@ import GamePlay from '../components/GamePlay';
 import Actions from '../store/modules'
 import gameAPI from '../api/gamePlay';
 import SocketClient from '../lib/SocketClient';
+import { GAME_STATE } from '../utils/gameDataManager';
 
 class GamePlayContainer extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class GamePlayContainer extends Component {
   }
 
   handlePlayerKeyDown = (keyCode) => {
+    if(this.props.gameState === GAME_STATE.GAME_OVER) return;
     this.playGroundActions.playerKeyDown(keyCode);
   }
 

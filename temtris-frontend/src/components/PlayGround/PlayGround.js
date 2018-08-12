@@ -1,9 +1,9 @@
-import React , {Component} from 'react';
+import React , {Component, Fragment } from 'react';
 import styles from './PlayGround.scss';
 import classNames from 'classnames/bind';
 import DotBlock from '../DotBlock';
 import UserPanel from '../UserPanel';
-import GameDataManger from '../../utils/gameDataManager';
+import GameDataManger, { GAME_STATE } from '../../utils/gameDataManager';
 
 const cx = classNames.bind(styles);
 
@@ -30,18 +30,31 @@ class PlayGround extends Component{
     )
   }
 
+  renderGameOver(gameState, view) {
+    if(gameState === GAME_STATE.GAME_OVER) {
+      return <div className={cx('play-ground-game-over', view)}>GAME OVER</div>
+    }
+    return null;
+  }
+
   renderLine (line) {
     return line.map(((dot, index) => <DotBlock dot={dot} key={index} small={this.props.view}/>));
   }
 
   render() {
-    const { gameGroundData, userInfo, view } = this.props;
+    const { gameGroundData, userInfo, view, gameState } = this.props;
     const styles = view ? {} : { tabIndex: "0"};
     return (
-      <div className={cx('play-ground', this.props.view)} onKeyDown={this.handleKeyPress} {...styles}>  
-        <UserPanel userInfo={userInfo} view={view}/>
-        {this.renderAllLine(gameGroundData || GameDataManger.defaultGameData())}
-      </div>
+      <Fragment>
+        <div className={cx('play-ground', view, this.renderGameOver(gameState))} onKeyDown={this.handleKeyPress} {...styles}>  
+          <UserPanel userInfo={userInfo} view={view}/>
+          <div style={{position: 'relative'}}>
+            {this.renderAllLine(gameGroundData || GameDataManger.defaultGameData())}
+            {this.renderGameOver(gameState, view)}
+          </div>
+        </div>
+      </Fragment>
+     
     )
   }
 
