@@ -24,6 +24,7 @@ export default handleActions({
   },
   [ALL_GROUND_DATA]: (state, action) => {
     const { payload: allGroundData } = action;
+    console.log(allGroundData)
     return {
       ...state,
       allGroundData

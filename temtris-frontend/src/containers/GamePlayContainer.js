@@ -17,14 +17,12 @@ class GamePlayContainer extends Component {
     SocketClient.addEventOn('game_data', (response) => {
       this.broadcastActions.allGroundData(response)
     });
-
   }
 
   handlePlayerKeyDown = (keyCode) => {
     if(this.props.gameState === GAME_STATE.GAME_OVER) return;
     this.playGroundActions.playerKeyDown(keyCode);
   }
-
 
   componentDidMount() {
     gameAPI.join().then((response) => {
@@ -42,11 +40,12 @@ class GamePlayContainer extends Component {
   shouldComponentUpdate(nextProps) {
     if(nextProps.downStop) {
       if(this.props.playerBlocks.baseBlock.equlas(nextProps.playerBlocks.baseBlock)) {
-        return false;
+        return true;
       }
       SocketClient.sendMessage('game_data', {
         userInfo: nextProps.userInfo,
-        gameData: nextProps.gameGroundData
+        gameData: nextProps.gameGroundData,
+        gameState: nextProps.gameState
       });
     }
     

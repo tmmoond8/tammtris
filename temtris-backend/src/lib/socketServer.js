@@ -47,12 +47,20 @@ module.exports = function(io) {
       })
   });
 
+
+  const gameData = (response) => {
+    gameManager.put(response);
+    console.log(gameManager.gameData[0])
+    io.sockets.emit('game_data', gameManager.gameData);
+  };
+
   const join = (socket, response) => {
     const { userInfo, chattingRoom } = response
       socket.join(chattingRoom);
       socket.join(userInfo.id);
       console.log('---- [JOIN] ----- ', chattingRoom);
       io.sockets.emit('join', userInfo);
+      gameData({ userInfo })
       socket['temtris'] = {id: userInfo.id};
   };
 
@@ -60,7 +68,8 @@ module.exports = function(io) {
     if (socket.temtris) {
         console.log('disconnet')
         console.log('---- [OUT] ----', userManager.removeUser(socket.temtris.id));
-        gameManager.remove(socket.temtris.id);   
+        gameManager.remove(socket.temtris.id);
+        io.sockets.emit('game_data', gameManager.gameData);
     }
   }
 
@@ -69,10 +78,6 @@ module.exports = function(io) {
       io.sockets.emit('message', msg);
   };
 
-  const gameData = (response) => {
-    gameManager.put(response);
-    io.sockets.emit('game_data', gameManager.gameData);
-  };
 
   const notify = (socket, msg, type) => {
       const message = new Message(null, msg, type);
