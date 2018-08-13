@@ -8,13 +8,15 @@ import { MdInvertColors, MdFilterVintage } from 'react-icons/md';
 const cx = classNames.bind(styles);
 
 class TeamSelectRadioButton extends Component {
-
     state = {
         select: 'individual'
     }
 
     isSelected = (item) => this.state.select === item;
-    selectItem = (item) => this.setState({ select: item })
+    selectItem = (item) => {
+        this.props.onChangeTeam(item);
+        this.setState({ select: item })
+    }
     renderItem = ((name, icon) => {
         const { selectItem, isSelected }  = this;
         return (

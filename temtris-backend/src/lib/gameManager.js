@@ -19,6 +19,11 @@ class gameManager {
       return item && item.userInfo.id !== userId ? item: null
     });
   }
+
+  changeTeam({ userInfo, team }) {
+    const nextIndex = this.find(userInfo.id);
+    this.gameData[nextIndex].userInfo.team = team;
+  }
 }
 
 module.exports = (function() {

@@ -15,6 +15,7 @@ const MESSAGE_TYPE = {
 
 let SocketClient = {
     sendMessage: (event, message) => {
+        console.log(`event : ${event}, message: ${message}`)
         socket.emit(event, message);
     },
     addEventOn: (event, fn) => {
