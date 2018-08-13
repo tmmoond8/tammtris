@@ -9,10 +9,6 @@ const cx = classNames.bind(styles);
 
 class GamePlay extends Component {
 
-  getUserIndex = () => {
-
-  }
-
   render() {
     const { gameGroundData, playerBlocks, userInfo, onPlayerKeyDown, gameState, allGroundData } = this.props;
     let index = allGroundData.findIndex(item => !!item && item.userInfo && userInfo.id === item.userInfo.id);
@@ -24,7 +20,7 @@ class GamePlay extends Component {
             gameGroundData = {gameGroundData}
             number={index + 1}
             playerBlocks = {playerBlocks}
-            userInfo = {allGroundData[index] ? allGroundData[index] : userInfo}
+            userInfo = {allGroundData[index] ? allGroundData[index].userInfo : userInfo}
             onPlayerKeyDown = {onPlayerKeyDown}
             gameState = {gameState}
           />

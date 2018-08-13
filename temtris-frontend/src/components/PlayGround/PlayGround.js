@@ -13,11 +13,14 @@ class PlayGround extends Component{
   }
 
   shouldComponentUpdate(nextProps) {
+    const prevUserInfo = this.props.userInfo;
     if(!nextProps.gameGroundData || !nextProps.userInfo || !this.props.gameGroundData) {
       return true;
     }
-    return this.props.userInfo.id !== nextProps.userInfo.id ||
-    PlayGround.toString(this.props.gameGroundData) !== PlayGround.toString(nextProps.gameGroundData);
+    return prevUserInfo.id !== nextProps.userInfo.id 
+      || prevUserInfo.team !== nextProps.userInfo.team 
+      || this.props.number !== nextProps.number
+      || PlayGround.toString(this.props.gameGroundData) !== PlayGround.toString(nextProps.gameGroundData);
   }
 
   renderAllLine(gameData) {
