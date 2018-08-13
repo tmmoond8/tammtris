@@ -10,7 +10,7 @@ const cx = classNames.bind(styles);
 class GamePlay extends Component {
   render() {
     const { gameGroundData, playerBlocks, userInfo, onPlayerKeyDown, gameState, allGroundData } = this.props;
-
+    console.log(allGroundData);
     return (
       <div className={cx('game-play')}>
         <OtherPlayGrounds allGroundData={allGroundData}/>

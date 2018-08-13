@@ -9,9 +9,9 @@ class gameManager {
     return this.gameData.findIndex(item => !item) === -1 ? this.gameData.length : this.gameData.findIndex(item => !item);
   }
 
-  put({userInfo, gameData}) {
+  put({userInfo, gameData, gameState}) {
     const nextIndex = this.find(userInfo.id);
-    this.gameData[nextIndex] = {userInfo, gameData};
+    this.gameData[nextIndex] = {userInfo, gameData, gameState};
   }
 
   remove(userId) {

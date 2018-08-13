@@ -10,7 +10,15 @@ class OtherPlayGrounds extends Component {
 
   renderPlayGround = () => {
     return this.props.allGroundData.map((gameGroundData, idx) => 
-      <div className={cx('other-play-grounds-item')}><PlayGround key={idx} gameGroundData={gameGroundData && gameGroundData.gameData} userInfo={gameGroundData && gameGroundData.userInfo} view='view'/></div>
+      <div className={cx('other-play-grounds-item')}>
+        <PlayGround 
+          key={idx} 
+          number={idx + 1}
+          gameGroundData={gameGroundData && gameGroundData.gameData} 
+          userInfo={gameGroundData && gameGroundData.userInfo} 
+          gameState={gameGroundData && gameGroundData.gameState} 
+          view='view'/>
+      </div>
     )
   }
 
