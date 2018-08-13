@@ -45,12 +45,15 @@ module.exports = function(io) {
       socket.on('game_start', () => {
         gameState();
       })
+
+      socket.on('team_change', (msg) => {
+        changeTeam(msg);
+      })
   });
 
 
   const gameData = (response) => {
     gameManager.put(response);
-    console.log(gameManager.gameData[0])
     io.sockets.emit('game_data', gameManager.gameData);
   };
 
@@ -86,5 +89,10 @@ module.exports = function(io) {
 
   const gameState = () => {
       io.sockets.emit('game_start', {});
+  }
+
+  const changeTeam = (msg) => {
+      gameManager.changeTeam(msg);
+    io.sockets.emit('game_data', gameManager.gameData);
   }
 };

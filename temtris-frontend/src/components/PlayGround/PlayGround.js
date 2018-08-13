@@ -13,8 +13,6 @@ class PlayGround extends Component{
   }
 
   shouldComponentUpdate(nextProps) {
-    const { gameGroundData, userInfo, view, gameState, number } = nextProps;
-    // (view && gameState) && console.log(gameState);
     if(!nextProps.gameGroundData || !nextProps.userInfo || !this.props.gameGroundData) {
       return true;
     }
@@ -45,13 +43,13 @@ class PlayGround extends Component{
 
   render() {
     const { gameGroundData, userInfo, view, gameState, number } = this.props;
-    // (view && gameState) && console.log(gameState);
+    const team = userInfo && userInfo.team;
     const styles = view ? {} : { tabIndex: "0"};
     return (
       <Fragment>
-        <div className={cx('play-ground', view)} onKeyDown={this.handleKeyPress} {...styles}>  
+        <div className={cx('play-ground', view, team)} onKeyDown={this.handleKeyPress} {...styles}>  
           <UserPanel userInfo={userInfo} view={view} number={number}/>
-          <div style={{position: 'relative'}}>
+          <div style={{position: 'relative', background: 'white'}}>
             {this.renderAllLine(gameGroundData || GameDataManger.defaultGameData())}
             {this.renderGameOver(gameState, view)}
           </div>
