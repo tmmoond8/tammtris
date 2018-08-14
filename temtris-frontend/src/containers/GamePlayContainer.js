@@ -14,7 +14,7 @@ class GamePlayContainer extends Component {
     this.playGroundActions = this.props.PlayGroundActions();
     SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
     
-    SocketClient.addEventOn('game_data', (response) => {
+    SocketClient.addEventOn('game/data', (response) => {
       this.broadcastActions.allGroundData(response)
     });
   }
@@ -42,7 +42,7 @@ class GamePlayContainer extends Component {
       if(this.props.playerBlocks.baseBlock.equlas(nextProps.playerBlocks.baseBlock)) {
         return true;
       }
-      SocketClient.sendMessage('game_data', {
+      SocketClient.sendMessage('game/data', {
         userInfo: nextProps.userInfo,
         gameData: nextProps.gameGroundData,
         gameState: nextProps.gameState

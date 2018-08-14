@@ -31,10 +31,10 @@ module.exports = function(io) {
       });
 
       socket.on('message', (msg) => {
-          message(socket, msg);
+          message(msg);
       });
 
-      socket.on('game_data', (response) => {
+      socket.on('game/data', (response) => {
         gameData(response);
       });
 
@@ -42,11 +42,11 @@ module.exports = function(io) {
         out(socket);
       });
 
-      socket.on('game_start', () => {
+      socket.on('game/start', () => {
         gameState();
       })
 
-      socket.on('team_change', (msg) => {
+      socket.on('team/change', (msg) => {
         changeTeam(msg);
       })
   });
@@ -54,45 +54,49 @@ module.exports = function(io) {
 
   const gameData = (response) => {
     gameManager.put(response);
-    io.sockets.emit('game_data', gameManager.gameData);
+    io.sockets.emit('game/data', gameManager.gameData);
   };
 
   const join = (socket, response) => {
     const { userInfo, chattingRoom } = response
       socket.join(chattingRoom);
       socket.join(userInfo.id);
+      notify(`${userInfo.emoji} ${userInfo.name}님께서 입장하였습니다.`);
       console.log('---- [JOIN] ----- ', chattingRoom);
       io.sockets.emit('join', userInfo);
       gameData({ userInfo })
-      socket['temtris'] = {id: userInfo.id};
+      socket.userInfo = userInfo;
   };
 
   const out = (socket, response) => {
-    if (socket.temtris) {
+    const { userInfo } = socket;
+    if (userInfo) {
         console.log('disconnet')
-        console.log('---- [OUT] ----', userManager.removeUser(socket.temtris.id));
-        gameManager.remove(socket.temtris.id);
-        io.sockets.emit('game_data', gameManager.gameData);
+        console.log('---- [OUT] ----', userManager.removeUser(userInfo.id));
+        notify(`${userInfo.emoji} ${userInfo.name}님께서 퇴장하셨습니다.`);
+        gameManager.remove(userInfo.id);
+        io.sockets.emit('game/data', gameManager.gameData);
     }
   }
 
-  const message = (socket, msg) => {
+  const message = (msg) => {
       msg.messageId = Message.createMessageId();
       io.sockets.emit('message', msg);
   };
 
 
-  const notify = (socket, msg, type) => {
-      const message = new Message(null, msg, type);
-      io.sockets.emit('notify', message);
+  const notify = (msg) => {
+      const message = new Message({}, msg, MESSAGE_TYPE.NOTIFY);;
+      message.messageId = Message.createMessageId();
+      io.sockets.emit('message', message);
   }
 
   const gameState = () => {
-      io.sockets.emit('game_start', {});
+      io.sockets.emit('game/start', {});
   }
 
   const changeTeam = (msg) => {
       gameManager.changeTeam(msg);
-    io.sockets.emit('game_data', gameManager.gameData);
+    io.sockets.emit('game/data', gameManager.gameData);
   }
 };
