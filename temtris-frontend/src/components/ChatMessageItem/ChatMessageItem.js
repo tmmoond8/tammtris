@@ -35,8 +35,11 @@ class ChatMessageItem extends Component {
     }
 
     notify(msg) {
+        const style = {
+            color: 'orangered'
+        }
         return (
-            <div>
+            <div style={style}>
                 <span>{msg.message}</span>
             </div>
         )

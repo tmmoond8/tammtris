@@ -31,7 +31,7 @@ module.exports = function(io) {
       });
 
       socket.on('message', (msg) => {
-          message(socket, msg);
+          message(msg);
       });
 
       socket.on('game/data', (response) => {
@@ -65,27 +65,30 @@ module.exports = function(io) {
       console.log('---- [JOIN] ----- ', chattingRoom);
       io.sockets.emit('join', userInfo);
       gameData({ userInfo })
-      socket['temtris'] = {id: userInfo.id};
+      socket.userInfo = userInfo;
   };
 
   const out = (socket, response) => {
-    if (socket.temtris) {
+    const { userInfo } = socket;
+    if (userInfo) {
         console.log('disconnet')
-        console.log('---- [OUT] ----', userManager.removeUser(socket.temtris.id));
-        gameManager.remove(socket.temtris.id);
+        console.log('---- [OUT] ----', userManager.removeUser(userInfo.id));
+        notify(`${userInfo.emoji} ${userInfo.name}님께서 퇴장하셨습니다.`);
+        gameManager.remove(userInfo.id);
         io.sockets.emit('game/data', gameManager.gameData);
     }
   }
 
-  const message = (socket, msg) => {
+  const message = (msg) => {
       msg.messageId = Message.createMessageId();
       io.sockets.emit('message', msg);
   };
 
 
   const notify = (msg) => {
-      const message = new Message(null, msg, MESSAGE_TYPE.NOTIFY);
-      io.sockets.emit('message/notify', message);
+      const message = new Message({}, msg, MESSAGE_TYPE.NOTIFY);;
+      message.messageId = Message.createMessageId();
+      io.sockets.emit('message', message);
   }
 
   const gameState = () => {
