@@ -72,7 +72,7 @@ module.exports = function(io) {
     const { userInfo } = socket;
     if (userInfo) {
         console.log('disconnet')
-        console.log('---- [OUT] ----', userManager.removeUser(userInfo.id));
+        console.log('---- [OUT] ----', userManager.removeUser(userInfo));
         notify(`${userInfo.emoji} ${userInfo.name}님께서 퇴장하셨습니다.`);
         gameManager.remove(userInfo.id);
         io.sockets.emit('game/data', gameManager.gameData);
