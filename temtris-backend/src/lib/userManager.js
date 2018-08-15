@@ -29,6 +29,7 @@ class UserManager {
   removeUser(userInfo) {
     emojiManager.retrieve(userInfo.name);
     this.userList = this.userList.filter(item => item.id !== userInfo.id);
+    return userInfo.name;
   }
 }
 
