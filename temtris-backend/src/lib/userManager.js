@@ -1,12 +1,5 @@
 const uuid = require('uuid/v1');
-
-const Emoji = {
-  monkey: { name: 'monkey', emoji: '🐵'}, dog: { name: 'dog', emoji: '🐶'},
-  cat: { name: 'cat', emoji: '🐱'}, lion: { name: 'lion', emoji: '🦁'},
-  tiger: { name: 'tiger', emoji: '🐯'}, unicorn: { name: 'unicorn', emoji: '🦄'},
-  cow: { name: 'cow', emoji: '🐮'}, pig: { name: 'pig', emoji: '🐷'},
-  boar: { name: 'boar', emoji: '🐗'}, mouse: { name: 'mouse', emoji: '🐭'},
-}
+const emojiManager = require('./emojiManager');
 
 class User {
   constructor(name, emoji) {
@@ -27,14 +20,16 @@ class UserManager {
   }
 
   addGuest(id) {
-    const emoji = Emoji[Object.keys(Emoji)[Math.floor(Math.random() * Object.keys(Emoji).length)]];
+    const emoji = emojiManager.getEmoji();
     const user = new User(emoji.name, emoji.emoji);
     this.userList.push(user);
     return user;
   }
 
-  removeUser(id) {
-    this.userList = this.userList.filter(item => item.id !== id);
+  removeUser(userInfo) {
+    emojiManager.retrieve(userInfo.name);
+    this.userList = this.userList.filter(item => item.id !== userInfo.id);
+    return userInfo.name;
   }
 }
 

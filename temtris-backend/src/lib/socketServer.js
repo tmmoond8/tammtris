@@ -62,17 +62,16 @@ module.exports = function(io) {
       socket.join(chattingRoom);
       socket.join(userInfo.id);
       notify(`${userInfo.emoji} ${userInfo.name}님께서 입장하였습니다.`);
-      console.log('---- [JOIN] ----- ', chattingRoom);
       io.sockets.emit('join', userInfo);
       gameData({ userInfo })
       socket.userInfo = userInfo;
+      console.log('---- [JOIN] ----- ', chattingRoom);
   };
 
   const out = (socket, response) => {
     const { userInfo } = socket;
     if (userInfo) {
-        console.log('disconnet')
-        console.log('---- [OUT] ----', userManager.removeUser(userInfo.id));
+        console.log('---- [OUT] ----', userManager.removeUser(userInfo));
         notify(`${userInfo.emoji} ${userInfo.name}님께서 퇴장하셨습니다.`);
         gameManager.remove(userInfo.id);
         io.sockets.emit('game/data', gameManager.gameData);
