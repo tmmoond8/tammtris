@@ -1,0 +1,15 @@
+@import 'utils';
+
+.waiting-room-area {
+    display: grid;
+    grid-gap: 1rem 1rem;
+    padding: 2rem;
+    grid-template-columns: auto auto auto;
+    min-width: 34 * block-sizes-for('normal');
+    background: $oc-gray-2;
+}
+
+.waiting-room {
+    background: white;
+    box-shadow: 0 0.2rem 0.4rem 0 rgba(0,0,0,0.2);
+}
