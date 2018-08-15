@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import GamePlayContainer from '../../../containers/GamePlayContainer';
 import GameControlContainer from '../../../containers/GameControlContainer';
-import styles from './GamePlayGround.scss';
+import styles from './GamePlayPage.scss';
 import classNames from 'classnames/bind';
 
 const cx = classNames.bind(styles);
