@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import GamePlayPage from './components/pages/GamePlayPage';
-import WaitingRoomPage from './components/pages/WaitingRoomPage';
+import GamePlayContainer from './containers/GamePlayContainer';
+import GameControlContainer from './containers/GameControlContainer';
+import WaitingRoomContainer from './containers/WaitingRoomContainer';
 
 class App extends Component {
   render() {
+    const style = {
+      display: 'flex',
+      flexDirection: 'row'
+    }
     return (
       <BrowserRouter>
-        <div>
-          <Route exact path="/" component={WaitingRoomPage}/>
-          <Route path="/game" component={GamePlayPage}/>
+        <div style={style}>
+          <Route exact path="/" component={WaitingRoomContainer}/>
+          <Route path="/game" component={GamePlayContainer}/>
+          <GameControlContainer/>
         </div>
       </BrowserRouter>
     );

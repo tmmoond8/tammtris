@@ -28,7 +28,7 @@ class GamePlayContainer extends Component {
     gameAPI.join().then((response) => {
       const {data: userInfo } = response;
       this.playGroundActions.userInfo(userInfo);
-      SocketClient.sendMessage('join', {
+      SocketClient.sendMessage('game/join', {
         userInfo,
         chattingRoom: 'openChatting'
       });
@@ -75,9 +75,9 @@ export default connect(
   (state) => ({ 
     gameGroundData: state.playGround.gameGroundData,
     playerBlocks: state.playGround.playerBlocks,
-    userInfo: state.playGround.userInfo,
     gameState: state.playGround.gameState,
     downStop: state.playGround.downStop,
+    userInfo: state.broadcast.userInfo,
     chattingMessages: state.broadcast.chattingMessages,
     allGroundData: state.broadcast.allGroundData
   }),
