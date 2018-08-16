@@ -3,6 +3,7 @@
 .game-play {
  display: flex;
  flex-direction: row;
+ background: $oc-gray-2;
  min-width: 34 * block-sizes-for('normal');
  .game-play-myplace {
     margin: auto 1rem;

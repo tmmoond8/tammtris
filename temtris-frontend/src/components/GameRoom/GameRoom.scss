@@ -1,0 +1,25 @@
+@import 'utils';
+
+.game-room-number {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 12rem;
+    font-weight: 100;
+    color: $oc-gray-2;
+}
+.game-room-title {
+    z-index: 2;
+    font-weight: 600;
+    font-size: 1.5rem;
+    flex: 1;
+    align-items: center;
+    display: flex;
+    text-transform: capitalize;
+}
+
+.game-room-player-list {
+    z-index: 2;
+    list-style: none;
+    flex: 2;
+}

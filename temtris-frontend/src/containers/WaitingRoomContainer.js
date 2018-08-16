@@ -16,6 +16,9 @@ class WaitingRoomContainer extends Component {
     SocketClient.addEventOn('waitingRoom/join', (userInfo) => {
       this.broadcastActions.userInfo(userInfo);
     });
+    SocketClient.addEventOn('waitingRoom/list', (rooms) => {
+			this.broadcastActions.waitingRoomData(rooms);
+    })
   }
 
   componentDidMount() {
@@ -25,8 +28,9 @@ class WaitingRoomContainer extends Component {
   }
 
   render() {
+		const { waitingRoomData } = this.props;
     return (
-      <WaitingRoom rooms={[]}/>
+      <WaitingRoom rooms={waitingRoomData}/>
     )
   }
 }
@@ -34,7 +38,8 @@ class WaitingRoomContainer extends Component {
 export default connect(
   (state) => ({
     // 방정보를 가져오겠지.
-    userInfo: state.broadcast.userInfo
+		userInfo: state.broadcast.userInfo,
+		waitingRoomData: state.broadcast.waitingRoomData
   }),
   (dispatch) => ({
     broadcastActions: () => bindActionCreators(Actions.broadcast, dispatch)

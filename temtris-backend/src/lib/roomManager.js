@@ -6,23 +6,23 @@ const room = [
         players: []
     },
     {
-        title: 'test2',
+        title: 'ours is the fury',
         players: []
     },
     {
-        title: 'test3',
+        title: 'here me roar',
         players: []
     },
     {
-        title: 'test4',
+        title: 'fire and blood',
         players: []
     },
     {
-        title: 'test5',
+        title: 'family duty honor',
         players: []
     },
     {
-        title: 'test5',
+        title: 'we do not sow',
         players: []
     }
 ];
@@ -40,6 +40,8 @@ const roomManager = {
         return room;
     }
 };
+
+module.exports = roomManager;
 
 // module.exports = roomManager;
 // console.log(roomManager.getRoom())

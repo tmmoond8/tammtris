@@ -1,5 +1,6 @@
 const userManager = require('./userManager');
 const gameManager = require('./gameManager');
+const roomManager = require('./roomManager');
 
 const MESSAGE_TYPE = {
   BROADCAST: 0,
@@ -68,7 +69,8 @@ module.exports = function(io) {
         socket.join('waitingRoom');
         socket.join(userInfo.id);
         socket.chattingRoom = 'waitingRoom';
-        io.to(userInfo.id).emit('waitingRoom/join', userInfo);
+				io.to(userInfo.id).emit('waitingRoom/join', userInfo);
+				io.to('waitingRoom').emit('waitingRoom/list', roomManager.getRoom());
         console.log(`waitingRoom : ${userInfo.name}`)
       },
       out(socket) {
