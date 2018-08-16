@@ -26,11 +26,11 @@ class Message {
 module.exports = function(io) {
   io.on('connection', (socket) => {
       console.log('---------------[ON] ----- socket ON')
-      socket.on('waitingRoom/join', (response) => {
-        waitingRoom.join(socket, response);
+      socket.on('waitingRoom/join', () => {
+        waitingRoom.join(socket);
       });
 
-      socket.on('join', (response) => {
+      socket.on('game/join', (response) => {
         join(socket, response);
       });
 
@@ -64,9 +64,12 @@ module.exports = function(io) {
 
   const waitingRoom = {
       join(socket, response) {
-        const { userInfo } = response
+        const userInfo = userManager.addGuest();
         socket.join('waitingRoom');
         socket.join(userInfo.id);
+        socket.chattingRoom = 'waitingRoom';
+        io.to(userInfo.id).emit('waitingRoom/join', userInfo);
+        console.log(`waitingRoom : ${userInfo.name}`)
       },
       out(socket) {
         const { userInfo } = socket;
@@ -79,9 +82,8 @@ module.exports = function(io) {
   const join = (socket, response) => {
     const { userInfo, chattingRoom } = response;
 			socket.join(chattingRoom);
-			socket.gameRoom = chattingRoom;
-      notify(`${userInfo.emoji} ${userInfo.name}님께서 입장하였습니다.`);
-      io.to(chattingRoom).emit('join', userInfo);
+			socket.chattingRoom = chattingRoom;
+      notify(socket, `${userInfo.emoji} ${userInfo.name}님께서 입장하였습니다.`);
       gameData({ userInfo })
       socket.userInfo = userInfo;
       console.log('---- [JOIN] ----- ', chattingRoom);
@@ -90,30 +92,30 @@ module.exports = function(io) {
   const out = (socket, response) => {
     const { userInfo } = socket;
     if (userInfo) {
-			notify(`${userInfo.emoji} ${userInfo.name}님께서 퇴장하셨습니다.`);
+			notify(socket, `${userInfo.emoji} ${userInfo.name}님께서 퇴장하셨습니다.`);
 			gameManager.remove(userInfo.id);
-			io.to(socket.gameRoom).emit('game/data', gameManager.gameData);
+			io.to(socket.chattingRoom).emit('game/data', gameManager.gameData);
     }
   }
 
   const message = (socket, msg) => {
 		msg.messageId = Message.createMessageId();
-		io.to(socket.gameRoom).emit('message', msg);
+		io.to(socket.chattingRoom).emit('message', msg);
   };
 
 
   const notify = (socket, msg) => {
 		const message = new Message({}, msg, MESSAGE_TYPE.NOTIFY);;
 		message.messageId = Message.createMessageId();
-		io.to(socket.gameRoom).emit('message', message);
+		io.to(socket.chattingRoom).emit('message', message);
   }
 
   const gameState = () => {
-		io.to(socket.gameRoom).emit('game/start', {});
+		io.to(socket.chattingRoom).emit('game/start', {});
   }
 
   const changeTeam = (socket, msg) => {
       gameManager.changeTeam(msg);
-    io.to(socket.gameRoom).emit('game/data', gameManager.gameData);
+    io.to(socket.chattingRoom).emit('game/data', gameManager.gameData);
   }
 };

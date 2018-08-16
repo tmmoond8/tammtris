@@ -1,7 +1,6 @@
 import { createAction, handleActions } from 'redux-actions';
 import GameDataManager, { GAME_STATE } from '../../utils/gameDataManager';
 import ShapeDataManager from '../../utils/shapeDataManager';
-import block from '../../models/block';
 
 // actions types
 
@@ -9,14 +8,13 @@ const PLAYER_KEY_DOWN = 'gamePlay/PLAYER_KEY_DOWN';
 const SINGLE_GAME_START = 'gamePlay/SINGLE_GAME_START';
 const MULTI_GAME_START = 'gamePlay/MULTI_GAME_START';
 const GAME_OVER = 'gamePlay/GAME_OVER';
-const USER_INFO = 'gamePlay/USER_INFO';
+
 
 // action creator
 export const playerKeyDown = createAction(PLAYER_KEY_DOWN);
 export const singleGameStart = createAction(SINGLE_GAME_START);
 export const multiGameStart = createAction(MULTI_GAME_START);
 export const gameOver = createAction(GAME_OVER);
-export const userInfo = createAction(USER_INFO);
 
 
 const playerBlocks = ShapeDataManager.getEmptyShape();
@@ -28,7 +26,6 @@ playerBlocks.getShape().forEach(item => {
 const initialState = {
   gameGroundData: gameData,
   playerBlocks: playerBlocks,
-  userInfo: {name: 'geust', emoji: '🐗'},
   gameState: GAME_STATE.READY,
   downStop: false
 }
@@ -69,11 +66,4 @@ export default handleActions({
       gameState: GAME_STATE.GAME_OVER
     }
   },
-  [USER_INFO]: (state, action) => {
-    const { payload: userInfo } = action;
-    return {
-      ...state,
-      userInfo
-    }
-  }
 }, initialState);

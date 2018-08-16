@@ -63,7 +63,7 @@ class GameControlContainer extends Component {
 
 export default connect(
   (state) => ({ 
-    userInfo: state.playGround.userInfo,
+    userInfo: state.broadcast.userInfo,
     chattingMessages: state.broadcast.chattingMessages,
     gameState: state.playGround.gameState
   }),

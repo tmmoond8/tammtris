@@ -5,11 +5,10 @@ import classnames from 'classnames/bind';
 const cx = classnames.bind(styles);
 
 export default class WaitingRoom extends Component {
-
 	renderRoom() {
 		return (
 			<div className={cx('waiting-room')}>
-				a
+				aaa
 			</div>
 		)
 	}
