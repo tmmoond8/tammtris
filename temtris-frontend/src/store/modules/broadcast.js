@@ -18,7 +18,7 @@ const initialState = {
   chattingMessages: [],
   allGroundData: [null, null, null, null, null, null],
   userInfo: {name: 'geust', emoji: '🐗'},
-  waitingRoomData: []
+  waitingRoomData: {roomList: [], userList: []}
 }
 
 // reducer
@@ -31,10 +31,10 @@ export default handleActions({
     }
   },
   [WAITING_ROOM_DATA]: (state, action) => {
-    const { payload: roomData } = action;
+    const { payload: waitingRoomData } = action;
     return {
       ...state,
-      waitingRoomData: roomData
+      waitingRoomData: waitingRoomData
     }
   },
   [CHATTING_NOTIFY]: (state, action) => {

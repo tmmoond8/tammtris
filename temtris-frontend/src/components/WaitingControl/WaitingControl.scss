@@ -1,0 +1,35 @@
+@import 'utils';
+
+.waiting-control {
+    background-color: $oc-gray-0;
+    box-shadow: 0 0.2rem 0.4rem 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    flex: 1;
+    max-width: 16rem;
+    min-width: 16rem;
+    display: flex;
+    flex-direction: column;
+    .waiting-control-logo {
+        background-color: $oc-cyan-4;
+        color: $oc-gray-0;
+        font-size: 3em;
+        font-family: 'Limelight', cursive;
+        height: 6rem;
+        line-height: 6rem;
+        text-align: center;
+    }
+    .waiting-control-chatting {
+        background-color: $oc-gray-1;
+        flex: 1 1 1rem;
+    }
+    .waiting-control-userlist {
+        height: 8.85rem;
+        overflow-y: auto;
+        .waiting-control-userlist-item {
+            list-style-type: none;
+            &.me {
+                color: $oc-pink-6;
+            }
+        }
+    }
+}

@@ -6,6 +6,7 @@ import Actions from '../store/modules'
 import gameAPI from '../api/gamePlay';
 import SocketClient from '../lib/SocketClient';
 import { GAME_STATE } from '../utils/gameDataManager';
+import GameControlContainer from './GameControlContainer';
 
 class GamePlayContainer extends Component {
   constructor(props) {
@@ -55,18 +56,27 @@ class GamePlayContainer extends Component {
   render() {
     const { handlePlayerKeyDown, broadcastActions } = this;
     const { gameGroundData, playerBlocks, userInfo, chattingMessages, gameState, allGroundData} = this.props;
-
+    const style = {
+			display: 'flex',
+			flexDirection: 'row'
+    }
+    
     return (
-      <GamePlay 
-        gameGroundData={gameGroundData}
-        playerBlocks={playerBlocks}
-        userInfo={userInfo}
-        onPlayerKeyDown = {handlePlayerKeyDown}
-        gameState = {gameState}
-        allGroundData={allGroundData}
-        chattingMessages={chattingMessages} 
-        broadcastActions={broadcastActions}
-      /> 
+      
+      <div style={style}>
+        <GamePlay 
+          gameGroundData={gameGroundData}
+          playerBlocks={playerBlocks}
+          userInfo={userInfo}
+          onPlayerKeyDown = {handlePlayerKeyDown}
+          gameState = {gameState}
+          allGroundData={allGroundData}
+          chattingMessages={chattingMessages} 
+          broadcastActions={broadcastActions}
+        /> 
+        <GameControlContainer/>
+      </div>
+      
     );
   }
 }

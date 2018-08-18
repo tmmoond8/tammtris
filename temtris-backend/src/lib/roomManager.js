@@ -1,43 +1,39 @@
 const userManager = require('./userManager');
 
-const room = [
-    {
-        title: 'winter is comming',
-        players: []
-    },
-    {
-        title: 'ours is the fury',
-        players: []
-    },
-    {
-        title: 'here me roar',
-        players: []
-    },
-    {
-        title: 'fire and blood',
-        players: []
-    },
-    {
-        title: 'family duty honor',
-        players: []
-    },
-    {
-        title: 'we do not sow',
-        players: []
+const GAME_STATE = {
+    READY: 'READY',
+    PLAY: 'PLAY',
+    GAME_OVER: 'GAME_OVER'
+  }
+
+class Room {
+    constructor(title) {
+        this.title = title;
+        this.host = null;
+        this.state = GAME_STATE.READY;
+        this.players = [];
     }
+}
+const roomList = [
+    new Room('winter is comming'),
+    new Room('ours is the fury'),
+    new Room('here me roar'),
+    new Room('fire and blood'),
+    new Room('family duty honor'),
+    new Room('we do not sow')
 ];
 const roomManager = {
     getRoom() {
-        return room;
+        return roomList;
     },
     join(index, userInfo) {
-        if(room[index].players.length === 6) return;
-        room[index].players.push(userInfo);
-        return room;
+        if(roomList[index].players.length === 6) return;
+        roomList[index].players.push(userInfo);
+        return roomList;
     },
     out(index, userInfo) {
-        room[index].players = room[index].players.filter(item => item.id !== userInfo.id);
-        return room;
+        roomList[index].players = roomList[index].players.filter(item => item.id !== userInfo.id);
+        return roomList;
     }
 };
 
