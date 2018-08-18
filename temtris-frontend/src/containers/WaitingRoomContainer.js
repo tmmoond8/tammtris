@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import WaitingRoom from '../components/WaitingRoom';
 import SocketClient from '../lib/SocketClient';
 import Actions from '../store/modules'
+import WaitingControlContainer from './WaitingControlContainer';
 
 class WaitingRoomContainer extends Component {
 
@@ -16,8 +17,9 @@ class WaitingRoomContainer extends Component {
     SocketClient.addEventOn('waitingRoom/join', (userInfo) => {
       this.broadcastActions.userInfo(userInfo);
     });
-    SocketClient.addEventOn('waitingRoom/list', (rooms) => {
-			this.broadcastActions.waitingRoomData(rooms);
+    SocketClient.addEventOn('waitingRoom/data', (waitingRoomData) => {
+			console.log(waitingRoomData);
+			this.broadcastActions.waitingRoomData(waitingRoomData);
     })
   }
 
@@ -28,9 +30,16 @@ class WaitingRoomContainer extends Component {
   }
 
   render() {
+		const style = {
+			display: 'flex',
+			flexDirection: 'row'
+		}
 		const { waitingRoomData } = this.props;
     return (
-      <WaitingRoom rooms={waitingRoomData}/>
+			<div style={style}>
+				<WaitingRoom waitingRoomData={waitingRoomData}/>	
+				<WaitingControlContainer/>
+			</div>
     )
   }
 }

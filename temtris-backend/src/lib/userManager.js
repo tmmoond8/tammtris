@@ -9,27 +9,27 @@ class User {
     this.team = 'individual';
   }
 }
-
+let userList = [];
 class UserManager {
-  constructor() {
-    this.userList = [];
-  }
-
   addUser({name, emoji}) {
-    this.userList.push(new user(id, name, emoji));
+    userList.push(new user(id, name, emoji));
   }
 
   addGuest(id) {
     const emoji = emojiManager.getEmoji();
     const user = new User(emoji.name, emoji.emoji);
-    this.userList.push(user);
+    userList.push(user);
     return user;
   }
 
   removeUser(userInfo) {
     emojiManager.retrieve(userInfo.name);
-    this.userList = this.userList.filter(item => item.id !== userInfo.id);
+    userList = userList.filter(item => item.id !== userInfo.id);
     return userInfo.name;
+  }
+
+  getUserList() {
+    return userList;
   }
 }
 

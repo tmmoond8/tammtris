@@ -16,9 +16,10 @@ export default class WaitingRoom extends Component {
 
   render() {
 		const { renderRoom } = this;
+		const { waitingRoomData } = this.props;
     return (
 			<div className={cx('waiting-room-area')}>
-				{this.props.rooms.map((room, index) => renderRoom(room, index + 1))}
+				{waitingRoomData.roomList.map((room, index) => renderRoom(room, index + 1))}
 			</div>
     );
   }
