@@ -14,6 +14,10 @@ class gameManager {
     this.gameData[nextIndex] = {userInfo, gameData, gameState};
   }
 
+  isFull() {
+    return this.gameData.filter(item => !!item.userInfo).length === 6;
+  }
+
   remove(userId) {
     this.gameData = this.gameData.map(item => {
       return item && item.userInfo.id !== userId ? item: null
@@ -26,6 +30,4 @@ class gameManager {
   }
 }
 
-module.exports = (function() {
-  return new gameManager();
-})() 
+module.exports = gameManager;

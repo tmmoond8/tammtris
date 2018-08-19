@@ -75,8 +75,9 @@ module.exports = function(io) {
 
 
   const gameData = (response) => {
-    gameManager.put(response);
-    io.sockets.emit(GAME_DATA, gameManager.gameData);
+		const { roomNumber } = response;
+    gameManager.getRoomList()[roomNumber].put(response);
+    io.sockets.emit(GAME_DATA, gameManager.getRoomList()[roomNumber].gameData);
   };
 
   const waitingRoom = {
@@ -94,6 +95,7 @@ module.exports = function(io) {
 		},
 		out(socket) {
 			const { userInfo } = socket;
+			socket.leave(WAITING_ROOM);
 			roomManager.removeWaitingUser(userInfo);
 			io.to(WAITING_ROOM).emit(WAITING_ROOM_DATA, {roomList: roomManager.getRoomList(), userList: roomManager.getWaitingUserList()});
 		}
@@ -119,6 +121,7 @@ module.exports = function(io) {
       if (userInfo) {
         notify(socket, `${userInfo.emoji} ${userInfo.name}님께서 퇴장하셨습니다.`);
 				gameManager.remove(userInfo.id);
+				socket.leave(socket.chattingRoom);
 				roomManager.out(socket.chattingRoom, userInfo);
         io.to(socket.chattingRoom).emit(GAME_DATA, gameManager.gameData);
       }

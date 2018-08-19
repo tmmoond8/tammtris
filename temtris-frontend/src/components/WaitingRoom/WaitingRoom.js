@@ -9,17 +9,17 @@ export default class WaitingRoom extends Component {
 
 	renderRoomList(roomList, onGameJoin) {
 		return Object.keys(roomList).map(key => {
-			const { title, players, number } = roomList[key];
+			const { title, gameManager, number } = roomList[key];
 			return (
 				<div className={cx('waiting-area-room')}>
-					<GameRoom title={title} players={players} number={number} onGameJoin={onGameJoin}/>
+					<GameRoom title={title} gameData={gameManager.gameData} number={number} onGameJoin={onGameJoin}/>
 				</div>
 			)
 		})
 	}
 
   render() {
-		const { renderRoom, renderRoomList } = this;
+		const { renderRoomList } = this;
 		const { waitingRoomData, onGameJoin } = this.props;
     return (
 			<div className={cx('waiting-room-area')}>

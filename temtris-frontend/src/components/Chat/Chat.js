@@ -13,12 +13,6 @@ class Chat extends Component {
     this.handleSendMessage = this.handleSendMessage.bind(this)
     SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
     this.chattingRef = React.createRef();
-
-    const { onReceiveMessage } = props;
-
-    SocketClient.addEventOn('message', (msg) => {
-        onReceiveMessage(msg);
-    });
   };
 
     handleSendMessage = (msg) => {

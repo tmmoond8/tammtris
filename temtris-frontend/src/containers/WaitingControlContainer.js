@@ -11,15 +11,14 @@ class WaitingControlContainer extends Component {
     this.broadcastActions = this.props.BroadCastActions();
     this.playGroundActions = this.props.PlayGroundActions();
     SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
-  }
 
-  handleReceiveMessage = (msg) => {
-    const { userInfo } = this.props;
-    this.broadcastActions.chattingMessages({...msg, userInfo})
+    SocketClient.addEventOn('message', (msg) => {
+      const { userInfo } = this.props;
+      this.broadcastActions.chattingMessages({...msg, userInfo})
+    });
   }
 
   render() {
-    const { handleReceiveMessage } = this;
     const { userInfo, chattingMessages, waitingRoomData } = this.props;
 
     return (
@@ -27,7 +26,6 @@ class WaitingControlContainer extends Component {
         userInfo={userInfo} 
         userList={waitingRoomData.userList}
         chattingMessages={chattingMessages}
-        onReceiveMessage={handleReceiveMessage}
       />
     )
   }

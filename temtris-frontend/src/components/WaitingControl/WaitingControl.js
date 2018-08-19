@@ -18,13 +18,13 @@ class WaitingControl extends Component {
   }
 
   render() {
-    const { userInfo, chattingMessages, onReceiveMessage, userList} = this.props;
+    const { userInfo, chattingMessages, userList} = this.props;
     const { renderUserList } = this;
 
     return (
       <div className={cx('waiting-control')}>
         <div className={cx('waiting-control-logo')}>temtris</div>
-        <Chat userInfo={userInfo} chattingMessages={chattingMessages} onReceiveMessage={onReceiveMessage}/>
+        <Chat userInfo={userInfo} chattingMessages={chattingMessages}/>
         {renderUserList(userList, userInfo)}
       </div>
     )

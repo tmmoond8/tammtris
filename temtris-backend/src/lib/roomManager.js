@@ -1,3 +1,5 @@
+const gameManager = require('./gameManager');
+
 const GAME_STATE = {
     READY: 'READY',
     PLAY: 'PLAY',
@@ -10,7 +12,7 @@ class Room {
         this.number = number;
         this.host = null;
         this.state = GAME_STATE.READY;
-        this.players = [];
+				this.gameManager = new gameManager();
     }
 }
 
@@ -28,14 +30,15 @@ const roomManager = {
 		},
 
     join(index, userInfo) {
-        if(roomList[index].players.length === 6) return null;
-        roomList[index].players.push(userInfo);
-        return roomList[index];
+			userInfo.gameData = null;
+			if(roomList[index].gameManager.isFull()) return null;
+			roomList[index].gameManager.put(userInfo, null);
+			return roomList[index];
     },
     out(index, userInfo) {
 			if(!roomList[index]) return;
-        roomList[index].players = roomList[index].players.filter(item => item.id !== userInfo.id);
-        return roomList;
+			roomList[index].gameManager.remove(userInfo);
+			return roomList;
     },
     getWaitingUserList() {
         return waitingUserList;
