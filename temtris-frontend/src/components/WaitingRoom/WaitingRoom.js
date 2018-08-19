@@ -6,20 +6,20 @@ import GameRoom from '../GameRoom';
 const cx = classnames.bind(styles);
 
 export default class WaitingRoom extends Component {
-	renderRoom({ title, players}, number) {
+	renderRoom({ title, players}, index, onGameJoin) {
 		return (
 			<div className={cx('waiting-area-room')}>
-				<GameRoom title={title} players={players} number={number}/>
+				<GameRoom title={title} players={players} index={index} onGameJoin={onGameJoin}/>
 			</div>
 		)
 	}
 
   render() {
 		const { renderRoom } = this;
-		const { waitingRoomData } = this.props;
+		const { waitingRoomData, onGameJoin } = this.props;
     return (
 			<div className={cx('waiting-room-area')}>
-				{waitingRoomData.roomList.map((room, index) => renderRoom(room, index + 1))}
+				{waitingRoomData.roomList.map((room, index) => renderRoom(room, index, onGameJoin))}
 			</div>
     );
   }

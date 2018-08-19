@@ -26,16 +26,19 @@ class GamePlayContainer extends Component {
   }
 
   componentDidMount() {
-    gameAPI.join().then((response) => {
-      const {data: userInfo } = response;
-      this.playGroundActions.userInfo(userInfo);
-      SocketClient.sendMessage('game/join', {
-        userInfo,
-        chattingRoom: 'openChatting'
-      });
-    }).catch(err => {
-        console.error(err);
-    })
+    // gameAPI.join().then((response) => {
+    //   const {data: userInfo } = response;
+    //   this.playGroundActions.userInfo(userInfo);
+    //   
+    // }).catch(err => {
+    //     console.error(err);
+    // })
+
+    const { userInfo} = this.props;
+    SocketClient.sendMessage('game/join', {
+      userInfo,
+      gameRoom: 1
+    });
   }
 
   shouldComponentUpdate(nextProps) {

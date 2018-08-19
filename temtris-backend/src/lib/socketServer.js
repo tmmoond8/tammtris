@@ -10,6 +10,7 @@ const WAITING_ROOM = 'waitingRoom';
 const MESSAGE = 'message';
 const WAITING_ROOM_JOIN = 'waitingRoom/join';
 const WAITING_ROOM_DATA = 'waitingRoom/data';
+const GAME_CHECK = 'game/check';
 const GAME_JOIN = 'game/join';
 const GAME_START = 'game/start';
 const GAME_DATA = 'game/data';
@@ -40,21 +41,28 @@ module.exports = function(io) {
         waitingRoom.join(socket);
       });
 
-      socket.on(GAME_JOIN, (response) => {
-        join(socket, response);
-      });
-
       socket.on(MESSAGE, (msg) => {
         message(socket, msg);
       });
 
-      socket.on(GAME_DATA, (response) => {
-        gameData(socket, response);
+      socket.on(GAME_JOIN, (req) => {
+				console.log(`play join ${req}`);
+        waitingRoom.out(socket);
+        playGround.join(socket, req);
+			  socket.chattingRoom = WAITING_ROOM;
+      });
+
+      socket.on(GAME_CHECK, (req) => {
+        playGround.check(socket, req);
+      });
+
+      socket.on(GAME_DATA, (req) => {
+        gameData(socket, req);
       });
 
       socket.on('disconnect', () => {
-        out(socket);
         waitingRoom.out(socket);
+        playGround.out(socket);
       });
 
       socket.on(GAME_START, () => {
@@ -73,41 +81,49 @@ module.exports = function(io) {
   };
 
   const waitingRoom = {
-		join(socket, response) {
+		join(socket) {
 			const userInfo = userManager.addGuest();
 			socket.join(WAITING_ROOM);
-			socket.join(userInfo.id);
+      socket.join(userInfo.id);
+      roomManager.addWaitingUser(userInfo);
 			socket.chattingRoom = WAITING_ROOM;
 			socket.userInfo = userInfo;
 			io.to(socket.userInfo.id).emit(WAITING_ROOM_JOIN, userInfo);
-			io.to(socket.chattingRoom).emit(WAITING_ROOM_DATA, {roomList: roomManager.getRoom(), userList: userManager.getUserList()});
+			io.to(socket.chattingRoom).emit(WAITING_ROOM_DATA, {roomList: roomManager.getRoom(), userList: roomManager.getWaitingUserList()});
 			console.log(`userList : ${userManager.getUserList()}`)
 			console.log(`waitingRoom : ${userInfo.name}`)
 		},
 		out(socket) {
 			const { userInfo } = socket;
-			if (userInfo) {
-					console.log('---- [OUT] ----', userManager.removeUser(userInfo));
-			}
+			console.log(`waiting out ${userInfo.name}`)
+			roomManager.removeWaitingUser(userInfo);
+			io.to(WAITING_ROOM).emit(WAITING_ROOM_DATA, {roomList: roomManager.getRoom(), userList: roomManager.getWaitingUserList()});
 		}
   }
 
-  const join = (socket, response) => {
-		const { userInfo, chattingRoom } = response;
-			socket.join(chattingRoom);
-			socket.chattingRoom = chattingRoom;
-      notify(socket, `${userInfo.emoji} ${userInfo.name}님께서 입장하였습니다.`);
+  const playGround = {
+    check(socket, req) {
+      const { roomIndex } = req;
+      roomManager.join(roomIndex, socket.userInfo)
+      io.to(socket.userInfo.id).emit(GAME_CHECK, roomIndex );
+    },
+    join(socket, req) {
+      const { userInfo, gameRoom } = req;
+			socket.join(gameRoom);
+			socket.chattingRoom = gameRoom;
+			notify(socket, `${userInfo.emoji} ${userInfo.name}님께서 입장하였습니다.`);
       gameData({ userInfo })
       socket.userInfo = userInfo;
-      console.log('---- [JOIN] ----- ', chattingRoom);
-  };
-
-  const out = (socket, response) => {
-    const { userInfo } = socket;
-    if (userInfo) {
-			notify(socket, `${userInfo.emoji} ${userInfo.name}님께서 퇴장하셨습니다.`);
-			gameManager.remove(userInfo.id);
-			io.to(socket.chattingRoom).emit('game/data', gameManager.gameData);
+      console.log('---- [JOIN] ----- ', gameRoom);
+    },
+    out(socket) {
+      const { userInfo } = socket;
+      if (userInfo) {
+        notify(socket, `${userInfo.emoji} ${userInfo.name}님께서 퇴장하셨습니다.`);
+				gameManager.remove(userInfo.id);
+				roomManager.out(socket.chattingRoom, userInfo);
+        io.to(socket.chattingRoom).emit(GAME_DATA, gameManager.gameData);
+      }
     }
   }
 

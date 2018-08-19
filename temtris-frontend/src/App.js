@@ -9,7 +9,7 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <Route exact path="/" component={WaitingRoomContainer}/>
-          <Route path="/game" component={GamePlayContainer}/>
+          <Route path="/game/:id" component={GamePlayContainer}/>
         </div>
       </BrowserRouter>
     );
