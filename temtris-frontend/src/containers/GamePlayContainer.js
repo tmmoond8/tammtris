@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import GamePlay from '../components/GamePlay';
 import Actions from '../store/modules'
-import gameAPI from '../api/gamePlay';
 import SocketClient from '../lib/SocketClient';
 import { GAME_STATE } from '../utils/gameDataManager';
 import GameControlContainer from './GameControlContainer';
@@ -26,16 +25,11 @@ class GamePlayContainer extends Component {
   }
 
   componentDidMount() {
-    gameAPI.join().then((response) => {
-      const {data: userInfo } = response;
-      this.playGroundActions.userInfo(userInfo);
-      SocketClient.sendMessage('game/join', {
-        userInfo,
-        chattingRoom: 'openChatting'
-      });
-    }).catch(err => {
-        console.error(err);
-    })
+    const { userInfo, gameRoom} = this.props;
+    SocketClient.sendMessage('game/join', {
+      userInfo,
+      roomNumber: gameRoom.number
+    });
   }
 
   shouldComponentUpdate(nextProps) {
@@ -89,7 +83,8 @@ export default connect(
     downStop: state.playGround.downStop,
     userInfo: state.broadcast.userInfo,
     chattingMessages: state.broadcast.chattingMessages,
-    allGroundData: state.broadcast.allGroundData
+    allGroundData: state.broadcast.allGroundData,
+    gameRoom: state.broadcast.gameRoom
   }),
   (dispatch) => ({
     PlayGroundActions: () => bindActionCreators(Actions.playGround, dispatch),

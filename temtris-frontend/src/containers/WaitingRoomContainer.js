@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import WaitingRoom from '../components/WaitingRoom';
@@ -10,17 +11,31 @@ class WaitingRoomContainer extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      redirect: null
+    }
     this.broadcastActions = this.props.broadcastActions();
-    // this.playGroundActions = this.props.playGroundActions();
     SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
     // 여기에 이벤트 등록
     SocketClient.addEventOn('waitingRoom/join', (userInfo) => {
       this.broadcastActions.userInfo(userInfo);
     });
     SocketClient.addEventOn('waitingRoom/data', (waitingRoomData) => {
-			console.log(waitingRoomData);
 			this.broadcastActions.waitingRoomData(waitingRoomData);
-    })
+    });
+    SocketClient.addEventOn('game/check', (response) => {
+      if (response !== null) {
+        this.broadcastActions.gameRoom(response);
+        this.setState({
+          redirect: `/game/${response.number}`
+        })
+      }
+    });
+  }
+
+  handleGameJoin(roomIndex) {
+    // room number에 방이 있는지 확인 후 바로 입장
+    SocketClient.sendMessage('game/check', {roomIndex});
   }
 
   componentDidMount() {
@@ -34,10 +49,13 @@ class WaitingRoomContainer extends Component {
 			display: 'flex',
 			flexDirection: 'row'
 		}
-		const { waitingRoomData } = this.props;
+    const { waitingRoomData } = this.props;
+    const { handleGameJoin } = this;
+    const { redirect } = this.state;
     return (
 			<div style={style}>
-				<WaitingRoom waitingRoomData={waitingRoomData}/>	
+        {redirect && <Redirect to={redirect}/>}
+				<WaitingRoom waitingRoomData={waitingRoomData} onGameJoin={handleGameJoin}/>	
 				<WaitingControlContainer/>
 			</div>
     )
@@ -46,9 +64,8 @@ class WaitingRoomContainer extends Component {
 
 export default connect(
   (state) => ({
-    // 방정보를 가져오겠지.
 		userInfo: state.broadcast.userInfo,
-		waitingRoomData: state.broadcast.waitingRoomData
+    waitingRoomData: state.broadcast.waitingRoomData,
   }),
   (dispatch) => ({
     broadcastActions: () => bindActionCreators(Actions.broadcast, dispatch)

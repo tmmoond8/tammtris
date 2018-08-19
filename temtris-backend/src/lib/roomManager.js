@@ -1,5 +1,3 @@
-const userManager = require('./userManager');
-
 const GAME_STATE = {
     READY: 'READY',
     PLAY: 'PLAY',
@@ -7,39 +5,67 @@ const GAME_STATE = {
   }
 
 class Room {
-    constructor(title) {
+    constructor(title, number) {
         this.title = title;
+        this.number = number;
         this.host = null;
         this.state = GAME_STATE.READY;
         this.players = [];
     }
 }
-const roomList = [
-    new Room('winter is comming'),
-    new Room('ours is the fury'),
-    new Room('here me roar'),
-    new Room('fire and blood'),
-    new Room('family duty honor'),
-    new Room('we do not sow')
-];
+
+let roomList = {};
+let roomKey = 1;
+let waitingUserList = [];
+
 const roomManager = {
-    getRoom() {
+    getRoomList() {
         return roomList;
-    },
+		},
+		
+		createRoom(title) {
+			roomList[roomKey] = new Room(title, roomKey++);
+		},
+
     join(index, userInfo) {
-        if(roomList[index].players.length === 6) return;
+        if(roomList[index].players.length === 6) return null;
         roomList[index].players.push(userInfo);
-        return roomList;
+        return roomList[index];
     },
     out(index, userInfo) {
+			if(!roomList[index]) return;
         roomList[index].players = roomList[index].players.filter(item => item.id !== userInfo.id);
         return roomList;
+    },
+    getWaitingUserList() {
+        return waitingUserList;
+    },
+    addWaitingUser(user) {
+        waitingUserList.push(user);
+    },
+    removeWaitingUser(user) {
+        waitingUserList = waitingUserList.filter(item => item.id !== user.id);
     }
 };
 
+roomManager.createRoom('winter is comming');
+roomManager.createRoom('ours is the fury');
+roomManager.createRoom('here me roar');
+roomManager.createRoom('fire and blood');
+roomManager.createRoom('family duty honor');
+roomManager.createRoom('we do not sow');
+
 module.exports = roomManager;
 
-// module.exports = roomManager;
+// const user = userManager.addGuest();
+// console.log(roomManager.getWaitingUserList());
+// roomManager.addWaitingUser(user);
+// roomManager.addWaitingUser(userManager.addGuest());
+// roomManager.addWaitingUser(userManager.addGuest());
+// console.log(roomManager.getWaitingUserList());
+// roomManager.removeWaitingUser(user);
+// console.log(roomManager.getWaitingUserList());
+
 // console.log(roomManager.getRoom())
 // console.log(roomManager.join(0, userManager.addGuest()))
 // console.log(roomManager.join(0, userManager.addGuest()))
