@@ -25,8 +25,9 @@ class WaitingRoomContainer extends Component {
     });
     SocketClient.addEventOn('game/check', (response) => {
       if (response !== null) {
+        this.broadcastActions.gameRoom(response);
         this.setState({
-          redirect: `/game/${response}`
+          redirect: `/game/${response.number}`
         })
       }
     });
@@ -64,7 +65,7 @@ class WaitingRoomContainer extends Component {
 export default connect(
   (state) => ({
 		userInfo: state.broadcast.userInfo,
-		waitingRoomData: state.broadcast.waitingRoomData
+    waitingRoomData: state.broadcast.waitingRoomData,
   }),
   (dispatch) => ({
     broadcastActions: () => bindActionCreators(Actions.broadcast, dispatch)

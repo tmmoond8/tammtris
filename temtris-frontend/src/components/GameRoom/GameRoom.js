@@ -6,10 +6,10 @@ const cx = classNames.bind(styles);
 
 class GameRoom extends Component {
   render() {
-		const { title, players, index, onGameJoin } = this.props;
+		const { title, players, number, onGameJoin } = this.props;
 			return (
-				<div onClick={() => onGameJoin(index)}>
-					<div className={cx('game-room-number')}>{index + 1}</div>
+				<div onClick={() => onGameJoin(number)}>
+					<div className={cx('game-room-number')}>{number}</div>
 					<div className={cx('game-room-title')}>{title}</div>
 					<ul className={cx('game-room-player-list')}>
 						{players.map((player) => {
