@@ -6,10 +6,10 @@ const cx = classNames.bind(style);
 
 export default class UserPanel extends Component {
   render() {
-    const { userInfo, view, number } = this.props;
+    const { userInfo, view, gameNumber } = this.props;
     return (
       <div className={cx('user-info-panel', view)}>
-      <div className={cx('user-info-number', view)}>{number}</div>
+      <div className={cx('user-info-number', view)}>{gameNumber}</div>
         { userInfo && <div className={cx('user-info-name', view)}>{userInfo.name}</div>}
         { userInfo && <div className={cx('user-info-emoji', view)}>{userInfo.emoji}</div>}
       </div>

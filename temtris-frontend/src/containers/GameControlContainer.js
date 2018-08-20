@@ -35,7 +35,7 @@ class GameControlContainer extends Component {
 
   handleChangeTeam = (team) => {
     const { userInfo } = this.props;
-    SocketClient.sendMessage('team/change', { userInfo, team });
+    SocketClient.sendMessage('game/teamChange', { userInfo, team });
   }
 
   render() {

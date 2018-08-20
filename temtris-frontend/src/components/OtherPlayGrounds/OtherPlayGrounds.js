@@ -13,9 +13,9 @@ class OtherPlayGrounds extends Component {
       <div className={cx('other-play-grounds-item')} key={idx}>
         <PlayGround 
           key={idx} 
-          number={idx + 1}
+          gameNumber={gameGroundData.gameNumber}
           gameGroundData={gameGroundData && gameGroundData.gameData} 
-          userInfo={gameGroundData && gameGroundData.userInfo} 
+          userInfo={gameGroundData && gameGroundData} 
           gameState={gameGroundData && gameGroundData.gameState} 
           view='view'/>
       </div>

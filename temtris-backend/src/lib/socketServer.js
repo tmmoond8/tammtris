@@ -1,6 +1,6 @@
 const userManager = require('./userManager');
-const gameManager = require('./gameManager');
 const lobbyManager = require('./lobbyManager');
+const { GAME_STATE } = require('./variable');
 
 const MESSAGE_TYPE = {
   BROADCAST: 0,
@@ -56,7 +56,7 @@ module.exports = function(io) {
 		});
 
 		socket.on(GAME_DATA, (req) => {
-			// gameData(socket, req);
+			playGround.updateGameData(socket, req)
 		});
 
 		socket.on('disconnect', () => {
@@ -65,20 +65,16 @@ module.exports = function(io) {
 		});
 
 		socket.on(GAME_START, () => {
-			gameState();
+			const gameManager = lobbyManager.getGameManager(socket.chattingRoom);
+			if(gameManager.gameState === GAME_STATE.PLAY) return;
+			gameManager.gameState = GAME_STATE.PLAY;
+			io.to(socket.chattingRoom).emit(GAME_START);
 		})
 
 		socket.on(GAME_TEAM_CHANGE, (msg) => {
 			changeTeam(socket, msg);
 		})
   });
-
-
-  // const gameData = (response) => {
-	// 	const { roomNumber } = response;
-  //   lobbyManager.getRoom(roomNumber).put(response);
-  //   io.sockets.emit(GAME_DATA, lobbyManager.getRoom(roomNumber).gameData);
-  // };
 
   const lobby = {
 		join(socket) {
@@ -103,31 +99,41 @@ module.exports = function(io) {
 
   const playGround = {
     check(socket, req) {
-      const { roomNumber } = req;
-      lobbyManager.join(roomNumber, socket.userInfo);
-      io.to(socket.userInfo.id).emit(GAME_CHECK, lobbyManager.getRoom(roomNumber));
+      const { gameNumber } = req;
+      lobbyManager.join(gameNumber, socket.userInfo);
+      io.to(socket.userInfo.id).emit(GAME_CHECK, lobbyManager.getGameManager(gameNumber));
     },
     join(socket, req) {
-      const { userInfo, roomNumber } = req;
-			socket.chattingRoom = roomNumber;
-			socket.join(roomNumber);
+			const { userInfo, gameNumber } = req;
+			userInfo.gameData = null;
+			userInfo.gameState = GAME_STATE.READY;
+			socket.chattingRoom = gameNumber;
+			socket.join(gameNumber);
 			notify(socket, `${userInfo.emoji} ${userInfo.name}님께서 입장하였습니다.`);
       
-			lobbyManager.getGameManager(roomNumber).put(userInfo);
+			lobbyManager.getGameManager(gameNumber).put(userInfo);
 			io.to(LOBBY).emit(LOBBY_DATA, lobbyManager.getLobbyData());
-			io.to(roomNumber).emit(GAME_DATA, lobbyManager.getGameManager(roomNumber).gameData);
-      console.log('---- [JOIN] ----- ', roomNumber);
+			io.to(gameNumber).emit(GAME_DATA, lobbyManager.getGameManager(gameNumber).gameData);
+      console.log('---- [JOIN] ----- ', gameNumber);
     },
     out(socket) {
       const { userInfo, chattingRoom } = socket;
-      if (userInfo && !!lobbyManager.getRoom(chattingRoom)) {
+      if (userInfo && !!lobbyManager.getGameManager(chattingRoom)) {
         notify(socket, `${userInfo.emoji} ${userInfo.name}님께서 퇴장하셨습니다.`);
 				lobbyManager.getGameManager(chattingRoom).remove(userInfo.id);
 				socket.leave(chattingRoom);
 				lobbyManager.out(chattingRoom, userInfo);
-        io.to(chattingRoom).emit(GAME_DATA, gameManager.gameData);
+        io.to(chattingRoom).emit(GAME_DATA, lobbyManager.getGameManager(chattingRoom).gameData);
       }
-    }
+		},
+		updateGameData(socket, req) {
+			const { chattingRoom } = socket;
+			const { userInfo, gameData, gameState } = req;
+			userInfo.gameData = gameData;
+			userInfo.gameState = gameState;
+			lobbyManager.getGameManager(chattingRoom).put(userInfo);
+			io.to(chattingRoom).emit(GAME_DATA, lobbyManager.getGameManager(chattingRoom).gameData);
+		}
   }
 
   const message = (socket, msg) => {
@@ -147,7 +153,9 @@ module.exports = function(io) {
   }
 
   const changeTeam = (socket, msg) => {
-      gameManager.changeTeam(msg);
-    io.to(socket.chattingRoom).emit(GAME_DATA, gameManager.gameData);
+		const { chattingRoom } = socket;
+		const changeSuccess = lobbyManager.getGameManager(chattingRoom).changeTeam(msg);
+		if(!changeSuccess) return;
+    io.to(chattingRoom).emit(GAME_DATA, lobbyManager.getGameManager(chattingRoom).gameData);
   }
 };
