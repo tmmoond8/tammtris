@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
-import WaitingRoom from '../components/WaitingRoom';
+import Lobby from '../components/Lobby';
 import SocketClient from '../lib/SocketClient';
 import Actions from '../store/modules'
-import WaitingControlContainer from './WaitingControlContainer';
+import LobbyControlContainer from './LobbyControlContainer';
 
-class WaitingRoomContainer extends Component {
+class LobbyContainer extends Component {
 
   constructor(props) {
     super(props);
@@ -17,11 +17,11 @@ class WaitingRoomContainer extends Component {
     this.broadcastActions = this.props.broadcastActions();
     SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
     // 여기에 이벤트 등록
-    SocketClient.addEventOn('waitingRoom/join', (userInfo) => {
+    SocketClient.addEventOn('lobby/join', (userInfo) => {
       this.broadcastActions.userInfo(userInfo);
     });
-    SocketClient.addEventOn('waitingRoom/data', (waitingRoomData) => {
-			this.broadcastActions.waitingRoomData(waitingRoomData);
+    SocketClient.addEventOn('lobby/data', (lobbyData) => {
+			this.broadcastActions.lobbyData(lobbyData);
     });
     SocketClient.addEventOn('game/check', (response) => {
       if (response !== null) {
@@ -33,15 +33,15 @@ class WaitingRoomContainer extends Component {
     });
   }
 
-  handleGameJoin(roomIndex) {
+  handleGameJoin(roomNumber) {
     // room number에 방이 있는지 확인 후 바로 입장
-    SocketClient.sendMessage('game/check', {roomIndex});
+    SocketClient.sendMessage('game/check', { roomNumber });
   }
 
   componentDidMount() {
     // 오픈 채팅방 입장
     // 이쪽에서 SocketIO로 방 정보 가져오도록..
-    SocketClient.sendMessage('waitingRoom/join');
+    SocketClient.sendMessage('lobby/join');
   }
 
   render() {
@@ -49,14 +49,14 @@ class WaitingRoomContainer extends Component {
 			display: 'flex',
 			flexDirection: 'row'
 		}
-    const { waitingRoomData } = this.props;
+    const { lobbyData } = this.props;
     const { handleGameJoin } = this;
     const { redirect } = this.state;
     return (
 			<div style={style}>
         {redirect && <Redirect to={redirect}/>}
-				<WaitingRoom waitingRoomData={waitingRoomData} onGameJoin={handleGameJoin}/>	
-				<WaitingControlContainer/>
+				<Lobby lobbyData={lobbyData} onGameJoin={handleGameJoin}/>	
+				<LobbyControlContainer/>
 			</div>
     )
   }
@@ -65,9 +65,9 @@ class WaitingRoomContainer extends Component {
 export default connect(
   (state) => ({
 		userInfo: state.broadcast.userInfo,
-    waitingRoomData: state.broadcast.waitingRoomData,
+    lobbyData: state.broadcast.lobbyData,
   }),
   (dispatch) => ({
     broadcastActions: () => bindActionCreators(Actions.broadcast, dispatch)
   })
-)(WaitingRoomContainer);
+)(LobbyContainer);

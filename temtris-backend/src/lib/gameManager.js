@@ -3,24 +3,28 @@ class gameManager {
     this.gameData = 'a'.repeat(5).split('a').map(() => null);
   }
 
-  find(userId) {
-    let index = this.gameData.findIndex(item => !!item && item.userInfo && userId === item.userInfo.id);
-    if(index !== -1) return index;
-    return this.gameData.findIndex(item => !item) === -1 ? this.gameData.length : this.gameData.findIndex(item => !item);
+  getPlayerList() {
+    return this.gameData.filter(user => !!user);
   }
 
-  put({userInfo, gameData, gameState}) {
+  find(userId) {
+    let index = this.gameData.findIndex(user => user && user.id === userId);
+    if(index !== -1) return index;
+    return this.gameData.findIndex(user => !user) === -1 ? this.gameData.length : this.gameData.findIndex(user => !user);
+  }
+
+  put(userInfo) {
     const nextIndex = this.find(userInfo.id);
-    this.gameData[nextIndex] = {userInfo, gameData, gameState};
+    this.gameData[nextIndex] = userInfo;
   }
 
   isFull() {
-    return this.gameData.filter(item => !!item.userInfo).length === 6;
+    return this.gameData.filter(user => user).length === 6;
   }
 
   remove(userId) {
-    this.gameData = this.gameData.map(item => {
-      return item && item.userInfo.id !== userId ? item: null
+    this.gameData = this.gameData.map(user => {
+      return user && user.id !== userId ? user : null
     });
   }
 

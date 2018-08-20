@@ -1,6 +1,6 @@
 @import 'utils';
 
-.waiting-room-area {
+.lobby-area {
     display: grid;
     grid-gap: 1rem 1rem;
     padding: 2rem;
@@ -10,7 +10,7 @@
     height: 28.6 * block-sizes-for('normal');
 }
 
-.waiting-area-room {
+.lobby-room {
     background: white;
     box-shadow: 0 0.2rem 0.4rem 0 rgba(0,0,0,0.2);
     display: flex;

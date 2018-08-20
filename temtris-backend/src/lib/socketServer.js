@@ -1,15 +1,15 @@
 const userManager = require('./userManager');
 const gameManager = require('./gameManager');
-const roomManager = require('./roomManager');
+const lobbyManager = require('./lobbyManager');
 
 const MESSAGE_TYPE = {
   BROADCAST: 0,
   NOTIFY: 32
 }
-const WAITING_ROOM = 'waitingRoom';
+const LOBBY = 'lobby';
 const MESSAGE = 'message';
-const WAITING_ROOM_JOIN = 'waitingRoom/join';
-const WAITING_ROOM_DATA = 'waitingRoom/data';
+const LOBBY_JOIN = 'lobby/join';
+const LOBBY_DATA = 'lobby/data';
 const GAME_CHECK = 'game/check';
 const GAME_JOIN = 'game/join';
 const GAME_START = 'game/start';
@@ -37,8 +37,8 @@ class Message {
 module.exports = function(io) {
   io.on('connection', (socket) => {
 		console.log('---------------[ON] ----- socket ON')
-		socket.on(WAITING_ROOM_JOIN, () => {
-			waitingRoom.join(socket);
+		socket.on(LOBBY_JOIN, () => {
+			lobby.join(socket);
 		});
 
 		socket.on(MESSAGE, (msg) => {
@@ -47,7 +47,7 @@ module.exports = function(io) {
 
 		socket.on(GAME_JOIN, (req) => {
 			console.log(`play join ${req}`);
-			waitingRoom.out(socket);
+			lobby.out(socket);
 			playGround.join(socket, req);
 		});
 
@@ -56,12 +56,12 @@ module.exports = function(io) {
 		});
 
 		socket.on(GAME_DATA, (req) => {
-			gameData(socket, req);
+			// gameData(socket, req);
 		});
 
 		socket.on('disconnect', () => {
 			playGround.out(socket);
-			waitingRoom.out(socket);
+			lobby.out(socket);
 		});
 
 		socket.on(GAME_START, () => {
@@ -74,56 +74,58 @@ module.exports = function(io) {
   });
 
 
-  const gameData = (response) => {
-		const { roomNumber } = response;
-    gameManager.getRoomList()[roomNumber].put(response);
-    io.sockets.emit(GAME_DATA, gameManager.getRoomList()[roomNumber].gameData);
-  };
+  // const gameData = (response) => {
+	// 	const { roomNumber } = response;
+  //   lobbyManager.getRoom(roomNumber).put(response);
+  //   io.sockets.emit(GAME_DATA, lobbyManager.getRoom(roomNumber).gameData);
+  // };
 
-  const waitingRoom = {
+  const lobby = {
 		join(socket) {
 			const userInfo = userManager.addGuest();
-			socket.join(WAITING_ROOM);
+			socket.join(LOBBY);
 			socket.join(userInfo.id);
-			roomManager.addWaitingUser(userInfo);
-			socket.chattingRoom = WAITING_ROOM;
+			lobbyManager.addWaitingUser(userInfo);
+			socket.chattingRoom = LOBBY;
 			socket.userInfo = userInfo;
-			io.to(socket.userInfo.id).emit(WAITING_ROOM_JOIN, userInfo);
-			io.to(socket.chattingRoom).emit(WAITING_ROOM_DATA, {roomList: roomManager.getRoomList(), userList: roomManager.getWaitingUserList()});
+			io.to(socket.userInfo.id).emit(LOBBY_JOIN, userInfo);
+			io.to(socket.chattingRoom).emit(LOBBY_DATA, lobbyManager.getLobbyData());
 			console.log(`userList : ${userManager.getUserList()}`)
-			console.log(`waitingRoom : ${userInfo.name}`)
+			console.log(`lobby : ${userInfo.name}`)
 		},
 		out(socket) {
 			const { userInfo } = socket;
-			socket.leave(WAITING_ROOM);
-			roomManager.removeWaitingUser(userInfo);
-			io.to(WAITING_ROOM).emit(WAITING_ROOM_DATA, {roomList: roomManager.getRoomList(), userList: roomManager.getWaitingUserList()});
+			socket.leave(LOBBY);
+			lobbyManager.removeWaitingUser(userInfo);
+			io.to(LOBBY).emit(LOBBY_DATA, lobbyManager.getLobbyData());
 		}
   }
 
   const playGround = {
     check(socket, req) {
-      const { roomIndex } = req;
-      const room = roomManager.join(roomIndex, socket.userInfo);
-      io.to(socket.userInfo.id).emit(GAME_CHECK, room );
+      const { roomNumber } = req;
+      lobbyManager.join(roomNumber, socket.userInfo);
+      io.to(socket.userInfo.id).emit(GAME_CHECK, lobbyManager.getRoom(roomNumber));
     },
     join(socket, req) {
       const { userInfo, roomNumber } = req;
 			socket.chattingRoom = roomNumber;
 			socket.join(roomNumber);
 			notify(socket, `${userInfo.emoji} ${userInfo.name}님께서 입장하였습니다.`);
-      gameData({ userInfo })
-      socket.userInfo = userInfo;
+      
+			lobbyManager.getGameManager(roomNumber).put(userInfo);
+			io.to(LOBBY).emit(LOBBY_DATA, lobbyManager.getLobbyData());
+			io.to(roomNumber).emit(GAME_DATA, lobbyManager.getGameManager(roomNumber).gameData);
       console.log('---- [JOIN] ----- ', roomNumber);
     },
     out(socket) {
-      const { userInfo } = socket;
-      if (userInfo) {
+      const { userInfo, chattingRoom } = socket;
+      if (userInfo && !!lobbyManager.getRoom(chattingRoom)) {
         notify(socket, `${userInfo.emoji} ${userInfo.name}님께서 퇴장하셨습니다.`);
-				gameManager.remove(userInfo.id);
-				socket.leave(socket.chattingRoom);
-				roomManager.out(socket.chattingRoom, userInfo);
-        io.to(socket.chattingRoom).emit(GAME_DATA, gameManager.gameData);
+				lobbyManager.getGameManager(chattingRoom).remove(userInfo.id);
+				socket.leave(chattingRoom);
+				lobbyManager.out(chattingRoom, userInfo);
+        io.to(chattingRoom).emit(GAME_DATA, gameManager.gameData);
       }
     }
   }
