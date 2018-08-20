@@ -33,18 +33,13 @@ class GameControlContainer extends Component {
     SocketClient.sendMessage('game/start', { userInfo });
   }
 
-  handleReceiveMessage = (msg) => {
-    const { userInfo } = this.props;
-    this.broadcastActions.chattingMessages({...msg, userInfo})
-  }
-
   handleChangeTeam = (team) => {
     const { userInfo } = this.props;
     SocketClient.sendMessage('team/change', { userInfo, team });
   }
 
   render() {
-    const { handleGameStart, handleReceiveMessage, handleMultiGameStart, handleChangeTeam } = this;
+    const { handleGameStart, handleMultiGameStart, handleChangeTeam } = this;
     const { userInfo, chattingMessages, gameState } = this.props;
 
     return (
@@ -52,7 +47,6 @@ class GameControlContainer extends Component {
         userInfo={userInfo} 
         chattingMessages={chattingMessages}
         onClickSingle={handleGameStart}
-        onReceiveMessage={handleReceiveMessage}
         onClickMulti={handleMultiGameStart}
         onChangeTeam={handleChangeTeam}
         gameState={gameState}

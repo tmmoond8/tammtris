@@ -40,7 +40,8 @@ class GamePlayContainer extends Component {
       SocketClient.sendMessage('game/data', {
         userInfo: nextProps.userInfo,
         gameData: nextProps.gameGroundData,
-        gameState: nextProps.gameState
+        gameState: nextProps.gameState,
+        roomNumber: nextProps.gameRoom.number
       });
     }
     

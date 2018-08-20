@@ -10,7 +10,7 @@ class OtherPlayGrounds extends Component {
 
   renderPlayGround = () => {
     return this.props.allGroundData.map((gameGroundData, idx) => 
-      <div className={cx('other-play-grounds-item')}>
+      <div className={cx('other-play-grounds-item')} key={idx}>
         <PlayGround 
           key={idx} 
           number={idx + 1}

@@ -12,9 +12,9 @@ class GameRoom extends Component {
 					<div className={cx('game-room-number')}>{number}</div>
 					<div className={cx('game-room-title')}>{title}</div>
 					<ul className={cx('game-room-player-list')}>
-						{players.map((player) => {
+						{players.map(player => {
 							return (
-								<li className={cx('game-room-player-item')}>{player.name}</li>
+								<li className={cx('game-room-player-item')}>{player && player.name}</li>
 							)
 						})}
 					</ul>

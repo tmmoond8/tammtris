@@ -1,6 +1,6 @@
 @import 'utils';
 
-.waiting-control {
+.lobby {
     background-color: $oc-gray-0;
     box-shadow: 0 0.2rem 0.4rem 0 rgba(0,0,0,0.2);
     transition: 0.3s;
@@ -9,7 +9,7 @@
     min-width: 16rem;
     display: flex;
     flex-direction: column;
-    .waiting-control-logo {
+    .lobby-logo {
         background-color: $oc-cyan-4;
         color: $oc-gray-0;
         font-size: 3em;
@@ -18,14 +18,14 @@
         line-height: 6rem;
         text-align: center;
     }
-    .waiting-control-chatting {
+    .lobby-chatting {
         background-color: $oc-gray-1;
         flex: 1 1 1rem;
     }
-    .waiting-control-userlist {
+    .lobby-userlist {
         height: 8.85rem;
         overflow-y: auto;
-        .waiting-control-userlist-item {
+        .lobby-userlist-item {
             list-style-type: none;
             &.me {
                 color: $oc-pink-6;
