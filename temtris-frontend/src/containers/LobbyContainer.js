@@ -27,15 +27,15 @@ class LobbyContainer extends Component {
       if (response !== null) {
         this.broadcastActions.gameRoom(response);
         this.setState({
-          redirect: `/game/${response.number}`
+          redirect: `/game/${response.gameNumber}`
         })
       }
     });
   }
 
-  handleGameJoin(roomNumber) {
+  handleGameJoin(gameNumber) {
     // room number에 방이 있는지 확인 후 바로 입장
-    SocketClient.sendMessage('game/check', { roomNumber });
+    SocketClient.sendMessage('game/check', { gameNumber });
   }
 
   componentDidMount() {

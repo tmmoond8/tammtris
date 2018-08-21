@@ -20,7 +20,7 @@ const initialState = {
   chattingMessages: [],
   allGroundData: [null, null, null, null, null, null],
   userInfo: {name: 'geust', emoji: '🐗'},
-  lobbyData: {roomList: [], waitingUserList: []},
+  lobbyData: {gameList: [], waitingUserList: []},
   gameRoom: null
 }
 

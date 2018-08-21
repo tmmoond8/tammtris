@@ -1,5 +1,11 @@
+const { GAME_STATE } = require('./variable');
+
 class gameManager {
-  constructor() {
+  constructor(title, gameNumber) {
+		this.title = title;
+		this.gameNumber = gameNumber;
+		this.host = null;
+		this.gameState = GAME_STATE.READY;
     this.gameData = 'a'.repeat(5).split('a').map(() => null);
   }
 
@@ -29,8 +35,10 @@ class gameManager {
   }
 
   changeTeam({ userInfo, team }) {
+    if(this.gameState === GAME_STATE.PLAY) return false;
     const nextIndex = this.find(userInfo.id);
-    this.gameData[nextIndex].userInfo.team = team;
+    this.gameData[nextIndex].team = team;
+    return true;
   }
 }
 

@@ -7,12 +7,12 @@ const cx = classnames.bind(styles);
 
 export default class Lobby extends Component {
 
-	renderRoomList(roomList, onGameJoin) {
-		return Object.keys(roomList).map(key => {
-			const { title, players, number } = roomList[key];
+	renderRoomList(gameList, onGameJoin) {
+		return Object.keys(gameList).map(key => {
+			const { title, players, gameNumber } = gameList[key];
 			return (
 				<div className={cx('lobby-room')} key={key}>
-					<GameRoom title={title} players={players} number={number} onGameJoin={onGameJoin}/>
+					<GameRoom title={title} players={players} gameNumber={gameNumber} onGameJoin={onGameJoin}/>
 				</div>
 			)
 		})
@@ -23,7 +23,7 @@ export default class Lobby extends Component {
 		const { lobbyData, onGameJoin } = this.props;
     return (
 			<div className={cx('lobby-area')}>
-				{renderRoomList(lobbyData.roomList, onGameJoin)}
+				{renderRoomList(lobbyData.gameList, onGameJoin)}
 			</div>
     );
   }

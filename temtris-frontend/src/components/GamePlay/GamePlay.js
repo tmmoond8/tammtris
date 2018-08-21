@@ -11,16 +11,16 @@ class GamePlay extends Component {
 
   render() {
     const { gameGroundData, playerBlocks, userInfo, onPlayerKeyDown, gameState, allGroundData } = this.props;
-    let index = allGroundData.findIndex(item => !!item && item.userInfo && userInfo.id === item.userInfo.id);
+    let index = allGroundData.findIndex(item => !!item && item.id === userInfo.id);
     return (
       <div className={cx('game-play')}>
         <OtherPlayGrounds allGroundData={allGroundData}/>
         <div className={cx('game-play-myplace')}>
           <PlayGround
             gameGroundData = {gameGroundData}
-            number={index + 1}
+            userIndex={index + 1}
             playerBlocks = {playerBlocks}
-            userInfo = {allGroundData[index] ? allGroundData[index].userInfo : userInfo}
+            userInfo = {allGroundData[index] ? allGroundData[index] : userInfo}
             onPlayerKeyDown = {onPlayerKeyDown}
             gameState = {gameState}
           />

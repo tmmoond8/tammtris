@@ -28,7 +28,7 @@ class GamePlayContainer extends Component {
     const { userInfo, gameRoom} = this.props;
     SocketClient.sendMessage('game/join', {
       userInfo,
-      roomNumber: gameRoom.number
+      gameNumber: gameRoom.gameNumber
     });
   }
 
@@ -41,7 +41,7 @@ class GamePlayContainer extends Component {
         userInfo: nextProps.userInfo,
         gameData: nextProps.gameGroundData,
         gameState: nextProps.gameState,
-        roomNumber: nextProps.gameRoom.number
+        gameNumber: nextProps.gameRoom.gameNumber
       });
     }
     
