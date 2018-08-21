@@ -19,7 +19,7 @@ class PlayGround extends Component{
     }
     return prevUserInfo.id !== nextProps.userInfo.id 
       || prevUserInfo.team !== nextProps.userInfo.team 
-      || this.props.gameNumber !== nextProps.gameNumber
+      || this.props.userIndex !== nextProps.userIndex
       || PlayGround.toString(this.props.gameGroundData) !== PlayGround.toString(nextProps.gameGroundData);
   }
 
@@ -45,13 +45,13 @@ class PlayGround extends Component{
   }
 
   render() {
-    const { gameGroundData, userInfo, view, gameState, gameNumber } = this.props;
+    const { gameGroundData, userInfo, view, gameState, userIndex } = this.props;
     const team = userInfo && userInfo.team;
     const styles = view ? {} : { tabIndex: "0"};
     return (
       <Fragment>
         <div className={cx('play-ground', view, team)} onKeyDown={this.handleKeyPress} {...styles}>  
-          <UserPanel userInfo={userInfo} view={view} gameNumber={gameNumber}/>
+          <UserPanel userInfo={userInfo} view={view} userIndex={userIndex}/>
           <div style={{position: 'relative', background: 'white'}}>
             {this.renderAllLine(gameGroundData || GameDataManger.defaultGameData())}
             {this.renderGameOver(gameState, view)}

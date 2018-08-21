@@ -8,12 +8,12 @@ const cx = classNames.bind(styles);
 
 class OtherPlayGrounds extends Component {
 
-  renderPlayGround = () => {
-    return this.props.allGroundData.map((gameGroundData, idx) => 
+  renderPlayGround = (allGroundData) => {
+    return allGroundData.map((gameGroundData, idx) => 
       <div className={cx('other-play-grounds-item')} key={idx}>
         <PlayGround 
           key={idx} 
-          gameNumber={gameGroundData.gameNumber}
+          userIndex={idx + 1}
           gameGroundData={gameGroundData && gameGroundData.gameData} 
           userInfo={gameGroundData && gameGroundData} 
           gameState={gameGroundData && gameGroundData.gameState} 
@@ -23,9 +23,10 @@ class OtherPlayGrounds extends Component {
   }
 
   render() {
+    const { allGroundData } = this.props;
     return (
       <div className={cx('other-play-grounds')}> 
-        { this.renderPlayGround() }
+        { this.renderPlayGround(allGroundData) }
         <Blank name="Next shapes"/>
         </div>
     );

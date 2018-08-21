@@ -18,7 +18,7 @@ class GamePlay extends Component {
         <div className={cx('game-play-myplace')}>
           <PlayGround
             gameGroundData = {gameGroundData}
-            gameNumber={index + 1}
+            userIndex={index + 1}
             playerBlocks = {playerBlocks}
             userInfo = {allGroundData[index] ? allGroundData[index] : userInfo}
             onPlayerKeyDown = {onPlayerKeyDown}
