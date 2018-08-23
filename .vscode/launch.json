@@ -7,8 +7,23 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "프로그램 시작",
-      "program": "${workspaceFolder}/temtris-backend/src/index.js"
-    }
+      "name": "Mocha Tests",
+      "program": "${workspaceFolder}/temtris-backend/node_modules/.bin/mocha",
+      "args": [
+        "-u",
+        "tdd",
+        "--timeout",
+        "999999",
+        "--colors",
+        "${workspaceFolder}/temtris-backend/test"
+      ],
+      "internalConsoleOptions": "openOnSessionStart"
+    },
+    // {
+    //   "type": "node",
+    //   "request": "launch",
+    //   "name": "프로그램 시작",
+    //   "program": "${workspaceFolder}/temtris-backend/src/index.js"
+    // }
   ]
 }

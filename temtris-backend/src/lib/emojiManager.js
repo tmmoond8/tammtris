@@ -30,10 +30,10 @@ const initEmoji = {
     snowman: { name: 'snowman', emoji: '⛄'},
 };
 
-const emoji = {...initEmoji};
+let emoji = {...initEmoji};
 const emojiManager = {
     getEmoji() {
-        if(Object.keys.length === 0) return {name: 'pig nose', emoji: '🐽'}
+        if(Object.keys(emoji).length === 0) return {name: 'pig nose', emoji: '🐽'}
         const randomKey = Object.keys(emoji)[Math.floor(Math.random() * Object.keys(emoji).length)];
         const randomEmoji = emoji[randomKey];
         delete emoji[randomKey];
@@ -42,6 +42,12 @@ const emojiManager = {
     retrieve(name) {
         if(!initEmoji[name]) return;
         emoji[name] = initEmoji[name];
+    },
+    getEmojiList() {
+        return Object.keys(emoji).map(key => emoji[key]);
+    },
+    init() {
+        emoji = { ...initEmoji };
     }
 }
 
