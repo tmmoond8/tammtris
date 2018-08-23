@@ -31,6 +31,11 @@ class UserManager {
   getUserList() {
     return userList;
   }
+
+  init() {
+    emojiManager.init();
+    userList = [];
+  }
 }
 
 module.exports = (function () {
