@@ -1,5 +1,6 @@
 const userManager = require('../src/lib/userManager');
 const gameManager = require('../src/lib/gameManager');
+const { GAME_STATE} = require('../src/lib/variable');
 const expect = require('chai').expect;
 userManager.init();
 const userDataSet = 'a'.repeat(10).split('a').map(() => userManager.addGuest());
@@ -55,6 +56,7 @@ describe('게임 만들어서 실행시키고 종료하기', () => {
     game.put(user[1]);
     expect(game.gameStart()).to.be.true
     expect(game.gameStart()).to.be.false
+    game.gameState = GAME_STATE.READY;
   });
 
   it('팀 바꾸기', () => {
@@ -62,7 +64,7 @@ describe('게임 만들어서 실행시키고 종료하기', () => {
     game.put(user[0]);
     game.put(user[1]);
     expect(game.gameData[1].team).to.equal('individual');
-    game.changeTeam({ userInfo: user[1], team: 'red' });
+    game.changeTeam({ userInfo: user[1], team: 'red' }, () => {});
     expect(game.gameData[1].team).to.equal('red');
     game.gameStart();
     game.changeTeam({ userInfo: user[1], team: 'blue' }); // 게임이 시작되면 팀을 바꿀수 없다.

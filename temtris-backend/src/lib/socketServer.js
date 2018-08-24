@@ -65,10 +65,10 @@ module.exports = function(io) {
 		});
 
 		socket.on(GAME_START, () => {
-			const gameManager = lobbyManager.getGameManager(socket.chattingRoom);
+			const gameManager = lobbyManager.getGameManager(socket.chattingChannel);
 			if(gameManager.gameState === GAME_STATE.PLAY) return;
 			gameManager.gameState = GAME_STATE.PLAY;
-			io.to(socket.chattingRoom).emit(GAME_START);
+			io.to(socket.chattingChannel).emit(GAME_START);
 		})
 
 		socket.on(GAME_TEAM_CHANGE, (msg) => {
@@ -81,18 +81,18 @@ module.exports = function(io) {
 			const userInfo = userManager.addGuest();
 			socket.join(LOBBY);
 			socket.join(userInfo.id);
-			lobbyManager.addWaitingUser(userInfo);
-			socket.chattingRoom = LOBBY;
+			socket.chattingChannel = LOBBY;
 			socket.userInfo = userInfo;
 			io.to(socket.userInfo.id).emit(LOBBY_JOIN, userInfo);
-			io.to(socket.chattingRoom).emit(LOBBY_DATA, lobbyManager.getLobbyData());
+			io.to(socket.chattingChannel).emit(LOBBY_DATA, lobbyManager.getLobbyData());
+			lobbyManager.lobbyJoin(userInfo);
 			console.log(`userList : ${userManager.getUserList()}`)
 			console.log(`lobby : ${userInfo.name}`)
 		},
 		out(socket) {
 			const { userInfo } = socket;
 			socket.leave(LOBBY);
-			lobbyManager.removeWaitingUser(userInfo);
+			lobbyManager.lobbyOut(userInfo);
 			io.to(LOBBY).emit(LOBBY_DATA, lobbyManager.getLobbyData());
 		}
   }
@@ -100,62 +100,59 @@ module.exports = function(io) {
   const playGround = {
     check(socket, req) {
       const { gameNumber } = req;
-      lobbyManager.join(gameNumber, socket.userInfo);
-      io.to(socket.userInfo.id).emit(GAME_CHECK, lobbyManager.getGameManager(gameNumber));
+      lobbyManager.gameCheck(gameNumber, socket.userInfo, () => {
+				io.to(socket.userInfo.id).emit(GAME_CHECK, lobbyManager.getGameManager(gameNumber))
+			});
     },
     join(socket, req) {
 			const { userInfo, gameNumber } = req;
-			userInfo.gameData = null;
-			userInfo.gameState = GAME_STATE.READY;
-			socket.chattingRoom = gameNumber;
+			socket.chattingChannel = gameNumber;
 			socket.join(gameNumber);
 			notify(socket, `${userInfo.emoji} ${userInfo.name}님께서 입장하였습니다.`);
-      
 			lobbyManager.getGameManager(gameNumber).put(userInfo);
 			io.to(LOBBY).emit(LOBBY_DATA, lobbyManager.getLobbyData());
 			io.to(gameNumber).emit(GAME_DATA, lobbyManager.getGameManager(gameNumber).gameData);
       console.log('---- [JOIN] ----- ', gameNumber);
     },
     out(socket) {
-      const { userInfo, chattingRoom } = socket;
-      if (userInfo && !!lobbyManager.getGameManager(chattingRoom)) {
+      const { userInfo, chattingChannel } = socket;
+      if (userInfo && !!lobbyManager.getGameManager(chattingChannel)) {
         notify(socket, `${userInfo.emoji} ${userInfo.name}님께서 퇴장하셨습니다.`);
-				lobbyManager.getGameManager(chattingRoom).remove(userInfo.id);
-				socket.leave(chattingRoom);
-				lobbyManager.out(chattingRoom, userInfo);
-        io.to(chattingRoom).emit(GAME_DATA, lobbyManager.getGameManager(chattingRoom).gameData);
+				lobbyManager.getGameManager(chattingChannel).remove(userInfo.id);
+				socket.leave(chattingChannel);
+        io.to(chattingChannel).emit(GAME_DATA, lobbyManager.getGameManager(chattingChannel).gameData);
       }
 		},
 		updateGameData(socket, req) {
-			const { chattingRoom } = socket;
+			const { chattingChannel } = socket;
 			const { userInfo, gameData, gameState } = req;
 			userInfo.gameData = gameData;
 			userInfo.gameState = gameState;
-			lobbyManager.getGameManager(chattingRoom).put(userInfo);
-			io.to(chattingRoom).emit(GAME_DATA, lobbyManager.getGameManager(chattingRoom).gameData);
+			lobbyManager.getGameManager(chattingChannel).put(userInfo);
+			io.to(chattingChannel).emit(GAME_DATA, lobbyManager.getGameManager(chattingChannel).gameData);
 		}
   }
 
   const message = (socket, msg) => {
 		msg.messageId = Message.createMessageId();
-		io.to(socket.chattingRoom).emit(MESSAGE, msg);
+		io.to(socket.chattingChannel).emit(MESSAGE, msg);
   };
 
 
   const notify = (socket, msg) => {
 		const message = new Message({}, msg, MESSAGE_TYPE.NOTIFY);;
 		message.messageId = Message.createMessageId();
-		io.to(socket.chattingRoom).emit(MESSAGE, message);
+		io.to(socket.chattingChannel).emit(MESSAGE, message);
   }
 
   const gameState = () => {
-		io.to(socket.chattingRoom).emit(GAME_START, {});
+		io.to(socket.chattingChannel).emit(GAME_START, {});
   }
 
   const changeTeam = (socket, msg) => {
-		const { chattingRoom } = socket;
-		const changeSuccess = lobbyManager.getGameManager(chattingRoom).changeTeam(msg);
-		if(!changeSuccess) return;
-    io.to(chattingRoom).emit(GAME_DATA, lobbyManager.getGameManager(chattingRoom).gameData);
+		const { chattingChannel } = socket;
+		lobbyManager.getGameManager(chattingChannel).changeTeam(msg, () => {
+			io.to(chattingChannel).emit(GAME_DATA, lobbyManager.getGameManager(chattingChannel).gameData);
+		});
   }
 };

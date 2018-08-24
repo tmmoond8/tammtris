@@ -2,7 +2,7 @@ const uuid = require('uuid/v1');
 const emojiManager = require('./emojiManager');
 
 class User {
-  constructor(name, emoji) {
+  constructor({name, emoji}) {
     this.id = uuid();
     this.name = name;
     this.emoji = emoji;
@@ -12,12 +12,12 @@ class User {
 let userList = [];
 class UserManager {
   addUser({name, emoji}) {
-    userList.push(new user(id, name, emoji));
+    userList.push(new user(name, emoji));
   }
 
-  addGuest(id) {
+  addGuest() {
     const emoji = emojiManager.getEmoji();
-    const user = new User(emoji.name, emoji.emoji);
+    const user = new User(emoji);
     userList.push(user);
     return user;
   }
