@@ -8,7 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "Mocha Tests",
-      "program": "${workspaceFolder}/temtris-backend/node_modules/.bin/mocha",
+      "program": "${workspaceFolder}/temtris-backend/node_modules/mocha/bin/_mocha",
       "args": [
         "-u",
         "tdd",
@@ -24,6 +24,6 @@
     //   "request": "launch",
     //   "name": "프로그램 시작",
     //   "program": "${workspaceFolder}/temtris-backend/src/index.js"
-    // }
+    // },
   ]
 }

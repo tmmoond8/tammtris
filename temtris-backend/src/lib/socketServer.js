@@ -15,6 +15,7 @@ const GAME_JOIN = 'game/join';
 const GAME_START = 'game/start';
 const GAME_DATA = 'game/data';
 const GAME_TEAM_CHANGE = 'game/teamChange';
+const GAME_RESULT = 'game/result';
 
 class Message {
 	constructor(user, message, type) {
@@ -130,6 +131,10 @@ module.exports = function(io) {
 			userInfo.gameState = gameState;
 			lobbyManager.getGameManager(chattingChannel).put(userInfo);
 			io.to(chattingChannel).emit(GAME_DATA, lobbyManager.getGameManager(chattingChannel).gameData);
+			// 게임에서 단 한유저만 남게되면 gameResult를 브로드캐스트 한다.
+			userInfo.gameState === GAME_STATE.GAME_OVER && lobbyManager.getGameManager(chattingChannel).gameOver((gameResult)=> {
+				io.to(chattingChannel).emit(GAME_RESULT, gameResult)
+			});
 		}
   }
 
@@ -137,7 +142,6 @@ module.exports = function(io) {
 		msg.messageId = Message.createMessageId();
 		io.to(socket.chattingChannel).emit(MESSAGE, msg);
   };
-
 
   const notify = (socket, msg) => {
 		const message = new Message({}, msg, MESSAGE_TYPE.NOTIFY);;

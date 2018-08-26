@@ -6,7 +6,6 @@ class User {
     this.id = uuid();
     this.name = name;
     this.emoji = emoji;
-    this.team = 'individual';
   }
 }
 let userList = [];
