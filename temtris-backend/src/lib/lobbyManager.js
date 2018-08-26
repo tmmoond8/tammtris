@@ -12,7 +12,6 @@ const lobbyManager = {
 			gameList: Object.keys(gameList).map(gameNumber => {
 				return {
 					...gameList[gameNumber],
-					gameManager: null,
 					players: gameList[gameNumber].getPlayerList()
 				}
 			})
@@ -27,24 +26,22 @@ const lobbyManager = {
 		gameList[gameKey] = new gameManager(title, gameKey++);
 	},
 
-	join(index, userInfo) {
+	gameCheck(index, userInfo, socketEmit) {
 		userInfo = { ...userInfo, gameData: null, gameState: GAME_STATE.READY}
 		if(gameList[index].isFull()) return null;
 		gameList[index].put(userInfo);
-		return gameList[index];
+		socketEmit();
 	},
-	out(index, userInfo) {
-		if(!gameList[index]) return;
-		gameList[index].remove(userInfo);
-		return gameList;
-	},
+
 	getWaitingUserList() {
 		return waitingUserList;
 	},
-	addWaitingUser(user) {
+
+	lobbyJoin(user) {
 		waitingUserList.push(user);
 	},
-	removeWaitingUser(user) {
+
+	lobbyOut(user) {
 		waitingUserList = waitingUserList.filter(item => item.id !== user.id);
 	}
 };

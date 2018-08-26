@@ -19,9 +19,10 @@ class gameManager {
     return this.gameData.findIndex(user => !user);
   }
 
+  // 게임 들어오기 전 자리가 있는지 체킹하기 때문에 실패하지 않는다.
   put(userInfo) {
+    userInfo.team = userInfo.team || 'individual';
     const nextIndex = this.find(userInfo.id);
-    if(nextIndex === -1) return;
     this.gameData[nextIndex] = userInfo;
   }
 
@@ -35,23 +36,52 @@ class gameManager {
     });
   }
 
-  changeTeam({ userInfo, team }) {
-    if(this.gameState === GAME_STATE.PLAY) return false;
+  changeTeam({ userInfo, team }, socketEmit) {
+    if(this.gameState === GAME_STATE.PLAY) return;
     const nextIndex = this.find(userInfo.id);
     this.gameData[nextIndex].team = team;
-    return true;
+    socketEmit();
+  }
+
+  getTeam(gameData) {
+    const team = {
+      size() {
+        return Object.keys(this).filter(key => key !== 'size').length
+      }
+    };
+    gameData.forEach(data => {
+      if(!data) return;
+      if(data.team === 'individual') {
+        team[data.id] = data;
+      } else {
+        team[data.team] = team[data.team] || [];
+        team[data.team].push(data);
+      }
+    });
+    return team;
   }
 
   gameStart() {
-    if(this.gameState === GAME_STATE.PLAY || this.getPlayerList().length < 2 ) return false;
+    if(this.gameState === GAME_STATE.PLAY || this.getTeam(this.gameData).size() < 2) return false;
     this.gameState = GAME_STATE.PLAY;
     return true;
   }
 
-  gameOver(userInfo) {
-    // 1명 남았으면 위너로 선정.
+  gameOver(socketEmit) {
+    const playingTeam = this.getTeam(this.gameData.filter(item => item && item.gameState !== GAME_STATE.GAME_OVER));
+    if(playingTeam.size() < 2) {
+      const winner = Object.keys(playingTeam).filter(key => key !== 'size');
+      socketEmit(this.gameData.map(data => {
+        if(!data) return data;
+        return {
+          ...data,
+          outcome: winner === data.team ? 'VICTORY' : 'DEFEAT'
+        }
+      }))
+      this.gameState = GAME_STATE.READY;
+      this.gameData.filter(item => !!item).forEach(item => item.gameState = GAME_STATE.READY);
+    }
   }
-
 }
 
 
