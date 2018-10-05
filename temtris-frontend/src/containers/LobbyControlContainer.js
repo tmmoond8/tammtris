@@ -9,12 +9,11 @@ class LobbyControlContainer extends Component {
   constructor(props) {
     super(props);
     this.broadcastActions = this.props.BroadCastActions();
-    this.playGroundActions = this.props.PlayGroundActions();
     SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
 
     SocketClient.addEventOn('message', (msg) => {
       const { userInfo } = this.props;
-      this.broadcastActions.chattingMessages({...msg, userInfo})
+      this.broadcastActions.addChattingMessage({...msg, userInfo})
     });
   }
 
@@ -38,7 +37,6 @@ export default connect(
     lobbyData: state.broadcast.lobbyData
   }),
   (dispatch) => ({
-    PlayGroundActions: () => bindActionCreators(Actions.playGround, dispatch),
     BroadCastActions: () => bindActionCreators(Actions.broadcast, dispatch)
   })
 )(LobbyControlContainer);

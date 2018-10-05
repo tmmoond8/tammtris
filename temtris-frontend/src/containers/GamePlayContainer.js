@@ -15,7 +15,7 @@ class GamePlayContainer extends Component {
     SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
     
     SocketClient.addEventOn('game/data', (response) => {
-      this.broadcastActions.allGroundData(response)
+      this.broadcastActions.setAllPlayData(response)
     });
   }
 
