@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
-import Lobby from '../components/Lobby';
-import SocketClient from '../lib/SocketClient';
-import Actions from '../store/modules'
-import LobbyControlContainer from './LobbyControlContainer';
+import { withRouter } from 'react-router-dom';
+import Lobby from 'components/Lobby';
+import SocketClient from 'lib/SocketClient';
+import Actions from 'store/modules'
 
 class LobbyContainer extends Component {
 
@@ -18,17 +17,16 @@ class LobbyContainer extends Component {
     SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
     // 여기에 이벤트 등록
     SocketClient.addEventOn('lobby/join', (userInfo) => {
-      this.broadcastActions.userInfo(userInfo);
+      this.broadcastActions.setUserInfo(userInfo);
     });
     SocketClient.addEventOn('lobby/data', (lobbyData) => {
-			this.broadcastActions.lobbyData(lobbyData);
+			this.broadcastActions.setLobbyData(lobbyData);
     });
     SocketClient.addEventOn('game/check', (response) => {
       if (response !== null) {
-        this.broadcastActions.gameRoom(response);
-        this.setState({
-          redirect: `/game/${response.gameNumber}`
-        })
+        this.broadcastActions.setGameRoom(response);
+        const { history } = this.props;
+        history.push(`/game/${response.gameNumber}`)
       }
     });
   }
@@ -51,12 +49,9 @@ class LobbyContainer extends Component {
 		}
     const { lobbyData } = this.props;
     const { handleGameJoin } = this;
-    const { redirect } = this.state;
     return (
 			<div style={style}>
-        {redirect && <Redirect to={redirect}/>}
 				<Lobby lobbyData={lobbyData} onGameJoin={handleGameJoin}/>	
-				<LobbyControlContainer/>
 			</div>
     )
   }
@@ -70,4 +65,4 @@ export default connect(
   (dispatch) => ({
     broadcastActions: () => bindActionCreators(Actions.broadcast, dispatch)
   })
-)(LobbyContainer);
+)(withRouter(LobbyContainer));

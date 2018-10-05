@@ -1,4 +1,4 @@
-import block from '../models/block';
+import block from 'models/shapes/block';
 import shapeDataManager from './shapeDataManager';
 
 const GAME_STATE = {

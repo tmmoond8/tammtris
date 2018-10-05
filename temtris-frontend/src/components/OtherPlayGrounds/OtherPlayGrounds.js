@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import styles from './OtherPlayGrounds.scss';
 import classNames from 'classnames/bind';
-import PlayGround from '../PlayGround';
-import Blank from '../Blank';
+import PlayGround from 'components/PlayGround';
+import Blank from 'components/Blank';
 
 const cx = classNames.bind(styles);
 

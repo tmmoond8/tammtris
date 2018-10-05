@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
-import GamePlay from '../components/GamePlay';
-import Actions from '../store/modules'
-import SocketClient from '../lib/SocketClient';
-import { GAME_STATE } from '../utils/gameDataManager';
+import GamePlay from 'components/GamePlay';
+import Actions from 'store/modules'
+import SocketClient from 'lib/SocketClient';
+import { GAME_STATE } from 'utils/gameDataManager';
 import GameControlContainer from './GameControlContainer';
 
 class GamePlayContainer extends Component {
@@ -15,7 +15,7 @@ class GamePlayContainer extends Component {
     SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
     
     SocketClient.addEventOn('game/data', (response) => {
-      this.broadcastActions.allGroundData(response)
+      this.broadcastActions.setAllPlayData(response)
     });
   }
 

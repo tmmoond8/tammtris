@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import ChatMessageItem from '../ChatMessageItem';
-import ChatMessageInput from '../ChatMessageInput';
-import SocketClient, { Message } from '../../lib/SocketClient';
+import ChatMessageItem from 'components/ChatMessageItem';
+import ChatMessageInput from 'components/ChatMessageInput';
+import SocketClient, { Message } from 'lib/SocketClient';
 import styles from './Chat.scss';
 import className from 'classnames/bind';
 
@@ -11,7 +11,6 @@ class Chat extends Component {
   constructor(props) {
     super(props);
     this.handleSendMessage = this.handleSendMessage.bind(this)
-    SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
     this.chattingRef = React.createRef();
   };
 

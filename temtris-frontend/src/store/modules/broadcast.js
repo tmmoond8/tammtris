@@ -1,20 +1,20 @@
 import { createAction, handleActions } from 'redux-actions';
 
 // actions type
-const CHATTING_MESSAGES = 'broadcast/CHATTING_MESSAGE';
-const CHATTING_NOTIFY = 'broadcast/CHATTING_NOTIFY';
-const ALL_GROUND_DATA = 'broadcast/ALL_GROUND_DATA';
-const USER_INFO = 'broadcast/USER_INFO';
-const LOBBY_DATA = 'broadcast/LOBBY_DATA';
-const GAME_ROOM = 'broadcast/GAME_ROOM';
+const ADD_CHATTING_MESSAGE = 'broadcast/ADD_CHATTING_MESSAGES';
+const ADD_CHATTING_NOTIFY = 'broadcast/ADD_CHATTING_NOTIFY';
+const SET_ALL_PLAY_DATA = 'broadcast/SET_ALL_PLAY_DATA';
+const SET_USER_INFO = 'broadcast/SET_USER_INFO';
+const SET_LOBBY_DATA = 'broadcast/SET_LOBBY_DATA';
+const SET_GAME_ROOM = 'broadcast/SET_GAME_ROOM';
 
 // actions creator
-export const chattingMessages = createAction(CHATTING_MESSAGES);
-export const chattingNotify = createAction(CHATTING_NOTIFY);
-export const allGroundData = createAction(ALL_GROUND_DATA);
-export const userInfo = createAction(USER_INFO);
-export const lobbyData = createAction(LOBBY_DATA);
-export const gameRoom = createAction(GAME_ROOM);
+export const addChattingMessage = createAction(ADD_CHATTING_MESSAGE);
+export const addChattingNotify = createAction(ADD_CHATTING_NOTIFY);
+export const setAllPlayData = createAction(SET_ALL_PLAY_DATA);
+export const setUserInfo = createAction(SET_USER_INFO);
+export const setLobbyData = createAction(SET_LOBBY_DATA);
+export const setGameRoom = createAction(SET_GAME_ROOM);
 
 const initialState = {
   chattingMessages: [],
@@ -26,42 +26,42 @@ const initialState = {
 
 // reducer
 export default handleActions({
-  [CHATTING_MESSAGES]: (state, action) => {
+  [ADD_CHATTING_MESSAGE]: (state, action) => {
     const { payload: message } = action;
     return {
       ...state,
       chattingMessages: state.chattingMessages.concat(message)
     }
   },
-  [GAME_ROOM]: (state, action) => {
+  [SET_GAME_ROOM]: (state, action) => {
     const { payload: gameRoom } = action;
     return {
       ...state,
       gameRoom: gameRoom
     }
   },
-  [LOBBY_DATA]: (state, action) => {
+  [SET_LOBBY_DATA]: (state, action) => {
     const { payload: lobbyData } = action;
     return {
       ...state,
       lobbyData: lobbyData
     }
   },
-  [CHATTING_NOTIFY]: (state, action) => {
+  [ADD_CHATTING_NOTIFY]: (state, action) => {
     const { payload: message } = action;
     return {
       ...state,
       chattingMessages: state.chattingMessages.concat(message)
     }
   },
-  [ALL_GROUND_DATA]: (state, action) => {
+  [SET_ALL_PLAY_DATA]: (state, action) => {
     const { payload: allGroundData } = action;
     return {
       ...state,
       allGroundData
     }
   },
-  [USER_INFO]: (state, action) => {
+  [SET_USER_INFO]: (state, action) => {
     const { payload: userInfo } = action;
     return {
       ...state,
