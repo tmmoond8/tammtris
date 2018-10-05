@@ -1,9 +1,9 @@
 import React , {Component, Fragment } from 'react';
 import styles from './PlayGround.scss';
 import classNames from 'classnames/bind';
-import DotBlock from '../DotBlock';
-import UserPanel from '../UserPanel';
-import GameDataManger, { GAME_STATE } from '../../utils/gameDataManager';
+import DotBlock from 'components/DotBlock';
+import UserPanel from 'components/UserPanel';
+import GameDataManger, { GAME_STATE } from 'utils/gameDataManager';
 
 const cx = classNames.bind(styles);
 

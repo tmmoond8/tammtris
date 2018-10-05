@@ -1,11 +1,11 @@
-import sShape from '../models/sShape';
-import stickShape from '../models/stickShape';
-import zShape from '../models/zShape';
-import squareShape from '../models/squareShape';
-import tankShape from '../models/tankShape';
-import ganaShape from '../models/ganaShape';
-import noogooShape from '../models/noogooShape';
-import emptyShape from '../models/emptyShape';
+import sShape from 'models/shapes/sShape';
+import stickShape from 'models/shapes/stickShape';
+import zShape from 'models/shapes/zShape';
+import squareShape from 'models/shapes/squareShape';
+import tankShape from 'models/shapes/tankShape';
+import ganaShape from 'models/shapes/ganaShape';
+import noogooShape from 'models/shapes/noogooShape';
+import emptyShape from 'models/shapes/emptyShape';
 
 class shapeDataManager {
   static shapes = [

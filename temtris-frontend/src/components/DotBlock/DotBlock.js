@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styles from './DotBlock.scss';
 import classNames from 'classnames/bind';
-import block from '../../models/block';
+import block from 'models/shapes/block';
 
 const cx = classNames.bind(styles);
 

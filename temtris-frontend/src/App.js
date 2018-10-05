@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import GamePlayContainer from './containers/GamePlayContainer';
-import LobbyContainer from './containers/LobbyContainer';
+import GamePlayContainer from 'containers/GamePlayContainer';
+import LobbyContainer from 'containers/LobbyContainer';
 
 class App extends Component {
   render() {

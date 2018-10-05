@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classNames from 'classnames/bind';
 import styles from './LobbyControl.scss';
-import Chat from '../Chat';
+import Chat from 'components/Chat';
 
 const cx = classNames.bind(styles);
 

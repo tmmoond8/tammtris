@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames/bind';
 import styles from './GamePlay.scss';
 
-import OtherPlayGrounds from '../OtherPlayGrounds';
+import OtherPlayGrounds from 'components/OtherPlayGrounds';
 import PlayGround from '../PlayGround';
 
 const cx = classNames.bind(styles);

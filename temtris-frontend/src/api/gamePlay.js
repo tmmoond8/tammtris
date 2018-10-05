@@ -1,6 +1,9 @@
 import axios from 'axios';
+const {
+  SERVER_URL: apiServer
+} = process.env;
 const instance = axios.create({
-  baseURL: 'http://localhost:14666/api',
+  baseURL: `${apiServer}/api`,
   timeout: 1000,
   headers: {'X-Custom-Header': 'foobar'}
 });
