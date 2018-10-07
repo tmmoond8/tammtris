@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import GamePlayContainer from 'containers/GamePlayContainer';
+import GamePlayPage from 'pages/GamePlayPage';
 import LobbyPage from 'pages/LobbyPage';
 
 class App extends Component {
@@ -9,7 +9,7 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <Route exact path="/" component={LobbyPage}/>
-          <Route path="/game/:id" component={GamePlayContainer}/>
+          <Route path="/game/:id" component={GamePlayPage}/>
         </div>
       </BrowserRouter>
     );

@@ -51,15 +51,9 @@ class GamePlayContainer extends Component {
   render() {
     const { handlePlayerKeyDown, broadcastActions } = this;
     const { gameGroundData, playerBlocks, userInfo, chattingMessages, gameState, allGroundData} = this.props;
-    const style = {
-			display: 'flex',
-			flexDirection: 'row'
-    }
     
     return (
-      
-      <div style={style}>
-        <GamePlay 
+      <GamePlay 
           gameGroundData={gameGroundData}
           playerBlocks={playerBlocks}
           userInfo={userInfo}
@@ -68,10 +62,7 @@ class GamePlayContainer extends Component {
           allGroundData={allGroundData}
           chattingMessages={chattingMessages} 
           broadcastActions={broadcastActions}
-        /> 
-        <GameControlContainer/>
-      </div>
-      
+        />
     );
   }
 }
