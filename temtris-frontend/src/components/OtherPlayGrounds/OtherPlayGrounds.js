@@ -28,7 +28,7 @@ class OtherPlayGrounds extends Component {
       <div className={cx('other-play-grounds')}> 
         { this.renderPlayGround(allGroundData) }
         <Blank name="Next shapes"/>
-        </div>
+      </div>
     );
   }
 };
