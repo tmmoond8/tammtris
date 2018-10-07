@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
-
-let socket = io('http://localhost:14666');
+const serverUrl = `http://${window.location.hostname}:14666`;
+let socket = io(serverUrl);
 socket.on('connect', () => {
     console.log('socket connect');
 });

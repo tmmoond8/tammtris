@@ -21,6 +21,14 @@ class GameControlContainer extends Component {
     });
   }
 
+  componentDidMount() {
+    const { userInfo, gameRoom} = this.props;
+    SocketClient.sendMessage('game/join', {
+      userInfo: userInfo ? userInfo : { name: 'test', emoji: '^^'},
+      gameNumber: gameRoom ? gameRoom.gameNumber : 1
+    });
+  }
+  
   handleGameStart = () => {
     const { playGroundActions } = this;
     playGroundActions.singleGameStart({
@@ -57,9 +65,10 @@ class GameControlContainer extends Component {
 
 export default connect(
   (state) => ({ 
+    gameState: state.playGround.gameState,
     userInfo: state.broadcast.userInfo,
     chattingMessages: state.broadcast.chattingMessages,
-    gameState: state.playGround.gameState
+    gameRoom: state.broadcast.gameRoom
   }),
   (dispatch) => ({
     PlayGroundActions: () => bindActionCreators(Actions.playGround, dispatch),

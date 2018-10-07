@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
-import GamePlay from 'components/GamePlay';
+import PlayGround from 'components/PlayGround';
 import Actions from 'store/modules'
 import SocketClient from 'lib/SocketClient';
 import { GAME_STATE } from 'utils/gameDataManager';
 
-class GamePlayContainer extends Component {
+class PlayGroundContainer extends Component {
   constructor(props) {
     super(props);
     this.broadcastActions = this.props.BroadCastActions();
@@ -22,7 +22,6 @@ class GamePlayContainer extends Component {
     if(this.props.gameState === GAME_STATE.GAME_OVER) return;
     this.playGroundActions.playerKeyDown(keyCode);
   }
-
   shouldComponentUpdate(nextProps) {
     if(nextProps.downStop) {
       if(this.props.playerBlocks.baseBlock.equlas(nextProps.playerBlocks.baseBlock)) {
@@ -40,19 +39,18 @@ class GamePlayContainer extends Component {
   }
 
   render() {
-    const { handlePlayerKeyDown, broadcastActions } = this;
-    const { gameGroundData, playerBlocks, userInfo, chattingMessages, gameState, allGroundData} = this.props;
+    const { handlePlayerKeyDown } = this;
+    const { allGroundData, gameGroundData, playerBlocks, userInfo, gameState } = this.props;
+    let index = allGroundData.findIndex(item => !!item && item.id === userInfo.id);
     
     return (
-      <GamePlay 
-          gameGroundData={gameGroundData}
-          playerBlocks={playerBlocks}
-          userInfo={userInfo}
+      <PlayGround
+          gameGroundData = {gameGroundData}
+          userIndex={index + 1}
+          playerBlocks = {playerBlocks}
+          userInfo = {allGroundData[index] ? allGroundData[index] : userInfo}
           onPlayerKeyDown = {handlePlayerKeyDown}
           gameState = {gameState}
-          allGroundData={allGroundData}
-          chattingMessages={chattingMessages} 
-          broadcastActions={broadcastActions}
         />
     );
   }
@@ -66,10 +64,11 @@ export default connect(
     downStop: state.playGround.downStop,
     userInfo: state.broadcast.userInfo,
     chattingMessages: state.broadcast.chattingMessages,
-    gameRoom: state.broadcast.gameRoom
+    gameRoom: state.broadcast.gameRoom,
+    allGroundData: state.broadcast.allGroundData,    
   }),
   (dispatch) => ({
     PlayGroundActions: () => bindActionCreators(Actions.playGround, dispatch),
     BroadCastActions: () => bindActionCreators(Actions.broadcast, dispatch)
   })
-)(GamePlayContainer);
+)(PlayGroundContainer);
