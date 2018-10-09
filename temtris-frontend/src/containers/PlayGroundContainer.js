@@ -19,7 +19,7 @@ class PlayGroundContainer extends Component {
   }
 
   handlePlayerKeyDown = (keyCode) => {
-    if(this.props.gameState === GAME_STATE.GAME_OVER) return;
+    if(this.props.gameState !== GAME_STATE.PLAY) return;
     this.playGroundActions.playerKeyDown(keyCode);
   }
   shouldComponentUpdate(nextProps) {

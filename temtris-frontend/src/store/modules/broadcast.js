@@ -7,6 +7,7 @@ const SET_ALL_PLAY_DATA = 'broadcast/SET_ALL_PLAY_DATA';
 const SET_USER_INFO = 'broadcast/SET_USER_INFO';
 const SET_LOBBY_DATA = 'broadcast/SET_LOBBY_DATA';
 const SET_GAME_ROOM = 'broadcast/SET_GAME_ROOM';
+const CHANGE_TEAM = 'broadcast/CHANGE_TEAM';
 
 // actions creator
 export const addChattingMessage = createAction(ADD_CHATTING_MESSAGE);
@@ -15,13 +16,15 @@ export const setAllPlayData = createAction(SET_ALL_PLAY_DATA);
 export const setUserInfo = createAction(SET_USER_INFO);
 export const setLobbyData = createAction(SET_LOBBY_DATA);
 export const setGameRoom = createAction(SET_GAME_ROOM);
+export const changeTeam = createAction(CHANGE_TEAM);
 
 const initialState = {
   chattingMessages: [],
   allGroundData: [null, null, null, null, null, null],
   userInfo: {name: 'geust', emoji: '🐗'},
   lobbyData: {gameList: [], waitingUserList: []},
-  gameRoom: null
+  gameRoom: null,
+  team: 'individual'
 }
 
 // reducer
@@ -66,6 +69,13 @@ export default handleActions({
     return {
       ...state,
       userInfo
+    }
+  },
+  [CHANGE_TEAM]: (state, action) => {
+    const { payload: team } = action;
+    return {
+      ...state,
+      team
     }
   }
 }, initialState);

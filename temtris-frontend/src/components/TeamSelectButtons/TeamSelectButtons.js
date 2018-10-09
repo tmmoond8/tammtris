@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from './TeamSelectRadioButton.scss';
+import styles from './TeamSelectButtons.scss';
 import classNames from 'classnames/bind';
 import { GoFlame } from 'react-icons/go';
 import { TiLeaf } from 'react-icons/ti';
@@ -7,28 +7,18 @@ import { MdInvertColors, MdFilterVintage } from 'react-icons/md';
 
 const cx = classNames.bind(styles);
 
-class TeamSelectRadioButton extends Component {
-    state = {
-        select: 'individual'
-    }
-
-    isSelected = (item) => this.state.select === item;
-    selectItem = (item) => {
-        this.props.onChangeTeam(item);
-        this.setState({ select: item })
-    }
+class TeamSelectButtons extends Component {
     renderItem = ((name, icon) => {
-        const { selectItem, isSelected }  = this;
+        const { onChangeTeam, isSelected }  = this.props;
         return (
             <div className={cx('team-select-item')}>
                 <div className={cx('team-select-icon', name, {selected: isSelected(name)})}
-                    onClick={() => selectItem(name)}>
+                    onClick={() => onChangeTeam(name)}>
                     {icon}
                 </div>
             </div>
         )
     })
-
 
     render() {
         const { renderItem } = this;
@@ -43,4 +33,4 @@ class TeamSelectRadioButton extends Component {
     }
 };
 
-export default TeamSelectRadioButton;
+export default TeamSelectButtons;
