@@ -67,9 +67,9 @@ module.exports = function(io) {
 
 		socket.on(GAME_START, () => {
 			const gameManager = lobbyManager.getGameManager(socket.chattingChannel);
-			if(gameManager.gameState === GAME_STATE.PLAY) return;
-			gameManager.gameState = GAME_STATE.PLAY;
-			io.to(socket.chattingChannel).emit(GAME_START);
+			if(gameManager.gameStart()) {
+				io.to(socket.chattingChannel).emit(GAME_START);
+			}
 		})
 
 		socket.on(GAME_TEAM_CHANGE, (msg) => {
@@ -102,7 +102,11 @@ module.exports = function(io) {
     check(socket, req) {
       const { gameNumber } = req;
       lobbyManager.gameCheck(gameNumber, socket.userInfo, () => {
-				io.to(socket.userInfo.id).emit(GAME_CHECK, lobbyManager.getGameManager(gameNumber))
+				const gameRoom = {
+					...lobbyManager.getGameManager(gameNumber)
+				};
+				delete gameRoom.gameData;
+				io.to(socket.userInfo.id).emit(GAME_CHECK, gameRoom);
 			});
     },
     join(socket, req) {
@@ -129,10 +133,10 @@ module.exports = function(io) {
 			const { userInfo, gameData, gameState } = req;
 			userInfo.gameData = gameData;
 			userInfo.gameState = gameState;
-			lobbyManager.getGameManager(chattingChannel).put(userInfo);
+			lobbyManager.getGameManager(chattingChannel).updateGameData(userInfo);
 			io.to(chattingChannel).emit(GAME_DATA, lobbyManager.getGameManager(chattingChannel).gameData);
 			// 게임에서 단 한유저만 남게되면 gameResult를 브로드캐스트 한다.
-			userInfo.gameState === GAME_STATE.GAME_OVER && lobbyManager.getGameManager(chattingChannel).gameOver((gameResult)=> {
+			gameState === GAME_STATE.GAME_OVER && lobbyManager.getGameManager(chattingChannel).gameOver(userInfo, (gameResult)=> {
 				io.to(chattingChannel).emit(GAME_RESULT, gameResult)
 			});
 		}
@@ -155,7 +159,8 @@ module.exports = function(io) {
 
   const changeTeam = (socket, msg) => {
 		const { chattingChannel } = socket;
-		lobbyManager.getGameManager(chattingChannel).changeTeam(msg, () => {
+		const { userInfo, team } = msg;
+		lobbyManager.getGameManager(chattingChannel).changeTeam (userInfo, team, () => {
 			io.to(chattingChannel).emit(GAME_DATA, lobbyManager.getGameManager(chattingChannel).gameData);
 		});
   }

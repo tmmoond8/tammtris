@@ -63,10 +63,10 @@ describe('게임 만들어서 실행시키고 종료하기', () => {
     game.put(user[0]);
     game.put(user[1]);
     expect(game.gameData[1].team).to.equal('individual');
-    game.changeTeam({ userInfo: user[1], team: 'red' }, () => {});
+    game.changeTeam(user[1], 'red', () => {});
     expect(game.gameData[1].team).to.equal('red');
     game.gameStart();
-    game.changeTeam({ userInfo: user[1], team: 'blue' }); // 게임이 시작되면 팀을 바꿀수 없다.
+    game.changeTeam(user[1], 'blue', () => {}); // 게임이 시작되면 팀을 바꿀수 없다.
     expect(game.gameData[1].team).to.equal('red');
   });
 
@@ -101,16 +101,13 @@ describe('게임 만들어서 실행시키고 종료하기', () => {
     game.gameStart();
     expect(game.gameState).to.equal(GAME_STATE.PLAY);
     
-    game.put({ ...user[0], gameState: GAME_STATE.GAME_OVER });
-    game.gameOver(() => {});
+    game.gameOver(user[0], () => {});
     expect(game.gameState).to.equal(GAME_STATE.PLAY);
     
-    game.put({ ...user[1], gameState: GAME_STATE.GAME_OVER });
-    game.gameOver(() => {});
+    game.gameOver(user[1], () => {});
     expect(game.gameState).to.equal(GAME_STATE.PLAY);
     
-    game.put({ ...user[3], gameState: GAME_STATE.GAME_OVER });
-    game.gameOver(() => {});
+    game.gameOver(user[3], () => {});
     expect(game.gameState).to.equal(GAME_STATE.READY);
   })
 
@@ -123,26 +120,27 @@ describe('게임 만들어서 실행시키고 종료하기', () => {
     game.put(user[3]);
     game.put(user[4]);
     game.put(user[5]);
-    game.changeTeam({ userInfo: user[0], team: 'red' }, () => {});
-    game.changeTeam({ userInfo: user[1], team: 'green' }, () => {});
-    game.changeTeam({ userInfo: user[2], team: 'red' }, () => {});
-    game.changeTeam({ userInfo: user[3], team: 'green' }, () => {});
-    game.changeTeam({ userInfo: user[4], team: 'red' }, () => {});
-    game.changeTeam({ userInfo: user[5], team: 'green' }, () => {});
+    game.changeTeam(user[0], 'red', () => {});
+    game.changeTeam(user[1], 'green', () => {});
+    game.changeTeam(user[2], 'red', () => {});
+    game.changeTeam(user[3], 'green', () => {});
+    game.changeTeam(user[4], 'red', () => {});
+    game.changeTeam(user[5], 'green', () => {});
     game.gameStart();
     expect(game.gameState).to.equal(GAME_STATE.PLAY);
 
-    game.put({ ...user[0], gameState: GAME_STATE.GAME_OVER });
-    game.put({ ...user[1], gameState: GAME_STATE.GAME_OVER });
-    game.gameOver(() => {});
+    // game.put({ ...user[0], gameState: GAME_STATE.GAME_OVER });
+    // game.put({ ...user[1], gameState: GAME_STATE.GAME_OVER });
+    game.gameOver(user[0], () => {});
+    game.gameOver(user[1], () => {});
     expect(game.gameState).to.equal(GAME_STATE.PLAY);
     
-    game.put({ ...user[3], gameState: GAME_STATE.GAME_OVER });
-    game.gameOver(() => {});
+    // game.put({ ...user[3], gameState: GAME_STATE.GAME_OVER });
+    game.gameOver(user[3], () => {});
     expect(game.gameState).to.equal(GAME_STATE.PLAY);
     
-    game.put({ ...user[5], gameState: GAME_STATE.GAME_OVER });
-    game.gameOver(() => {});
+    // game.put({ ...user[5], gameState: GAME_STATE.GAME_OVER });
+    game.gameOver(user[5], () => {});
     expect(game.gameState).to.equal(GAME_STATE.READY);
   })
 
@@ -155,29 +153,25 @@ describe('게임 만들어서 실행시키고 종료하기', () => {
     game.put(user[3]);
     game.put(user[4]);
     game.put(user[5]);
-    game.changeTeam({ userInfo: user[1], team: 'green' }, () => {});
-    game.changeTeam({ userInfo: user[2], team: 'red' }, () => {});
-    game.changeTeam({ userInfo: user[3], team: 'green' }, () => {});
-    game.changeTeam({ userInfo: user[4], team: 'red' }, () => {});
-    game.changeTeam({ userInfo: user[5], team: 'green' }, () => {});
+    game.changeTeam(user[1], 'green', () => {});
+    game.changeTeam(user[2], 'red', () => {});
+    game.changeTeam(user[3], 'green', () => {});
+    game.changeTeam(user[4], 'red', () => {});
+    game.changeTeam(user[5], 'green', () => {});
     game.gameStart();
     expect(game.gameState).to.equal(GAME_STATE.PLAY);
     
-    game.put({ ...user[4], gameState: GAME_STATE.GAME_OVER });
-    game.put({ ...user[1], gameState: GAME_STATE.GAME_OVER });
-    game.gameOver(() => {});
+    game.gameOver(user[4], () => {});
+    game.gameOver(user[1], () => {});
     expect(game.gameState).to.equal(GAME_STATE.PLAY);
 
-    game.put({ ...user[3], gameState: GAME_STATE.GAME_OVER });
-    game.gameOver(() => {});
+    game.gameOver(user[3], () => {});
     expect(game.gameState).to.equal(GAME_STATE.PLAY);
     
-    game.put({ ...user[2], gameState: GAME_STATE.GAME_OVER });
-    game.gameOver(() => {});
+    game.gameOver(user[2], () => {});
     expect(game.gameState).to.equal(GAME_STATE.PLAY);
 
-    game.put({ ...user[5], gameState: GAME_STATE.GAME_OVER });
-    game.gameOver(() => {});
+    game.gameOver(user[5], () => {});
     expect(game.gameState).to.equal(GAME_STATE.READY);
   })
 })

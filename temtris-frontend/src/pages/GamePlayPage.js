@@ -7,10 +7,11 @@ const GamePlayPage = () => {
   const style = {
     display: 'flex',
     flexDirection: 'row',
-    background: '$oc-gray-2',
-    minWidth: `34 * block-sizes-for('normal')`,
+    background: '#f9f9f9',
+    minWidth: '55rem',
     justifyContent: 'center',
     alignItems: 'center',
+    height: '100vh',
   }
 
   const otherPlayGroundStyle = {
