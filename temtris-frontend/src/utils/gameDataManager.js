@@ -43,7 +43,7 @@ class GameDataManager {
   })()
 
    handleArrowKey = (state, playerBlocksFunc, stopCallback) => {
-    const { gameGroundData, playerBlocks, gameState } = state;
+    const { gameGroundData, playerBlocks } = state;
     const gameData = gameGroundData.map(line => line.map(dot => dot));
     playerBlocks.getShape().forEach(item => {
       gameData[item.y][item.x] = block.EMPTY;
