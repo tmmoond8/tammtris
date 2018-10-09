@@ -85,18 +85,20 @@ class gameManager {
   gameOver({id}, socketEmit) {
     const player = this.getPlayer(id);
     player.gameState = GAME_STATE.GAME_OVER;
-    const playingTeam = this.getTeam(this.gameData.filter(item => item && item.gameState !== GAME_STATE.GAME_OVER));
-    if(playingTeam.size < 2) {
+    const playingUsers = this.gameData.filter(item => item && item.gameState !== GAME_STATE.GAME_OVER);
+    if(playingUsers.length < 2) {
       this.gameState = GAME_STATE.READY;
-      // const winner = Object.keys(playingTeam).filter(key => key !== 'size');
+      const winner = playingUsers[0]['team'];
            
-      // socketEmit(this.gameData.map(data => {
-      //   if(!data) return data;
-      //   return {
-      //     ...data,
-      //     outcome: winner === data.team ? 'VICTORY' : 'DEFEAT'
-      //   }
-      // }))
+      socketEmit(this.gameData.map(data => {
+        if(!data) return data;
+        const bebe =  winner === data.team ? 'VICTORY' : 'DEFEAT';
+        console.log(bebe);
+        return {
+          ...data,
+          outcome: bebe
+        }
+      }))
       
     }
   }
