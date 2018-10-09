@@ -5,6 +5,7 @@ import GameControl from 'components/GameControl';
 import Actions from 'store/modules';
 import SocketClient from 'lib/SocketClient';
 
+
 class GameControlContainer extends Component {
   constructor(props) {
     super(props);
@@ -41,13 +42,9 @@ class GameControlContainer extends Component {
     SocketClient.sendMessage('game/start', { userInfo });
   }
 
-  handleChangeTeam = (team) => {
-    const { userInfo } = this.props;
-    SocketClient.sendMessage('game/teamChange', { userInfo, team });
-  }
 
   render() {
-    const { handleGameStart, handleMultiGameStart, handleChangeTeam } = this;
+    const { handleGameStart, handleMultiGameStart } = this;
     const { userInfo, chattingMessages, gameState } = this.props;
 
     return (
@@ -56,7 +53,6 @@ class GameControlContainer extends Component {
         chattingMessages={chattingMessages}
         onClickSingle={handleGameStart}
         onClickMulti={handleMultiGameStart}
-        onChangeTeam={handleChangeTeam}
         gameState={gameState}
       />
     )

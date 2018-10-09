@@ -59,25 +59,20 @@ class gameManager {
   }
 
   getTeam(gameData) {
-    const team = {
-      size() {
-        return Object.keys(this).filter(key => key !== 'size').length
-      }
-    };
+    const team = new Map();
     gameData.forEach(data => {
-      if(!data) return;
-      if(data.team === 'individual') {
-        team[data.id] = data;
+      if (!data) return data;
+      if (data.team === 'individual') {
+        team.set(data.id, data);
       } else {
-        team[data.team] = team[data.team] || [];
-        team[data.team].push(data);
+        team.has(data.team) ? team.get(data.team).push(data) : team.set(data.team, [data]);
       }
     });
     return team;
   }
 
   gameStart() {
-    if(this.gameState === GAME_STATE.PLAY || this.getTeam(this.gameData).size() < 2) return false;
+    if(this.gameState === GAME_STATE.PLAY || this.getTeam(this.gameData).size < 2) return false;
     this.gameState = GAME_STATE.PLAY;
     this.gameData.filter(item => !!item).forEach(item => {
       item.gameState = GAME_STATE.READY;
@@ -91,19 +86,17 @@ class gameManager {
     const player = this.getPlayer(id);
     player.gameState = GAME_STATE.GAME_OVER;
     const playingTeam = this.getTeam(this.gameData.filter(item => item && item.gameState !== GAME_STATE.GAME_OVER));
-    if(playingTeam.size() < 2) {
+    if(playingTeam.size < 2) {
       this.gameState = GAME_STATE.READY;
-
-      const winner = Object.keys(playingTeam).filter(key => key !== 'size');
-      
-      
-      socketEmit(this.gameData.map(data => {
-        if(!data) return data;
-        return {
-          ...data,
-          outcome: winner === data.team ? 'VICTORY' : 'DEFEAT'
-        }
-      }))
+      // const winner = Object.keys(playingTeam).filter(key => key !== 'size');
+           
+      // socketEmit(this.gameData.map(data => {
+      //   if(!data) return data;
+      //   return {
+      //     ...data,
+      //     outcome: winner === data.team ? 'VICTORY' : 'DEFEAT'
+      //   }
+      // }))
       
     }
   }

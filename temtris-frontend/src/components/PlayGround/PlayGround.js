@@ -9,7 +9,6 @@ const cx = classNames.bind(styles);
 
 class PlayGround extends Component{
   handleKeyPress = (e) => {
-    console.log(e.nativeEvent.code);
     this.props.onPlayerKeyDown(e.nativeEvent.code);
   }
 

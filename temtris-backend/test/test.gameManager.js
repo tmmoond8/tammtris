@@ -76,19 +76,19 @@ describe('게임 만들어서 실행시키고 종료하기', () => {
     game.put(user[1]);
     game.put(user[2]);
     game.put(user[3]);
-    expect(game.getTeam(game.gameData).size()).to.equal(4);
-    game.put({ ...user[2], team: 'red'})
-    expect(game.getTeam(game.gameData).size()).to.equal(4);
-    game.put({ ...user[1], team: 'blue'})
-    expect(game.getTeam(game.gameData).size()).to.equal(4);
-    game.put({ ...user[1], team: 'green'})
-    expect(game.getTeam(game.gameData).size()).to.equal(4);
-    game.put({ ...user[0], team: 'green'})
-    expect(game.getTeam(game.gameData).size()).to.equal(3);
-    game.put({ ...user[3], team: 'blue'})
-    expect(game.getTeam(game.gameData).size()).to.equal(3);
-    game.put({ ...user[3], team: 'red'})
-    expect(game.getTeam(game.gameData).size()).to.equal(2);
+    expect(game.getTeam(game.gameData).size).to.equal(4);
+    game.changeTeam(user[2], 'red', () => {});
+    expect(game.getTeam(game.gameData).size).to.equal(4);
+    game.changeTeam(user[1], 'blue', () => {});
+    expect(game.getTeam(game.gameData).size).to.equal(4);
+    game.changeTeam(user[1], 'green', () => {});
+    expect(game.getTeam(game.gameData).size).to.equal(4);
+    game.changeTeam(user[0], 'green', () => {});
+    expect(game.getTeam(game.gameData).size).to.equal(3);
+    game.changeTeam(user[3], 'blue', () => {});
+    expect(game.getTeam(game.gameData).size).to.equal(3);
+    game.changeTeam(user[3], 'red', () => {});
+    expect(game.getTeam(game.gameData).size).to.equal(2);
   })
 
   it('게임 오버 검증 - 개인전', () => {

@@ -162,6 +162,7 @@ module.exports = function(io) {
 		const { userInfo, team } = msg;
 		lobbyManager.getGameManager(chattingChannel).changeTeam (userInfo, team, () => {
 			io.to(chattingChannel).emit(GAME_DATA, lobbyManager.getGameManager(chattingChannel).gameData);
+			io.to(userInfo.id).emit(GAME_TEAM_CHANGE, team);
 		});
   }
 };

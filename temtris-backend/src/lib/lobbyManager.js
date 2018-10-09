@@ -42,7 +42,7 @@ const lobbyManager = {
 	},
 
 	lobbyOut(user) {
-		waitingUserList = waitingUserList.filter(item => item.id !== user.id);
+		waitingUserList = waitingUserList.filter(item => (user && item.id !== user.id));
 	}
 };
 

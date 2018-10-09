@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
 import classNames from 'classnames/bind';
 import styles from './GameControl.scss';
-import StartButton from '../StartButton';
-import SinglePlayButton from '../SinglePlayButton';
-import TeamSelectRadioButton from '../TeamSelectRadioButton';
-import Chat from '../Chat';
+import { Link } from 'react-router-dom';
+import StartButton from 'components/StartButton';
+import SinglePlayButton from 'components/SinglePlayButton';
+import TeamSelectButtonsContainer from 'containers/TeamSelectButtonsContainer';
+import Chat from 'components/Chat';
 
 const cx = classNames.bind(styles);
 
 class GameControl extends Component {
   render() {
 
-    const { userInfo, chattingMessages, onClickSingle, onClickMulti, gameState, onChangeTeam } = this.props;
+    const { userInfo, chattingMessages, onClickSingle, onClickMulti, gameState } = this.props;
 
     return (
       <div className={cx('game-control')}>
-        <div className={cx('game-control-logo')}>temtris</div>
+        <Link to="/" className={cx('game-control-logo')}>temtris</Link>
         <Chat userInfo={userInfo} chattingMessages={chattingMessages}/>
-        <TeamSelectRadioButton onChangeTeam={onChangeTeam}/>
+        <TeamSelectButtonsContainer/>
         <StartButton onClickMulti={onClickMulti} gameState={gameState}/>
         <SinglePlayButton onClickSingle={onClickSingle} gameState={gameState}/>
       </div>
