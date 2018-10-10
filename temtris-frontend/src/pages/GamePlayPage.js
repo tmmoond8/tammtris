@@ -2,9 +2,11 @@ import React from 'react';
 import PlayGroundContainer from 'containers/PlayGroundContainer';
 import GameControlContainer from 'containers/GameControlContainer';
 import OtherPlayGroundsContainer from 'containers/OtherPlayGroundsContainer';
+import GameResult from 'components/GameResult';
 
 const GamePlayPage = () => {
   const style = {
+    position: 'relative',
     display: 'flex',
     flexDirection: 'row',
     background: '#f9f9f9',
@@ -37,6 +39,7 @@ const GamePlayPage = () => {
         <PlayGroundContainer/>
       </div>
       <GameControlContainer/>
+      <GameResult/>
     </div>
   )
 }

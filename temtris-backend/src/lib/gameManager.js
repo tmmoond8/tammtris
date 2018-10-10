@@ -88,17 +88,17 @@ class gameManager {
     const playingUsers = this.gameData.filter(item => item && item.gameState !== GAME_STATE.GAME_OVER);
     if(playingUsers.length < 2) {
       this.gameState = GAME_STATE.READY;
-      const winner = playingUsers[0]['team'];
+      // const winner = playingUsers[0]['team'];
            
-      socketEmit(this.gameData.map(data => {
-        if(!data) return data;
-        const bebe =  winner === data.team ? 'VICTORY' : 'DEFEAT';
-        console.log(bebe);
-        return {
-          ...data,
-          outcome: bebe
-        }
-      }))
+      // socketEmit(this.gameData.map(data => {
+      //   if(!data) return data;
+      //   const bebe =  winner === data.team ? 'VICTORY' : 'DEFEAT';
+      //   console.log(bebe);
+      //   return {
+      //     ...data,
+      //     outcome: bebe
+      //   }
+      // }))
       
     }
   }
