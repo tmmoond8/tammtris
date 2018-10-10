@@ -4,11 +4,9 @@ import className from 'classnames/bind';
 
 const cx = className.bind(styles);
 
-const GameResult = ({team, result}) => {
-  team = 'individual';
-  result = 'vitory';
+const GameResult = ({ team, result, handleClick }) => {
   return (
-    <div className={cx('game-result-area')}>
+    <div className={cx('game-result-area')} onClick={handleClick}>
       <div className={cx('game-result-box', team)}>
         {result.toUpperCase()}!
       </div>

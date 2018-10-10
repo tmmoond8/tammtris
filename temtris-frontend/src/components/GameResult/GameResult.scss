@@ -11,6 +11,8 @@
     font-size: 5rem;
     font-style: italic;
     font-weight: bold;
+    cursor: default;
+    user-select: none;
 
     $shdow_color: rgb(233, 123, 255);
     text-shadow: -1px 0 $shdow_color, 0 1px $shdow_color, 1px 0 $shdow_color, 0 -1px $shdow_color;

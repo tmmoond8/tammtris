@@ -2,7 +2,7 @@ import React from 'react';
 import PlayGroundContainer from 'containers/PlayGroundContainer';
 import GameControlContainer from 'containers/GameControlContainer';
 import OtherPlayGroundsContainer from 'containers/OtherPlayGroundsContainer';
-import GameResult from 'components/GameResult';
+import GameResultContainer from 'containers/GameResultContainer';
 
 const GamePlayPage = () => {
   const style = {
@@ -39,7 +39,7 @@ const GamePlayPage = () => {
         <PlayGroundContainer/>
       </div>
       <GameControlContainer/>
-      <GameResult/>
+      <GameResultContainer/>
     </div>
   )
 }

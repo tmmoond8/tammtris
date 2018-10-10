@@ -42,7 +42,11 @@ class GameDataManager {
     }
   })()
 
-   handleArrowKey = (state, playerBlocksFunc, stopCallback) => {
+  handleGameStop = () => {
+    this.gamePlay.stop();
+  }
+
+  handleArrowKey = (state, playerBlocksFunc, stopCallback) => {
     const { gameGroundData, playerBlocks } = state;
     const gameData = gameGroundData.map(line => line.map(dot => dot));
     playerBlocks.getShape().forEach(item => {
