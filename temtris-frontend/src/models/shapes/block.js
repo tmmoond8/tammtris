@@ -7,10 +7,11 @@ class block {
   static ORANGE = 5;
   static BLUE = 6;
   static CYAN = 7;
+  static TRANSPARENT = -1;
 
   static getBlockColor = (color) => {
     switch(color) {
-      case block.EMPTY: return 'transparent'
+      case block.EMPTY: return 'empty'
       case block.RED: return 'red'
       case block.GRAPE: return 'grape'
       case block.GREEN: return 'green'
@@ -19,7 +20,8 @@ class block {
       case block.BLUE: return 'blue'
       case block.CYAN: return 'cyan'
       case block.BLACK: return 'black'
-      default: return 'transparent';
+      case block.TRANSPARENT: return 'transparent'
+      default: return 'empty';
     }
   }
 

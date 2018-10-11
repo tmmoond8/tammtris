@@ -16,7 +16,7 @@ class OtherPlayGroundsContainer extends Component {
   }
   render() {
     const { allGroundData, userInfo } = this.props;
-    const otherPlayerData = allGroundData.filter((data) => !data || data.id !== userInfo.id);
+    const otherPlayerData = allGroundData.filter((data) => !data || data.id !== userInfo.id).slice(0, 5);
     
     return (
       <OtherPlayGrounds allGroundData={otherPlayerData}/>
