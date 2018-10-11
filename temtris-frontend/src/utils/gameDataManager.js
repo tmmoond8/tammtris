@@ -86,9 +86,9 @@ class GameDataManager {
       nextGameData.unshift(GameDataManager.defaultLine());
     }
 
-    const nextPlayerBlocks = shapeDataManager.getRandomShape();
+    const { playerBlocks, nextBlocks } = shapeDataManager.getNextBlocks();
     let gameState = GAME_STATE.PLAY;
-    nextPlayerBlocks.getShape().forEach(item => {
+    playerBlocks.getShape().forEach(item => {
       if(nextGameData[item.y][item.x] !== block.EMPTY) {
         gameState = GAME_STATE.GAME_OVER;
         this.gamePlay.stop();
@@ -97,9 +97,10 @@ class GameDataManager {
     });
     return {
       gameGroundData: nextGameData,
-      playerBlocks: nextPlayerBlocks,
+      playerBlocks,
       downStop: true, 
-      gameState
+      gameState,
+      nextBlocks
     }
   }
 

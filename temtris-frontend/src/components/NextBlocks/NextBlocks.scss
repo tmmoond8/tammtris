@@ -1,0 +1,24 @@
+.next-blocks {
+  p {
+    display: block;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-size: 2rem;
+    font-style: italic;
+  }
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .next-blocks-next {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .next-blocks-shape {
+    flex: 1;
+  }
+}

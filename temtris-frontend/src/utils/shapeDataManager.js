@@ -12,13 +12,16 @@ class shapeDataManager {
   static shapes = [
     sShape, stickShape, zShape, squareShape, tankShape, ganaShape, noogooShape
   ]
-  static getRandomShape() {
-    if (shapeDataManager.randomShapeQueue.length === 0) {
-      for(let i = 0; i < 10; i++) {
+  static getNextBlocks() {
+    if (shapeDataManager.randomShapeQueue.length < 5) {
+      for(let i = 0; i < 100; i++) {
         shapeDataManager. randomShapeQueue.push(new shapeDataManager.shapes[Math.floor(Math.random()*2147483647 % shapeDataManager.shapes.length)]);
       }
     }
-    return shapeDataManager.randomShapeQueue.shift();
+    return {
+      playerBlocks: shapeDataManager.randomShapeQueue.shift(),
+      nextBlocks: shapeDataManager.randomShapeQueue.slice(0, 2)
+    }
   }
 
   static getEmptyShape() {

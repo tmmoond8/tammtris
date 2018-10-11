@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import styles from './OtherPlayGrounds.scss';
 import classNames from 'classnames/bind';
 import PlayGround from 'components/PlayGround';
-import NextShapes from 'components/NextShapes';
+import NextBlocksContainer from 'containers/NextBlocksContainer';
 
 const cx = classNames.bind(styles);
 
@@ -29,7 +29,7 @@ class OtherPlayGrounds extends Component {
       <div className={cx('other-play-grounds')}> 
         { this.renderPlayGround(allGroundData) }
         <div className={cx('next-shapes')}>
-          <NextShapes/>
+          <NextBlocksContainer/>
         </div>
       </div>
     );

@@ -31,13 +31,14 @@ const gameDataManager = new GameDataManager();
 export default handleActions({
   [PLAYER_KEY_DOWN]: (state, action) => {
     const { payload: keyCode } = action;
-    const { gameGroundData, playerBlocks, downStop, gameState } = gameDataManager.handleKeyPress(keyCode, state);
+    const { gameGroundData, playerBlocks, downStop, gameState, nextBlocks } = gameDataManager.handleKeyPress(keyCode, state);
     return {
       ...state,
       gameGroundData,
       playerBlocks,
       downStop,
-      gameState: gameState || state.gameState
+      gameState: gameState || state.gameState,
+      nextBlocks: nextBlocks ? nextBlocks : state.nextBlocks
     }
   },
   [SINGLE_GAME_START]: (state, action) => {
@@ -45,13 +46,14 @@ export default handleActions({
     if(blockGameState.includes(state.gameState)) return state;
     const { autoDown, mapData } = action.payload;
     const gameGroundData = mapData || GameDataManager.defaultGameData();
-    const playerBlocks = shapeDataManager.getRandomShape();
+    const { playerBlocks, nextBlocks } = shapeDataManager.getNextBlocks();
     GameDataManager.mergePlayerBlocks(gameGroundData, playerBlocks);
     return {
       ...state,
       gameState: gameDataManager.gamePlay.play(autoDown, state.gameState),
       gameGroundData,
-      playerBlocks
+      playerBlocks,
+      nextBlocks
     }
   },
   [GAME_OVER]: (state, action) => {

@@ -20,7 +20,6 @@ class GameResultContainer extends Component {
     const { handleClick } = this;
     const { team, gameResult } = this.props;
     
-    
     if (!gameResult) return null;
 
     return (
