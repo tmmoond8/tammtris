@@ -8,11 +8,17 @@ import noogooShape from 'models/shapes/noogooShape';
 import emptyShape from 'models/shapes/emptyShape';
 
 class shapeDataManager {
+  static randomShapeQueue = [];
   static shapes = [
     sShape, stickShape, zShape, squareShape, tankShape, ganaShape, noogooShape
   ]
   static getRandomShape() {
-    return new shapeDataManager.shapes[Math.floor(Math.random()*2147483647 % shapeDataManager.shapes.length)]
+    if (shapeDataManager.randomShapeQueue.length === 0) {
+      for(let i = 0; i < 10; i++) {
+        shapeDataManager. randomShapeQueue.push(new shapeDataManager.shapes[Math.floor(Math.random()*2147483647 % shapeDataManager.shapes.length)]);
+      }
+    }
+    return shapeDataManager.randomShapeQueue.shift();
   }
 
   static getEmptyShape() {

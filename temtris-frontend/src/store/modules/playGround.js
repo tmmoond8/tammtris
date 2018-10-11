@@ -1,6 +1,6 @@
 import { createAction, handleActions } from 'redux-actions';
 import GameDataManager, { GAME_STATE } from 'utils/gameDataManager';
-import ShapeDataManager from 'utils/shapeDataManager';
+import shapeDataManager from 'utils/shapeDataManager';
 
 // actions types
 
@@ -17,15 +17,9 @@ export const multiGameStart = createAction(MULTI_GAME_START);
 export const gameOver = createAction(GAME_OVER);
 export const gameResult = createAction(GAME_RESULT);
 
-const playerBlocks = ShapeDataManager.getEmptyShape();
-const gameData = GameDataManager.defaultGameData();
-playerBlocks.getShape().forEach(item => {
-  gameData[item.y][item.x] = item.dot;
-});
-
 const initialState = {
-  gameGroundData: gameData,
-  playerBlocks: playerBlocks,
+  gameGroundData: GameDataManager.defaultGameData(),
+  playerBlocks: null,
   gameState: GAME_STATE.READY,
   downStop: false,
   gameResult: null,
@@ -51,7 +45,7 @@ export default handleActions({
     if(blockGameState.includes(state.gameState)) return state;
     const { autoDown, mapData } = action.payload;
     const gameGroundData = mapData || GameDataManager.defaultGameData();
-    const playerBlocks = ShapeDataManager.getRandomShape();
+    const playerBlocks = shapeDataManager.getRandomShape();
     GameDataManager.mergePlayerBlocks(gameGroundData, playerBlocks);
     return {
       ...state,

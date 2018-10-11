@@ -15,16 +15,19 @@ class OtherPlayGroundsContainer extends Component {
     });
   }
   render() {
-    const { allGroundData } = this.props;
+    const { allGroundData, userInfo } = this.props;
+    const otherPlayerData = allGroundData.filter((data) => !data || data.id !== userInfo.id);
+    
     return (
-      <OtherPlayGrounds allGroundData={allGroundData}/>
+      <OtherPlayGrounds allGroundData={otherPlayerData}/>
     )
   }
 }
 
 export default connect(
   (state) => ({
-    allGroundData: state.broadcast.allGroundData,    
+    allGroundData: state.broadcast.allGroundData,
+    userInfo: state.broadcast.userInfo    
   }),
   (dispatch) => ({
     BroadCastActions: () => bindActionCreators(Actions.broadcast, dispatch)
