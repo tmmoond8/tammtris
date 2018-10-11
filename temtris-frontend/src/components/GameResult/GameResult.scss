@@ -1,0 +1,33 @@
+@import 'utils';
+
+.game-result-area {
+  position: absolute;
+  .game-result-box {
+    display: flex;
+    width: 20rem;
+    height: 10rem;
+    justify-content: center;
+    align-items: center;
+    font-size: 5rem;
+    font-style: italic;
+    font-weight: bold;
+    cursor: default;
+    user-select: none;
+
+    $shdow_color: rgb(233, 123, 255);
+    text-shadow: -1px 0 $shdow_color, 0 1px $shdow_color, 1px 0 $shdow_color, 0 -1px $shdow_color;
+    
+    &.red {
+      color: $oc-red-8;
+    }
+    &.green {
+      color: $oc-green-8;
+    }
+    &.blue {
+      color: $oc-blue-8;
+    }
+    &.individual {
+      color: $oc-yellow-8;
+    }
+  }
+}

@@ -8,14 +8,14 @@ const PLAYER_KEY_DOWN = 'gamePlay/PLAYER_KEY_DOWN';
 const SINGLE_GAME_START = 'gamePlay/SINGLE_GAME_START';
 const MULTI_GAME_START = 'gamePlay/MULTI_GAME_START';
 const GAME_OVER = 'gamePlay/GAME_OVER';
-
+const GAME_RESULT = 'gamePlay/RESULT'
 
 // action creator
 export const playerKeyDown = createAction(PLAYER_KEY_DOWN);
 export const singleGameStart = createAction(SINGLE_GAME_START);
 export const multiGameStart = createAction(MULTI_GAME_START);
 export const gameOver = createAction(GAME_OVER);
-
+export const gameResult = createAction(GAME_RESULT);
 
 const playerBlocks = ShapeDataManager.getEmptyShape();
 const gameData = GameDataManager.defaultGameData();
@@ -27,7 +27,8 @@ const initialState = {
   gameGroundData: gameData,
   playerBlocks: playerBlocks,
   gameState: GAME_STATE.READY,
-  downStop: false
+  downStop: false,
+  gameResult: null,
 }
 
 const gameDataManager = new GameDataManager();
@@ -66,4 +67,12 @@ export default handleActions({
       gameState: GAME_STATE.GAME_OVER
     }
   },
+  [GAME_RESULT]: (state, action) => {
+    const { payload: gameResult } = action;
+    gameDataManager.handleGameStop();
+    return {
+      ...state,
+      gameResult
+    }
+  }
 }, initialState);

@@ -20,6 +20,11 @@ class GameControlContainer extends Component {
         autoDown: () => playGroundActions.playerKeyDown('ArrowDown')
       });
     });
+
+    SocketClient.addEventOn('game/result', (response) => {
+      const { playGroundActions } = this;
+      playGroundActions.gameResult(response);
+    });
   }
 
   componentDidMount() {

@@ -75,7 +75,7 @@ class gameManager {
     if(this.gameState === GAME_STATE.PLAY || this.getTeam(this.gameData).size < 2) return false;
     this.gameState = GAME_STATE.PLAY;
     this.gameData.filter(item => !!item).forEach(item => {
-      item.gameState = GAME_STATE.READY;
+      item.gameState = GAME_STATE.PLAY;
       item.gameData = null;
     });
 
@@ -85,19 +85,19 @@ class gameManager {
   gameOver({id}, socketEmit) {
     const player = this.getPlayer(id);
     player.gameState = GAME_STATE.GAME_OVER;
-    const playingTeam = this.getTeam(this.gameData.filter(item => item && item.gameState !== GAME_STATE.GAME_OVER));
+    const playingTeam = this.getTeam(this.gameData.filter(item => item && item.gameState === GAME_STATE.PLAY));
     if(playingTeam.size < 2) {
       this.gameState = GAME_STATE.READY;
-      // const winner = Object.keys(playingTeam).filter(key => key !== 'size');
-           
-      // socketEmit(this.gameData.map(data => {
-      //   if(!data) return data;
-      //   return {
-      //     ...data,
-      //     outcome: winner === data.team ? 'VICTORY' : 'DEFEAT'
-      //   }
-      // }))
-      
+      const winner = playingTeam.keys().next().value;
+      const gameResult = this.gameData.reduce((accum, data) => {
+        if(!data) return accum;
+        accum.push({
+          ...data, 
+          gameResult: (data.team === winner || data.id === winner)  ? 'VICTORY' : 'DEFEAT'
+        });
+        return accum;
+      }, []);
+      socketEmit(gameResult);
     }
   }
 }
