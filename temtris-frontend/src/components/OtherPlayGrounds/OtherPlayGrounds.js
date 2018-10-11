@@ -2,14 +2,14 @@ import React, { Component, Fragment } from 'react';
 import styles from './OtherPlayGrounds.scss';
 import classNames from 'classnames/bind';
 import PlayGround from 'components/PlayGround';
-import Blank from 'components/Blank';
+import NextBlocksContainer from 'containers/NextBlocksContainer';
 
 const cx = classNames.bind(styles);
 
 class OtherPlayGrounds extends Component {
 
   renderPlayGround = (allGroundData) => {
-    return allGroundData.map((gameGroundData, idx) => 
+    return allGroundData.map((gameGroundData, idx) => (
       <div className={cx('other-play-grounds-item')} key={idx}>
         <PlayGround 
           key={idx} 
@@ -19,6 +19,7 @@ class OtherPlayGrounds extends Component {
           gameState={gameGroundData && gameGroundData.gameState} 
           view='view'/>
       </div>
+      )
     )
   }
 
@@ -27,7 +28,9 @@ class OtherPlayGrounds extends Component {
     return (
       <div className={cx('other-play-grounds')}> 
         { this.renderPlayGround(allGroundData) }
-        <Blank name="Next shapes"/>
+        <div className={cx('next-shapes')}>
+          <NextBlocksContainer/>
+        </div>
       </div>
     );
   }

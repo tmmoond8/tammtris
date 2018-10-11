@@ -8,4 +8,8 @@
     margin: .5rem;
     width: 11 * block-sizes-for('view');;
   }
+  .next-shapes {
+    grid-column: 3;
+    grid-row: 1;
+  }
 }
