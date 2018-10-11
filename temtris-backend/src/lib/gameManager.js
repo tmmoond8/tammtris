@@ -88,6 +88,7 @@ class gameManager {
     const playingTeam = this.getTeam(this.gameData.filter(item => item && item.gameState === GAME_STATE.PLAY));
     if(playingTeam.size < 2) {
       this.gameState = GAME_STATE.READY;
+      if(playingTeam.size === 0) return;
       const winner = playingTeam.keys().next().value;
       const gameResult = this.gameData.reduce((accum, data) => {
         if(!data) return accum;
