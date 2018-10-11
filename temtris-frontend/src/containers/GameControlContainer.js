@@ -22,9 +22,7 @@ class GameControlContainer extends Component {
     });
     SocketClient.addEventOn('game/result', (response) => {
       const { playGroundActions } = this;
-      playGroundActions.singleGameStart({
-        autoDown: () => playGroundActions.playerKeyDown('ArrowDown')
-      });
+      playGroundActions.gameResult(response);
     });
   }
 

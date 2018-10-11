@@ -138,9 +138,9 @@ module.exports = function(io) {
 			// 게임에서 단 한유저만 남게되면 gameResult를 브로드캐스트 한다.
 			gameState === GAME_STATE.GAME_OVER && lobbyManager.getGameManager(chattingChannel).gameOver(userInfo, (gameResult)=> {
 				gameResult.forEach(result => {
+					console.log(`${result.id} : ${result.gameResult}`);
 					io.to(result.id).emit(GAME_RESULT, result.gameResult);
 				})
-				// io.to(chattingChannel).emit(GAME_RESULT, gameResult)
 			});
 		}
   }
