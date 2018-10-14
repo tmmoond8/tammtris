@@ -21,7 +21,7 @@ export const changeTeam = createAction(CHANGE_TEAM);
 const initialState = {
   chattingMessages: [],
   allGroundData: [null, null, null, null, null, null],
-  userInfo: {name: 'geust', emoji: '🐗', id: 'testID'},
+  userInfo: {name: 'guest', emoji: '🐗', id: 'testID'},
   lobbyData: {gameList: [], waitingUserList: []},
   gameRoom: null,
   team: 'individual'

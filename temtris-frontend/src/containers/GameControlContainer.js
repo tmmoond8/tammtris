@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { bindActionCreators } from 'redux';
 import GameControl from 'components/GameControl';
 import Actions from 'store/modules';
@@ -16,7 +17,7 @@ class GameControlContainer extends Component {
 
     SocketClient.addEventOn('game/start', (response) => {
       const { playGroundActions } = this;
-      playGroundActions.singleGameStart({
+      playGroundActions.gameStart({
         autoDown: () => playGroundActions.playerKeyDown('ArrowDown')
       });
     });
@@ -27,16 +28,20 @@ class GameControlContainer extends Component {
   }
 
   componentDidMount() {
-    const { userInfo, gameRoom} = this.props;
+    const { userInfo, gameRoom, history } = this.props;
+    if (userInfo.name === 'guest') {
+      history.push('/');
+      return;
+    }
     SocketClient.sendMessage('game/join', {
-      userInfo: userInfo ? userInfo : { name: 'test', emoji: '^^'},
+      userInfo: userInfo,
       gameNumber: gameRoom ? gameRoom.gameNumber : 1
     });
   }
   
-  handleGameStart = () => {
+  handleSingleGameStart = () => {
     const { playGroundActions } = this;
-    playGroundActions.singleGameStart({
+    playGroundActions.gameStart({
       autoDown: () => playGroundActions.playerKeyDown('ArrowDown')
     });
   }
@@ -48,14 +53,14 @@ class GameControlContainer extends Component {
 
 
   render() {
-    const { handleGameStart, handleMultiGameStart } = this;
+    const { handleSingleGameStart, handleMultiGameStart } = this;
     const { userInfo, chattingMessages, gameState } = this.props;
 
     return (
       <GameControl 
         userInfo={userInfo} 
         chattingMessages={chattingMessages}
-        onClickSingle={handleGameStart}
+        onClickSingle={handleSingleGameStart}
         onClickMulti={handleMultiGameStart}
         gameState={gameState}
       />
@@ -74,4 +79,4 @@ export default connect(
     PlayGroundActions: () => bindActionCreators(Actions.playGround, dispatch),
     BroadCastActions: () => bindActionCreators(Actions.broadcast, dispatch)
   })
-)(GameControlContainer);
+)(withRouter(GameControlContainer));

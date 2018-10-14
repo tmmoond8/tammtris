@@ -36,11 +36,11 @@ describe('게임 만들어서 실행시키고 종료하기', () => {
     game.put(user[7]);
     expect(game.gameData[2].id).to.equal(user[2].id);
     expect(game.getPlayerList().length).to.equal(6);
-    game.remove(user[3].id);
+    game.remove(user[3]);
     expect(game.getPlayerList().length).to.equal(5);
-    game.remove(user[5].id);
+    game.remove(user[5]);
     expect(game.getPlayerList().length).to.equal(4);
-    game.remove(user[3].id);
+    game.remove(user[3]);
     expect(game.getPlayerList().length).to.equal(4);
     expect(game.find('vcxvzzxvc')).to.equal(3);
     game.put(user[6]);
