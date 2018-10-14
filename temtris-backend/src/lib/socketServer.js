@@ -127,6 +127,7 @@ module.exports = function(io) {
 				notify(socket, `${userInfo.emoji} ${userInfo.name}님께서 퇴장하셨습니다.`);
 				lobbyManager.getGameManager(chattingChannel).remove(userInfo);
 				socket.leave(chattingChannel);
+				userManager.removeUser(userInfo);
         io.to(chattingChannel).emit(GAME_DATA, lobbyManager.getGameManager(chattingChannel).gameData);
       }
 		},
