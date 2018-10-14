@@ -5,15 +5,13 @@ import shapeDataManager from 'utils/shapeDataManager';
 // actions types
 
 const PLAYER_KEY_DOWN = 'gamePlay/PLAYER_KEY_DOWN';
-const SINGLE_GAME_START = 'gamePlay/SINGLE_GAME_START';
-const MULTI_GAME_START = 'gamePlay/MULTI_GAME_START';
+const GAME_START = 'gamePlay/GAME_START';
 const GAME_OVER = 'gamePlay/GAME_OVER';
 const GAME_RESULT = 'gamePlay/RESULT'
 
 // action creator
 export const playerKeyDown = createAction(PLAYER_KEY_DOWN);
-export const singleGameStart = createAction(SINGLE_GAME_START);
-export const multiGameStart = createAction(MULTI_GAME_START);
+export const gameStart = createAction(GAME_START);
 export const gameOver = createAction(GAME_OVER);
 export const gameResult = createAction(GAME_RESULT);
 
@@ -41,7 +39,7 @@ export default handleActions({
       nextBlocks: nextBlocks ? nextBlocks : state.nextBlocks
     }
   },
-  [SINGLE_GAME_START]: (state, action) => {
+  [GAME_START]: (state, action) => {
     const blockGameState = [GAME_STATE.PLAY];
     if(blockGameState.includes(state.gameState)) return state;
     const { autoDown, mapData } = action.payload;
@@ -53,9 +51,11 @@ export default handleActions({
       gameState: gameDataManager.gamePlay.play(autoDown, state.gameState),
       gameGroundData,
       playerBlocks,
-      nextBlocks
+      nextBlocks,
+      gameResult: null
     }
   },
+
   [GAME_OVER]: (state, action) => {
     gameDataManager.gamePlay.stop();
     return {
@@ -68,6 +68,7 @@ export default handleActions({
     gameDataManager.handleGameStop();
     return {
       ...state,
+      gameState: GAME_STATE.READY,
       gameResult
     }
   }

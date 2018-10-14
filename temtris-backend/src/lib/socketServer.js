@@ -94,6 +94,7 @@ module.exports = function(io) {
 			const { userInfo } = socket;
 			socket.leave(LOBBY);
 			lobbyManager.lobbyOut(userInfo);
+			userManager.removeUser(userInfo);
 			io.to(LOBBY).emit(LOBBY_DATA, lobbyManager.getLobbyData());
 		}
   }
@@ -122,8 +123,9 @@ module.exports = function(io) {
     out(socket) {
       const { userInfo, chattingChannel } = socket;
       if (userInfo && !!lobbyManager.getGameManager(chattingChannel)) {
-        notify(socket, `${userInfo.emoji} ${userInfo.name}님께서 퇴장하셨습니다.`);
-				lobbyManager.getGameManager(chattingChannel).remove(userInfo.id);
+				this.gameOver(socket, { userInfo });
+				notify(socket, `${userInfo.emoji} ${userInfo.name}님께서 퇴장하셨습니다.`);
+				lobbyManager.getGameManager(chattingChannel).remove(userInfo);
 				socket.leave(chattingChannel);
         io.to(chattingChannel).emit(GAME_DATA, lobbyManager.getGameManager(chattingChannel).gameData);
       }
@@ -135,10 +137,13 @@ module.exports = function(io) {
 			userInfo.gameState = gameState;
 			lobbyManager.getGameManager(chattingChannel).updateGameData(userInfo);
 			io.to(chattingChannel).emit(GAME_DATA, lobbyManager.getGameManager(chattingChannel).gameData);
-			// 게임에서 단 한유저만 남게되면 gameResult를 브로드캐스트 한다.
-			gameState === GAME_STATE.GAME_OVER && lobbyManager.getGameManager(chattingChannel).gameOver(userInfo, (gameResult)=> {
+			gameState === GAME_STATE.GAME_OVER && this.gameOver(socket, req);
+		},
+		gameOver(socket, req) {
+			const { chattingChannel } = socket;
+			const { userInfo } = req;
+			lobbyManager.getGameManager(chattingChannel).gameOver(userInfo, (gameResult)=> {
 				gameResult.forEach(result => {
-					console.log(`${result.id} : ${result.gameResult}`);
 					io.to(result.id).emit(GAME_RESULT, result.gameResult);
 				})
 			});

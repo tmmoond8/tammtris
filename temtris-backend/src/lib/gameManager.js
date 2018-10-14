@@ -44,9 +44,11 @@ class gameManager {
     return this.gameData.filter(user => user).length === 6;
   }
 
-  remove(userId) {
+  remove(userInfo) {
+    if(!userInfo) return;
+    const { id } = userInfo;
     this.gameData = this.gameData.map(user => {
-      return user && user.id !== userId ? user : null
+      return (user && user.id !== id) ? user : null
     });
   }
 
@@ -82,7 +84,9 @@ class gameManager {
     return true;
   }
 
-  gameOver({id}, socketEmit) {
+  gameOver(userInfo, socketEmit) {
+    if(!userInfo) return;
+    const { id } = userInfo;
     const player = this.getPlayer(id);
     player.gameState = GAME_STATE.GAME_OVER;
     const playingTeam = this.getTeam(this.gameData.filter(item => item && item.gameState === GAME_STATE.PLAY));
@@ -92,8 +96,9 @@ class gameManager {
       const winner = playingTeam.keys().next().value;
       const gameResult = this.gameData.reduce((accum, data) => {
         if(!data) return accum;
+        data.gameState = GAME_STATE.READY;
         accum.push({
-          ...data, 
+          ...data,
           gameResult: (data.team === winner || data.id === winner)  ? 'VICTORY' : 'DEFEAT'
         });
         return accum;
