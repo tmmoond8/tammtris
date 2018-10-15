@@ -31,6 +31,7 @@
   }
 
   .block-line {
+    display: flex;
     height: block-sizes-for('normal');
     &.view {
       height: block-sizes-for('view');
@@ -40,6 +41,7 @@
     padding: .5rem;
     flex: 1;
     width: auto;
+    font-size: 0.6rem;
   }
 }
 

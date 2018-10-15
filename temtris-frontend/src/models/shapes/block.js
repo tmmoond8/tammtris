@@ -1,3 +1,4 @@
+
 class block {
   static EMPTY = 0;
   static RED = 1;
@@ -7,10 +8,16 @@ class block {
   static ORANGE = 5;
   static BLUE = 6;
   static CYAN = 7;
+  static ITEM_UP1 = 11;
+  static ITEM_DOWN1 = 12;
+  static ITEM_UP3 = 13;
+  static ITEM_DOWN3 = 14;
+  static ITEM_CLEAR = 15;
+  static ITEM_BOMB = 16;
   static TRANSPARENT = -1;
 
-  static getBlockColor = (color) => {
-    switch(color) {
+  static getBlockColor = (dot) => {
+    switch(dot) {
       case block.EMPTY: return 'empty'
       case block.RED: return 'red'
       case block.GRAPE: return 'grape'
@@ -19,8 +26,16 @@ class block {
       case block.ORANGE: return 'orange'
       case block.BLUE: return 'blue'
       case block.CYAN: return 'cyan'
-      case block.BLACK: return 'black'
+      case block.ITEM_UP1: 
+      case block.ITEM_UP3: 
+      case block.ITEM_BOMB: 
+        return 'pink'
+        case block.ITEM_DOWN1: 
+        case block.ITEM_DOWN3: 
+        case block.ITEM_CLEAR: 
+          return 'lime'
       case block.TRANSPARENT: return 'transparent'
+      
       default: return 'empty';
     }
   }

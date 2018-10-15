@@ -6,14 +6,20 @@ $YELLOW : #FFD43B;
 $ORANGE : #D9480F;
 $BLUE : #1864AB;
 $CYAN : #3BC9DB;
+$PINK : #ff69b4;
+$LIME : #BFFF00;
 
 .dot-block {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: block-sizes-for('normal');
   height: block-sizes-for('normal');
   border: solid 0.1px $oc-gray-4;
   margin-right: -1px;
   margin-bottom: -1px;
+  color: $oc-gray-9;
+
   &.red {
     border: solid 0.1px $RED;
     background: -webkit-linear-gradient(-225deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.0470588) 50%), -webkit-linear-gradient(45deg, rgba(0,0,0,0) 50%, rgba(255,255,255,0.2) 50%), -webkit-linear-gradient(-225deg, $RED 0, $RED 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-135deg, $RED 0, $RED 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-45deg, $RED 0, $RED 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-225deg, $RED 0, $RED 25%, rgba(0,0,0,0) 25%), $RED;
@@ -49,9 +55,14 @@ $CYAN : #3BC9DB;
     background: -webkit-linear-gradient(-225deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.0470588) 50%), -webkit-linear-gradient(45deg, rgba(0,0,0,0) 50%, rgba(255,255,255,0.2) 50%), -webkit-linear-gradient(-225deg, $CYAN 0, $CYAN 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-135deg, $CYAN 0, $CYAN 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-45deg, $CYAN 0, $CYAN 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-225deg, $CYAN 0, $CYAN 25%, rgba(0,0,0,0) 25%), $CYAN;
   }
 
-  &.black {
-    border: solid 0.1px $oc-red-9;
-    background: -webkit-linear-gradient(-225deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.0470588) 50%), -webkit-linear-gradient(45deg, rgba(0,0,0,0) 50%, rgba(255,255,255,0.2) 50%), -webkit-linear-gradient(-225deg, #FF0000 0, #FF0000 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-135deg, #FF0000 0, #FF0000 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-45deg, #FF0000 0, #FF0000 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-225deg, #FF0000 0, #FF0000 25%, rgba(0,0,0,0) 25%), #ff0000;
+  &.pink {
+    border: solid 0.1px $PINK;
+    background: -webkit-linear-gradient(-225deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.0470588) 50%), -webkit-linear-gradient(45deg, rgba(0,0,0,0) 50%, rgba(255,255,255,0.2) 50%), -webkit-linear-gradient(-225deg, $PINK 0, $PINK 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-135deg, $PINK 0, $PINK 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-45deg, $PINK 0, $PINK 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-225deg, $PINK 0, $PINK 25%, rgba(0,0,0,0) 25%), $PINK;
+  }
+
+  &.lime {
+    border: solid 0.1px $LIME;
+    background: -webkit-linear-gradient(-225deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.0470588) 50%), -webkit-linear-gradient(45deg, rgba(0,0,0,0) 50%, rgba(255,255,255,0.2) 50%), -webkit-linear-gradient(-225deg, $LIME 0, $LIME 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-135deg, $LIME 0, $LIME 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-45deg, $LIME 0, $LIME 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-225deg, $LIME 0, $LIME 25%, rgba(0,0,0,0) 25%), $LIME;
   }
 
   &.transparent {
@@ -62,5 +73,9 @@ $CYAN : #3BC9DB;
   &.small {
     width: block-sizes-for('view');
     height: block-sizes-for('view');
+  }
+  &.small:after {
+    font-size: 0.7rem;
+    margin-top: 0px;
   }
 }
