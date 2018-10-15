@@ -78,11 +78,13 @@ class GameDataManager {
       if(line.includes(block.EMPTY)) {
         return line.map(dot => dot)
       } else {
+        // 여기서 아이템이 있는지 체킹하자.
         return null;
       }
     });
     nextGameData = nextGameData.filter(item => item !== null);
     while(nextGameData.length < SIZE_Y) {
+      // 여기에 아이템 블럭을 넣을 수 있겠다.
       nextGameData.unshift(GameDataManager.defaultLine());
     }
 
