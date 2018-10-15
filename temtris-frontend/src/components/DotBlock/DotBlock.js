@@ -2,7 +2,14 @@ import React, { Component } from 'react';
 import styles from './DotBlock.scss';
 import classNames from 'classnames/bind';
 import block from 'models/shapes/block';
-import { FaAngleUp, FaAngleDoubleUp, FaAngleDown, FaAngleDoubleDown } from 'react-icons/fa';
+import { 
+  FaAngleUp, 
+  FaAngleDoubleUp, 
+  FaAngleDown, 
+  FaAngleDoubleDown,
+  FaFeather,
+  FaBomb,
+} from 'react-icons/fa';
 
 
 const cx = classNames.bind(styles);
@@ -14,7 +21,9 @@ class DotBlock extends Component {
       [block.ITEM_UP1]: <FaAngleUp/>,
       [block.ITEM_DOWN1]: <FaAngleDown/>,
       [block.ITEM_UP3]: <FaAngleDoubleUp/>,
-      [block.ITEM_DOWN3]: <FaAngleDoubleDown/>
+      [block.ITEM_DOWN3]: <FaAngleDoubleDown/>,
+      [block.ITEM_CLEAR]: <FaFeather/>,
+      [block.ITEM_BOMB]: <FaBomb/>,
     }
   }
 

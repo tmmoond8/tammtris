@@ -12,6 +12,8 @@ class block {
   static ITEM_DOWN1 = 12;
   static ITEM_UP3 = 13;
   static ITEM_DOWN3 = 14;
+  static ITEM_CLEAR = 15;
+  static ITEM_BOMB = 16;
   static TRANSPARENT = -1;
 
   static getBlockColor = (dot) => {
@@ -26,9 +28,11 @@ class block {
       case block.CYAN: return 'cyan'
       case block.ITEM_UP1: 
       case block.ITEM_UP3: 
+      case block.ITEM_BOMB: 
         return 'pink'
         case block.ITEM_DOWN1: 
         case block.ITEM_DOWN3: 
+        case block.ITEM_CLEAR: 
           return 'lime'
       case block.TRANSPARENT: return 'transparent'
       

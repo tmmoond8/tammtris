@@ -48,6 +48,8 @@ export default handleActions({
     tempMap[17][5] = 13;
     tempMap[18][4] = 12;
     tempMap[18][5] = 14;
+    tempMap[16][5] = 15;
+    tempMap[16][4] = 16;
     const gameGroundData = tempMap || GameDataManager.defaultGameData();
     const { playerBlocks, nextBlocks } = shapeDataManager.getNextBlocks();
     GameDataManager.mergePlayerBlocks(gameGroundData, playerBlocks);
