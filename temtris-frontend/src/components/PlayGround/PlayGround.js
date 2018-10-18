@@ -3,6 +3,7 @@ import styles from './PlayGround.scss';
 import classNames from 'classnames/bind';
 import DotBlock from 'components/DotBlock';
 import UserPanel from 'components/UserPanel';
+import ItemBox from 'components/ItemBox';
 import GameDataManger, { GAME_STATE } from 'utils/gameDataManager';
 
 const cx = classNames.bind(styles);
@@ -46,11 +47,12 @@ class PlayGround extends Component{
 
   render() {
     const { handleKeyPress } = this;
-    const { gameGroundData, userInfo, view, gameState, userIndex } = this.props;
+    const { gameGroundData, userInfo, view, gameState, userIndex, gameItems } = this.props;
     const team = userInfo && userInfo.team;
     const styles = view ? {} : { tabIndex: "0"};
     return (
       <Fragment>
+        <ItemBox gameItems={gameItems} view={view}/>
         <div className={cx('play-ground', view, team)} onKeyDown={handleKeyPress} {...styles}>  
           <UserPanel userInfo={userInfo} view={view} userIndex={userIndex}/>
           <div style={{position: 'relative', background: 'white'}}>

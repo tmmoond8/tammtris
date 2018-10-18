@@ -40,17 +40,18 @@ class PlayGroundContainer extends Component {
 
   render() {
     const { handlePlayerKeyDown } = this;
-    const { allGroundData, gameGroundData, playerBlocks, userInfo, gameState } = this.props;
+    const { allGroundData, gameGroundData, playerBlocks, userInfo, gameState, gameItems } = this.props;
     let index = allGroundData.findIndex(item => !!item && item.id === userInfo.id);
     
     return (
       <PlayGround
           gameGroundData = {gameGroundData}
           userIndex={index + 1}
-          playerBlocks = {playerBlocks}
-          userInfo = {allGroundData[index] ? allGroundData[index] : userInfo}
-          onPlayerKeyDown = {handlePlayerKeyDown}
-          gameState = {gameState}
+          playerBlocks={playerBlocks}
+          userInfo={allGroundData[index] ? allGroundData[index] : userInfo}
+          onPlayerKeyDown={handlePlayerKeyDown}
+          gameState={gameState}
+          gameItems={gameItems}
         />
     );
   }
@@ -65,7 +66,8 @@ export default connect(
     userInfo: state.broadcast.userInfo,
     chattingMessages: state.broadcast.chattingMessages,
     gameRoom: state.broadcast.gameRoom,
-    allGroundData: state.broadcast.allGroundData,    
+    allGroundData: state.broadcast.allGroundData,   
+    gameItems: state.playGround.gameItems 
   }),
   (dispatch) => ({
     PlayGroundActions: () => bindActionCreators(Actions.playGround, dispatch),

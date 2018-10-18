@@ -7,6 +7,7 @@
   .other-play-grounds-item {
     margin: .5rem;
     width: 11 * block-sizes-for('view');
+    display: flex;
   }
   .next-shapes {
     grid-column: 3;
