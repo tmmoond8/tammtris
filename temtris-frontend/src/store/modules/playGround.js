@@ -33,14 +33,17 @@ const gameDataManager = new GameDataManager();
 export default handleActions({
   [PLAYER_KEY_DOWN]: (state, action) => {
     const { payload: keyCode } = action;
-    const { gameGroundData, playerBlocks, downStop, gameState, nextBlocks } = gameDataManager.handleKeyPress(keyCode, state);
+    const { gameGroundData, playerBlocks, downStop, gameState, nextBlocks, itemBlocks } = gameDataManager.handleKeyPress(keyCode, state);
+    const gameItem = state.gameItems;
+    gameItem[0] = itemBlocks[0];
     return {
       ...state,
       gameGroundData,
       playerBlocks,
       downStop,
       gameState: gameState || state.gameState,
-      nextBlocks: nextBlocks ? nextBlocks : state.nextBlocks
+      nextBlocks: nextBlocks ? nextBlocks : state.nextBlocks,
+      gameItem
     }
   },
   [GAME_START]: (state, action) => {

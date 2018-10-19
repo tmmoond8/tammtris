@@ -42,10 +42,6 @@ class GameDataManager {
     }
   })()
 
-  handleGameStop = () => {
-    this.gamePlay.stop();
-  }
-
   handleArrowKey = (state, playerBlocksFunc, stopCallback) => {
     const { gameGroundData, playerBlocks } = state;
     const gameData = gameGroundData.map(line => line.map(dot => dot));
@@ -72,17 +68,15 @@ class GameDataManager {
     }
   }
 
+  itemBlocks = {
+
+  }
+
   blockStop = (state) => {
     const { gameGroundData } = state;
-    let nextGameData = gameGroundData.map(line => {
-      if(line.includes(block.EMPTY)) {
-        return line.map(dot => dot)
-      } else {
-        // 여기서 아이템이 있는지 체킹하자.
-        return null;
-      }
-    });
-    nextGameData = nextGameData.filter(item => item !== null);
+    let nextGameData = gameGroundData.filter(line => line.includes(block.EMPTY));
+    const removedGameData = gameGroundData.filter(line => !line.includes(block.EMPTY));
+    const removedItemBlock = removedGameData.reduce((accum, line) => accum.concat(line), []).filter(item => item > 10);
     while(nextGameData.length < SIZE_Y) {
       // 여기에 아이템 블럭을 넣을 수 있겠다.
       nextGameData.unshift(GameDataManager.defaultLine());
@@ -102,7 +96,8 @@ class GameDataManager {
       playerBlocks,
       downStop: true, 
       gameState,
-      nextBlocks
+      nextBlocks,
+      itemBlocks: removedItemBlock,
     }
   }
 
