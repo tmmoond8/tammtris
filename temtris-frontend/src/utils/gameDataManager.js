@@ -24,6 +24,11 @@ class GameDataManager {
     });
   }
 
+  static clearPlayerBlocks(gameData, playerBlocks) {
+    playerBlocks.getShape().forEach(item => {
+      gameData[item.y][item.x] = block.EMPTY;
+    });
+  }
 
   gamePlay = (function() {
     let gameLoop;
@@ -38,6 +43,21 @@ class GameDataManager {
       },
       stop: () => {
         clearInterval(gameLoop);
+      }
+    }
+  })();
+
+  addItems(gameItems, newItems) {
+    return gameItems.filter(item => item > 10).concat(newItems)
+             .concat('a'.repeat(10).split('').map(item => 0)).splice(0, 10)
+  }
+
+  itemUse = (() => {
+    const upLine = 'a'.repeat(10).split('').map((item, idx) => idx === 4 ? 0 : 8);
+    return {
+      up(gameGroundData, number) {
+        for(let i = 0; i < number; i++) gameGroundData.push(upLine);
+        return gameGroundData.splice(number, SIZE_Y)
       }
     }
   })()
@@ -63,20 +83,19 @@ class GameDataManager {
     })
 
     return {
+      ...state,
+      downStop: false, 
       gameGroundData: gameData,
       playerBlocks: nextPlayerBlocks
     }
   }
-
-  itemBlocks = {
-
-  }
-
   blockStop = (state) => {
-    const { gameGroundData } = state;
+    const { gameGroundData, gameItems } = state;
     let nextGameData = gameGroundData.filter(line => line.includes(block.EMPTY));
     const removedGameData = gameGroundData.filter(line => !line.includes(block.EMPTY));
     const removedItemBlock = removedGameData.reduce((accum, line) => accum.concat(line), []).filter(item => item > 10);
+    const nextGameItems = this.addItems(gameItems, removedItemBlock);
+
     while(nextGameData.length < SIZE_Y) {
       // 여기에 아이템 블럭을 넣을 수 있겠다.
       nextGameData.unshift(GameDataManager.defaultLine());
@@ -97,7 +116,7 @@ class GameDataManager {
       downStop: true, 
       gameState,
       nextBlocks,
-      itemBlocks: removedItemBlock,
+      gameItems : nextGameItems,
     }
   }
 

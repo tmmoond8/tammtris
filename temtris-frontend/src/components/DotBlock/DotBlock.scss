@@ -8,6 +8,7 @@ $BLUE : #1864AB;
 $CYAN : #3BC9DB;
 $PINK : #ff69b4;
 $LIME : #BFFF00;
+$GREY : #999999;
 
 .dot-block {
   display: flex;
@@ -63,6 +64,11 @@ $LIME : #BFFF00;
   &.lime {
     border: solid 0.1px $LIME;
     background: -webkit-linear-gradient(-225deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.0470588) 50%), -webkit-linear-gradient(45deg, rgba(0,0,0,0) 50%, rgba(255,255,255,0.2) 50%), -webkit-linear-gradient(-225deg, $LIME 0, $LIME 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-135deg, $LIME 0, $LIME 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-45deg, $LIME 0, $LIME 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-225deg, $LIME 0, $LIME 25%, rgba(0,0,0,0) 25%), $LIME;
+  }
+
+  &.grey {
+    border: solid 0.1px $GREY;
+    background: -webkit-linear-gradient(-225deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.0470588) 50%), -webkit-linear-gradient(45deg, rgba(0,0,0,0) 50%, rgba(255,255,255,0.2) 50%), -webkit-linear-gradient(-225deg, $GREY 0, $GREY 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-135deg, $GREY 0, $GREY 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-45deg, $GREY 0, $GREY 25%, rgba(0,0,0,0) 25%), -webkit-linear-gradient(-225deg, $GREY 0, $GREY 25%, rgba(0,0,0,0) 25%), $GREY;
   }
 
   &.transparent {

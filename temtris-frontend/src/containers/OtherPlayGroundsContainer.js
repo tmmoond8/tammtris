@@ -10,9 +10,6 @@ class OtherPlayGroundsContainer extends Component {
     super(props);
     this.broadcastActions = this.props.BroadCastActions();
     SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
-    SocketClient.addEventOn('game/data', (response) => {
-      this.broadcastActions.setAllPlayData(response)
-    });
   }
   render() {
     const { allGroundData, userInfo } = this.props;

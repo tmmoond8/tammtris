@@ -16,11 +16,26 @@ class PlayGroundContainer extends Component {
     SocketClient.addEventOn('game/data', (response) => {
       this.broadcastActions.setAllPlayData(response)
     });
+    SocketClient.addEventOn('game/itemUse', (response) => {
+      console.log(response);
+      this.playGroundActions.gameItemUse(response);
+    });
   }
 
   handlePlayerKeyDown = (keyCode) => {
     if(this.props.gameState !== GAME_STATE.PLAY) return;
-    this.playGroundActions.playerKeyDown(keyCode);
+    if(keyCode.startsWith('Digit')) {
+      const { allGroundData, userInfo } = this.props;
+      const index = allGroundData.findIndex(item => !!item && item.id === userInfo.id);
+      const to = Number.parseInt(keyCode.charAt('5'));
+      if(to > 6) return;
+      SocketClient.sendMessage('game/itemUse', {
+        from: index + 1,
+        to
+      })
+    } else {
+      this.playGroundActions.playerKeyDown(keyCode);
+    }
   }
   shouldComponentUpdate(nextProps) {
     if(nextProps.downStop) {
@@ -31,7 +46,8 @@ class PlayGroundContainer extends Component {
         userInfo: nextProps.userInfo,
         gameData: nextProps.gameGroundData,
         gameState: nextProps.gameState,
-        gameNumber: nextProps.gameRoom.gameNumber
+        gameNumber: nextProps.gameRoom.gameNumber,
+        gameItems: nextProps.gameItems
       });
     }
     

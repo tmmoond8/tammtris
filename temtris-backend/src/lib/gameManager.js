@@ -33,7 +33,7 @@ class gameManager {
   }
 
   // 유저의 게임 데이터만 업데이트 한다.
-  updateGameData({id, gameState, gameData}) {
+  updateGameData({id, gameState, gameData, gameItems}) {
     const player = this.getPlayer(id);
     if (player === null) return;
     player.gameState = gameState;
@@ -105,6 +105,11 @@ class gameManager {
       }, []);
       socketEmit(gameResult);
     }
+  }
+
+  itemUse({ from, to }, socketEmit) {
+    console.log(`from : ${from} to : ${to}`);
+    socketEmit()
   }
 }
 

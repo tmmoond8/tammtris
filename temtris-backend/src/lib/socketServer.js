@@ -15,6 +15,7 @@ const GAME_JOIN = 'game/join';
 const GAME_START = 'game/start';
 const GAME_DATA = 'game/data';
 const GAME_TEAM_CHANGE = 'game/teamChange';
+const GAME_ITEM_USE = 'game/itemUse';
 const GAME_RESULT = 'game/result';
 
 class Message {
@@ -75,6 +76,10 @@ module.exports = function(io) {
 		socket.on(GAME_TEAM_CHANGE, (msg) => {
 			changeTeam(socket, msg);
 		})
+
+		socket.on(GAME_ITEM_USE, (msg) => {
+			itemUse(socket, msg);
+		})
   });
 
   const lobby = {
@@ -133,9 +138,10 @@ module.exports = function(io) {
 		},
 		updateGameData(socket, req) {
 			const { chattingChannel } = socket;
-			const { userInfo, gameData, gameState } = req;
+			const { userInfo, gameData, gameState, gameItems } = req;
 			userInfo.gameData = gameData;
 			userInfo.gameState = gameState;
+			userInfo.gameItems = gameItems;
 			lobbyManager.getGameManager(chattingChannel).updateGameData(userInfo);
 			io.to(chattingChannel).emit(GAME_DATA, lobbyManager.getGameManager(chattingChannel).gameData);
 			gameState === GAME_STATE.GAME_OVER && this.gameOver(socket, req);
@@ -173,5 +179,12 @@ module.exports = function(io) {
 			io.to(chattingChannel).emit(GAME_DATA, lobbyManager.getGameManager(chattingChannel).gameData);
 			io.to(userInfo.id).emit(GAME_TEAM_CHANGE, team);
 		});
-  }
+	}
+	
+	const itemUse = (socket, msg) => {
+		const { chattingChannel } = socket;
+		lobbyManager.getGameManager(chattingChannel).itemUse(msg, () => {
+			io.to(chattingChannel).emit(GAME_ITEM_USE, msg);
+		})
+	}
 };

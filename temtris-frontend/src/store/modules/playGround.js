@@ -9,14 +9,14 @@ const PLAYER_KEY_DOWN = 'gamePlay/PLAYER_KEY_DOWN';
 const GAME_START = 'gamePlay/GAME_START';
 const GAME_OVER = 'gamePlay/GAME_OVER';
 const GAME_RESULT = 'gamePlay/RESULT';
-const GAME_ITEMS = 'gamePlay/ITEMS';
+const GAME_ITEM_USE = 'gamePlay/ITEM_USE';
 
 // action creator
 export const playerKeyDown = createAction(PLAYER_KEY_DOWN);
 export const gameStart = createAction(GAME_START);
 export const gameOver = createAction(GAME_OVER);
 export const gameResult = createAction(GAME_RESULT);
-export const gameItems = createAction(GAME_ITEMS);
+export const gameItemUse = createAction(GAME_ITEM_USE);
 
 const initialState = {
   gameGroundData: GameDataManager.defaultGameData(),
@@ -33,17 +33,15 @@ const gameDataManager = new GameDataManager();
 export default handleActions({
   [PLAYER_KEY_DOWN]: (state, action) => {
     const { payload: keyCode } = action;
-    const { gameGroundData, playerBlocks, downStop, gameState, nextBlocks, itemBlocks } = gameDataManager.handleKeyPress(keyCode, state);
-    const gameItem = state.gameItems;
-    gameItem[0] = itemBlocks[0];
+    const { gameGroundData, playerBlocks, downStop, gameState, nextBlocks, gameItems } = gameDataManager.handleKeyPress(keyCode, state);
     return {
       ...state,
       gameGroundData,
       playerBlocks,
-      downStop,
+      downStop: downStop || state.downStop,
       gameState: gameState || state.gameState,
-      nextBlocks: nextBlocks ? nextBlocks : state.nextBlocks,
-      gameItem
+      nextBlocks: nextBlocks || state.nextBlocks,
+      gameItems: gameItems || state.gameItems
     }
   },
   [GAME_START]: (state, action) => {
@@ -73,18 +71,23 @@ export default handleActions({
   },
   [GAME_RESULT]: (state, action) => {
     const { payload: gameResult } = action;
-    gameDataManager.handleGameStop();
+    gameDataManager.gamePlay.stop();
     return {
       ...state,
       gameState: GAME_STATE.READY,
       gameResult
     }
   },
-  [GAME_ITEMS]: (state, action) => {
-    const { payload: gameItems } = action;
+  [GAME_ITEM_USE]: (state, action) => {
+    const { from, to  } = action.payload;
+    let { gameGroundData, playerBlocks } = state;
+    GameDataManager.clearPlayerBlocks(gameGroundData, playerBlocks);
+    gameGroundData = gameDataManager.itemUse.up(gameGroundData, 3);
+    playerBlocks.baseBlock.y = playerBlocks.baseBlock.y - 3 < 3 ? 3 : playerBlocks.baseBlock.y - 3;
+    GameDataManager.mergePlayerBlocks(gameGroundData, playerBlocks);
     return {
       ...state,
-      gameItems
+      gameGroundData
     }
   }
 }, initialState);

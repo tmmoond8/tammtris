@@ -8,6 +8,7 @@ class block {
   static ORANGE = 5;
   static BLUE = 6;
   static CYAN = 7;
+  static GREY = 8;
   static ITEM_UP1 = 11;
   static ITEM_DOWN1 = 12;
   static ITEM_UP3 = 13;
@@ -26,6 +27,7 @@ class block {
       case block.ORANGE: return 'orange'
       case block.BLUE: return 'blue'
       case block.CYAN: return 'cyan'
+      case block.GREY: return 'grey'
       case block.ITEM_UP1: 
       case block.ITEM_UP3: 
       case block.ITEM_BOMB: 

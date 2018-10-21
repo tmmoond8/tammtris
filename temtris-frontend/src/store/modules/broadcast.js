@@ -24,7 +24,8 @@ const initialState = {
   userInfo: {name: 'guest', emoji: '🐗', id: 'testID'},
   lobbyData: {gameList: [], waitingUserList: []},
   gameRoom: null,
-  team: 'individual'
+  team: 'individual',
+  itemUse: {from: 1, to: 2, item: 13}
 }
 
 // reducer
