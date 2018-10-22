@@ -13,10 +13,11 @@ class OtherPlayGroundsContainer extends Component {
   }
   render() {
     const { allGroundData, userInfo } = this.props;
-    const otherPlayerData = allGroundData.filter((data) => !data || data.id !== userInfo.id).slice(0, 5);
+    const addIndex = (allGroundData) => allGroundData.map((item, index) => ({...item, number : index + 1}));
+    const filterMe = (allGroundData) => allGroundData.filter((data) => !data || data.id !== userInfo.id).slice(0, 5)
     
     return (
-      <OtherPlayGrounds allGroundData={otherPlayerData}/>
+      <OtherPlayGrounds allGroundData={filterMe(addIndex(allGroundData))}/>
     )
   }
 }

@@ -30,6 +30,10 @@ class GameDataManager {
     });
   }
 
+  static cloneGameGroundData(gameGroundData) {
+    return JSON.parse(JSON.stringify(gameGroundData));
+  }
+
   gamePlay = (function() {
     let gameLoop;
     return {
@@ -47,17 +51,50 @@ class GameDataManager {
     }
   })();
 
-  addItems(gameItems, newItems) {
+  addItems(gameItems=[], newItems) {
     return gameItems.filter(item => item > 10).concat(newItems)
              .concat('a'.repeat(10).split('').map(item => 0)).splice(0, 10)
   }
 
-  itemUse = (() => {
+  removeItem(gameItems) {
+    console.log('removeItem', gameItems);
+    return gameItems.splice(1, 9).concat([0]);
+  }
+
+  handleItemUse = (() => {
     const upLine = 'a'.repeat(10).split('').map((item, idx) => idx === 4 ? 0 : 8);
-    return {
-      up(gameGroundData, number) {
-        for(let i = 0; i < number; i++) gameGroundData.push(upLine);
-        return gameGroundData.splice(number, SIZE_Y)
+    const targetTo = (to, me) => to === me;
+    const fromMe = (from, me) => from === me;
+    const up = (gameGroundData, playerBlocks, number) => {
+      GameDataManager.clearPlayerBlocks(gameGroundData, playerBlocks);
+      for(let i = 0; i < number; i++) {
+        gameGroundData.push(upLine);
+        gameGroundData.shift();
+      };
+      GameDataManager.mergePlayerBlocks(gameGroundData, playerBlocks);
+      return gameGroundData;
+    }
+    const up1 = (gameGroundData, playerBlocks, to, me) => {
+      console.log('up1');
+      return targetTo(to, me) ? up(gameGroundData, playerBlocks, 1) : null;
+    }
+    const up2 = (gameGroundData, playerBlocks, to, me) => {
+      return targetTo(to, me) ? up(gameGroundData, playerBlocks, 2) : null;
+    }
+    return ({ gameGroundData, playerBlocks, gameItems }, { from , to, item, me }) => {
+      const gameData = GameDataManager.cloneGameGroundData(gameGroundData);
+      let processCall;
+      switch(item) {
+        case block.ITEM_UP1: 
+          processCall = () => up1(gameData, playerBlocks, to, me);
+          break;
+        case block.ITEM_UP2: 
+          processCall = () => up2(gameData, playerBlocks, to, me);
+          break;
+      }
+      return {
+        gameGroundData: typeof processCall === 'function' ? processCall() : null,
+        gameItems: fromMe(from, me) ? this.removeItem(gameItems) : gameItems
       }
     }
   })()

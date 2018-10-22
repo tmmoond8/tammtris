@@ -13,7 +13,7 @@ class OtherPlayGrounds extends Component {
       <div className={cx('other-play-grounds-item')} key={idx}>
         <PlayGround 
           key={idx} 
-          userIndex={idx + 1}
+          userIndex={gameGroundData.number}
           gameGroundData={gameGroundData && gameGroundData.gameData} 
           userInfo={gameGroundData && gameGroundData} 
           gameState={gameGroundData && gameGroundData.gameState}

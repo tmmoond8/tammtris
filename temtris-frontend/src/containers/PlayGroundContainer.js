@@ -14,25 +14,33 @@ class PlayGroundContainer extends Component {
     SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
     
     SocketClient.addEventOn('game/data', (response) => {
-      this.broadcastActions.setAllPlayData(response)
+      const { userInfo } = this.props;
+      if(!userInfo.number) {
+        this.broadcastActions.setUserInfo({ ...userInfo, 
+          number: response.findIndex(item => !!item && item.id === userInfo.id) + 1
+        });
+      }
+      this.broadcastActions.setAllPlayData(response);
     });
     SocketClient.addEventOn('game/itemUse', (response) => {
-      console.log(response);
-      this.playGroundActions.gameItemUse(response);
+      //TODO 이펙트 broadcast
+      const { userInfo } = this.props;
+      this.playGroundActions.gameItemUse({ ...response, me : userInfo.number });
     });
   }
 
   handlePlayerKeyDown = (keyCode) => {
     if(this.props.gameState !== GAME_STATE.PLAY) return;
     if(keyCode.startsWith('Digit')) {
-      const { allGroundData, userInfo } = this.props;
-      const index = allGroundData.findIndex(item => !!item && item.id === userInfo.id);
+      const { allGroundData, userInfo, gameItems } = this.props;
+      if(!Array.isArray(gameItems) || gameItems.length === 0) return;
       const to = Number.parseInt(keyCode.charAt('5'));
-      if(to > 6) return;
+      if(to > 5 || !allGroundData[to - 1]) return;
       SocketClient.sendMessage('game/itemUse', {
-        from: index + 1,
-        to
-      })
+        from: userInfo.number,
+        to,
+        item: gameItems[0]
+      });
     } else {
       this.playGroundActions.playerKeyDown(keyCode);
     }
@@ -57,12 +65,12 @@ class PlayGroundContainer extends Component {
   render() {
     const { handlePlayerKeyDown } = this;
     const { allGroundData, gameGroundData, playerBlocks, userInfo, gameState, gameItems } = this.props;
-    let index = allGroundData.findIndex(item => !!item && item.id === userInfo.id);
+    const index = userInfo.number - 1;
     
     return (
       <PlayGround
           gameGroundData = {gameGroundData}
-          userIndex={index + 1}
+          userIndex={userInfo.number || 0}
           playerBlocks={playerBlocks}
           userInfo={allGroundData[index] ? allGroundData[index] : userInfo}
           onPlayerKeyDown={handlePlayerKeyDown}
