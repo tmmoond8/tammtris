@@ -16,7 +16,8 @@ class OtherPlayGrounds extends Component {
           userIndex={idx + 1}
           gameGroundData={gameGroundData && gameGroundData.gameData} 
           userInfo={gameGroundData && gameGroundData} 
-          gameState={gameGroundData && gameGroundData.gameState} 
+          gameState={gameGroundData && gameGroundData.gameState}
+          gameItems={gameGroundData && gameGroundData.gameItems}
           view='view'/>
       </div>
       )

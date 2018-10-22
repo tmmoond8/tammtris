@@ -79,9 +79,10 @@ $GREY : #999999;
   &.small {
     width: block-sizes-for('view');
     height: block-sizes-for('view');
+    font-size: 0.5rem;
   }
   &.small:after {
-    font-size: 0.7rem;
+    font-size: 0.5rem;
     margin-top: 0px;
   }
 }

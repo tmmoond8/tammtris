@@ -38,6 +38,7 @@ class gameManager {
     if (player === null) return;
     player.gameState = gameState;
     player.gameData = gameData;
+    player.gameItems = gameItems;
   }
 
   isFull() {
