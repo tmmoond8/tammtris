@@ -20,8 +20,8 @@ class DotBlock extends Component {
     this.ITEM = {
       [block.ITEM_UP1]: <FaAngleUp/>,
       [block.ITEM_DOWN1]: <FaAngleDown/>,
-      [block.ITEM_UP3]: <FaAngleDoubleUp/>,
-      [block.ITEM_DOWN3]: <FaAngleDoubleDown/>,
+      [block.ITEM_UP2]: <FaAngleDoubleUp/>,
+      [block.ITEM_DOWN2]: <FaAngleDoubleDown/>,
       [block.ITEM_CLEAR]: <FaFeather/>,
       [block.ITEM_BOMB]: <FaBomb/>,
     }

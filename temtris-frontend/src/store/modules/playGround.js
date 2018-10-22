@@ -38,7 +38,7 @@ export default handleActions({
       ...state,
       gameGroundData,
       playerBlocks,
-      downStop: downStop || state.downStop,
+      downStop: downStop || false,
       gameState: gameState || state.gameState,
       nextBlocks: nextBlocks || state.nextBlocks,
       gameItems: gameItems || state.gameItems
@@ -58,7 +58,8 @@ export default handleActions({
       gameGroundData,
       playerBlocks,
       nextBlocks,
-      gameResult: null
+      gameResult: null,
+      gameItems: undefined,
     }
   },
 
@@ -78,16 +79,13 @@ export default handleActions({
       gameResult
     }
   },
+  
   [GAME_ITEM_USE]: (state, action) => {
-    const { from, to  } = action.payload;
-    let { gameGroundData, playerBlocks } = state;
-    GameDataManager.clearPlayerBlocks(gameGroundData, playerBlocks);
-    gameGroundData = gameDataManager.itemUse.up(gameGroundData, 3);
-    playerBlocks.baseBlock.y = playerBlocks.baseBlock.y - 3 < 3 ? 3 : playerBlocks.baseBlock.y - 3;
-    GameDataManager.mergePlayerBlocks(gameGroundData, playerBlocks);
+    const { gameGroundData: nextData, gameItems } = gameDataManager.handleItemUse(state, action.payload);
     return {
       ...state,
-      gameGroundData
+      gameGroundData: nextData || state.gameGroundData,
+      gameItems: gameItems || state.gameItems
     }
   }
 }, initialState);
