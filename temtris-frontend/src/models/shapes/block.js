@@ -13,7 +13,7 @@ class block {
   static ITEM_DOWN1 = 12;
   static ITEM_UP2 = 13;
   static ITEM_DOWN2 = 14;
-  static ITEM_CLEAR = 15;
+  static ITEM_CLEANER = 15;
   static ITEM_BOMB = 16;
   static TRANSPARENT = -1;
 
@@ -34,7 +34,7 @@ class block {
         return 'pink'
         case block.ITEM_DOWN1: 
         case block.ITEM_DOWN2: 
-        case block.ITEM_CLEAR: 
+        case block.ITEM_CLEANER: 
           return 'lime'
       case block.TRANSPARENT: return 'transparent'
       

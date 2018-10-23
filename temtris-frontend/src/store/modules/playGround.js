@@ -2,6 +2,7 @@ import { createAction, handleActions } from 'redux-actions';
 import GameDataManager, { GAME_STATE } from 'utils/gameDataManager';
 import shapeDataManager from 'utils/shapeDataManager';
 import mapDataManager from 'utils/mapDataManager';
+import ItemDataManager from 'utils/itemDataManager';
 
 // actions types
 
@@ -28,6 +29,7 @@ const initialState = {
 }
 
 const gameDataManager = new GameDataManager();
+const itemDataManager = new ItemDataManager();
 
 // reducer
 export default handleActions({
@@ -81,7 +83,7 @@ export default handleActions({
   },
   
   [GAME_ITEM_USE]: (state, action) => {
-    const { gameGroundData: nextData, gameItems } = gameDataManager.handleItemUse(state, action.payload);
+    const { gameGroundData: nextData, gameItems } = itemDataManager.handleItemUse(state, action.payload);
     return {
       ...state,
       gameGroundData: nextData || state.gameGroundData,
