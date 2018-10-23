@@ -76,10 +76,26 @@ $GREY : #999999;
     background: transparent;
   }
 
+  &.first-item {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.5rem;
+    border: dashed 4px $RED;
+    margin: 2px;
+  }
+
   &.small {
     width: block-sizes-for('view');
     height: block-sizes-for('view');
     font-size: 0.5rem;
+
+    &.first-item {
+      width: 1rem;
+      height: 1rem;
+      font-size: .7rem;
+      border: dashed 1px $RED;
+      margin: 1px;
+    }
   }
   &.small:after {
     font-size: 0.5rem;
