@@ -32,11 +32,12 @@ class DotBlock extends Component {
   }
 
   render() {
-    const small = this.props.small ? 'small' : '';
-    const icon = this.ITEM[this.props.dot];
+    const { firstItem, small, dot } = this.props;
+    const icon = this.ITEM[dot];
     return (<span className={cx('dot-block',
-      block.getBlockColor(this.props.dot),
-      small
+      block.getBlockColor(dot),
+      small ? 'small' : '',
+      firstItem ? 'first-item' : ''
     )}>
     {icon}
     </span>);

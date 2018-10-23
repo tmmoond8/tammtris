@@ -10,7 +10,7 @@ class ItemBox extends Component {
 
   renderLine (gameItems, view) {
     const validGameItems = (gameItems) => Array.isArray(gameItems) ? gameItems : defaultItemBox
-    return validGameItems(gameItems).map(((dot, index) => <DotBlock dot={dot} key={index} small={view}/>));
+    return validGameItems(gameItems).map(((dot, index) => <DotBlock dot={dot} firstItem={index === 0} key={index} small={view}/>));
   }
 
   render() {
