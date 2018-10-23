@@ -7,6 +7,7 @@ class MapDataManager {
     '~': 15,
     '*': 16
   }
+  
   static getTestMap() {
     const mapData = 
      `0|0|0|0|0|0|0|0|0|0
@@ -27,8 +28,8 @@ class MapDataManager {
       0|0|0|0|0|0|0|0|0|0
       0|0|0|0|0|0|0|0|0|0
       0|0|0|0|0|0|0|0|0|0
-      1|+|#|+|0|1|+|#|1|1
-      1|#|#|+|0|1|#|+|1|1`;
+      *|-|-|=|0|1|+|#|~|~
+      1|-|=|-|0|1|#|+|1|1`;
 
     const coreMapDat = mapData.replace(/ /g, '').split(String.fromCharCode(10))
                       .map(line => line.split('|'));
@@ -39,7 +40,6 @@ class MapDataManager {
       })
     ));
   }
-  
 }
 
 export default MapDataManager;
