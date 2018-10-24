@@ -52,13 +52,51 @@ class ItemDataManager {
     }
   }
 
-  getRandomDots = (gameGroundData, number) => {
+  static mergeItems = (gameGroundData, number) => {
+    if(number === 0) return;
+    const dots = ItemDataManager.getRandomDots(gameGroundData, number);
+    dots.forEach(dot => {
+      gameGroundData[dot.y][dot.x] = ItemDataManager.getRandomItem();
+    })
+  }
+
+  static getRandomItem = (() => {
+    const compose = (...fn) => {
+      if(fn.length === 0) return (input) => input;
+      return (input) => fn.reduce((accm, currentFn) => currentFn(accm), input)
+    }
+    const rand = (input, per) => { 
+      console.log(`input ${input}, per ${per}`)
+      if (input !== block.EMPTY) return input;
+      return (Math.random() * 100) < per
+    };
+    const done = (input) => input !== block.EMPTY;
+    const bomb = (input) => done(input) ? input : rand(input, 5) ? block.ITEM_BOMB : input;
+    const cleaner = (input) => done(input) ? input : rand(input, 5) ? block.ITEM_CLEANER : input;
+    const upDown = (input) => {
+      if (input !== block.EMPTY) {
+        console.log(input);
+        return input
+      };
+      const per = Math.random() * 100;
+      if(per < 25) return block.ITEM_UP1;
+      if(per < 50) return block.ITEM_DOWN1;
+      if(per < 75) return block.ITEM_UP2;
+      if(per < 100) return block.ITEM_DOWN2;
+      return block.EMPTY;
+    };
+
+    const ranomItemsBox = compose(bomb, cleaner, upDown);
+    return () => ranomItemsBox(0);
+  })();
+
+  static getRandomDots = (gameGroundData, number) => {
     const dots = [];
     const data = GameDataManager.cloneGameGroundData(gameGroundData);
     let keys = data.map((item, idx) => idx);
     while(dots.length < number && keys.length > 0) {
-      let randomKey = keys[this.getRandomIndex(keys)];
-      let dot = this.getRandomDot(data, randomKey);
+      let randomKey = keys[ItemDataManager.getRandomIndex(keys)];
+      let dot = ItemDataManager.getRandomDot(data, randomKey);
       if(dot === null) {
         keys = keys.filter((item) => item !== randomKey);
       } else {
@@ -69,11 +107,11 @@ class ItemDataManager {
     
     return dots;
   }
-  getRandomIndex = (items) => Math.floor(Math.random() * items.length);
+  static getRandomIndex = (items) => Math.floor(Math.random() * items.length);
 
-  getRandomDot = (gameGroundData, y) => {
+  static getRandomDot = (gameGroundData, y) => {
     const selectedLine = gameGroundData[y];
-    const randomIndex = this.getRandomIndex(selectedLine)
+    const randomIndex = ItemDataManager.getRandomIndex(selectedLine)
     let pick, idx;
     for(let i = 0; i < 10; i++) {
       idx = (randomIndex + i) % 10
