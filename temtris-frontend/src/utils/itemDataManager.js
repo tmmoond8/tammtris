@@ -41,9 +41,49 @@ class ItemDataManager {
     };
   }
 
-  static addItems(gameItems=[], newItems) {
-    return gameItems.filter(item => item > 10).concat(newItems)
-             .concat('a'.repeat(SIZE_X).split('').map(item => 0)).splice(0, SIZE_X)
+  static addItems(gameItems=[], gameGroundData) {
+    const removedGameData = gameGroundData.filter(line => !line.includes(block.EMPTY));
+    const removedItemBlock = removedGameData.reduce((accum, line) => accum.concat(line), []).filter(item => item > 10);
+    const remainder = gameGroundData.filter(line => line.includes(block.EMPTY));
+    return {
+      nextGameItems: gameItems.filter(item => item > 10).concat(removedItemBlock)
+      .concat('a'.repeat(SIZE_X).split('').map(item => 0)).splice(0, SIZE_X),
+      nextGameData: remainder
+    }
+  }
+
+  getRandomDots = (gameGroundData, number) => {
+    const dots = [];
+    const data = GameDataManager.cloneGameGroundData(gameGroundData);
+    let keys = data.map((item, idx) => idx);
+    while(dots.length < number && keys.length > 0) {
+      let randomKey = keys[this.getRandomIndex(keys)];
+      let dot = this.getRandomDot(data, randomKey);
+      if(dot === null) {
+        keys = keys.filter((item) => item !== randomKey);
+      } else {
+        data[dot.y][dot.x] = 0;
+        dots.push(dot);
+      }
+    }
+    
+    return dots;
+  }
+  getRandomIndex = (items) => Math.floor(Math.random() * items.length);
+
+  getRandomDot = (gameGroundData, y) => {
+    const selectedLine = gameGroundData[y];
+    const randomIndex = this.getRandomIndex(selectedLine)
+    let pick, idx;
+    for(let i = 0; i < 10; i++) {
+      idx = (randomIndex + i) % 10
+      if(selectedLine[idx] < 10 && selectedLine[idx] !== 0) {
+        pick = selectedLine[idx];
+        break;
+      }
+    }
+    if(!pick) return null;
+    return { x: idx, y };
   }
 
   removeItem(gameItems) {
