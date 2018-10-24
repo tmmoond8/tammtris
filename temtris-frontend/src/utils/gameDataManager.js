@@ -81,16 +81,10 @@ class GameDataManager {
   
   blockStop = (state) => {
     const { gameGroundData, gameItems } = state;
-    let nextGameData = gameGroundData.filter(line => line.includes(block.EMPTY));
-    const removedGameData = gameGroundData.filter(line => !line.includes(block.EMPTY));
-    const removedItemBlock = removedGameData.reduce((accum, line) => accum.concat(line), []).filter(item => item > 10);
-    const nextGameItems = ItemDataManager.addItems(gameItems, removedItemBlock);
-
+    let { nextGameItems, nextGameData } = ItemDataManager.addItems(gameItems, gameGroundData);
     while(nextGameData.length < SIZE_Y) {
-      // 여기에 아이템 블럭을 넣을 수 있겠다.
       nextGameData.unshift(GameDataManager.defaultLine());
     }
-
     const { playerBlocks, nextBlocks } = ShapeDataManager.getNextBlocks();
     let gameState = GAME_STATE.PLAY;
     playerBlocks.getShape().forEach(item => {
