@@ -82,9 +82,11 @@ class GameDataManager {
   blockStop = (state) => {
     const { gameGroundData, gameItems } = state;
     let { nextGameItems, nextGameData } = ItemDataManager.addItems(gameItems, gameGroundData);
+    ItemDataManager.mergeItems(nextGameData, 20 - nextGameData.length);
     while(nextGameData.length < SIZE_Y) {
       nextGameData.unshift(GameDataManager.defaultLine());
     }
+
     const { playerBlocks, nextBlocks } = ShapeDataManager.getNextBlocks();
     let gameState = GAME_STATE.PLAY;
     playerBlocks.getShape().forEach(item => {
