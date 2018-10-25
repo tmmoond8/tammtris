@@ -11,6 +11,7 @@ const GAME_START = 'gamePlay/GAME_START';
 const GAME_OVER = 'gamePlay/GAME_OVER';
 const GAME_RESULT = 'gamePlay/RESULT';
 const GAME_ITEM_USE = 'gamePlay/ITEM_USE';
+const INIT = 'gamePlay/INIT';
 
 // action creator
 export const playerKeyDown = createAction(PLAYER_KEY_DOWN);
@@ -18,6 +19,7 @@ export const gameStart = createAction(GAME_START);
 export const gameOver = createAction(GAME_OVER);
 export const gameResult = createAction(GAME_RESULT);
 export const gameItemUse = createAction(GAME_ITEM_USE);
+export const init = createAction(INIT);
 
 const initialState = {
   gameGroundData: GameDataManager.defaultGameData(),
@@ -89,5 +91,7 @@ export default handleActions({
       gameGroundData: nextData || state.gameGroundData,
       gameItems: gameItems || state.gameItems
     }
-  }
+  },
+
+  [INIT]: (state, action) => JSON.parse(JSON.stringify(initialState)),
 }, initialState);

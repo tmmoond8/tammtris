@@ -1,19 +1,13 @@
 import io from 'socket.io-client';
 const serverUrl = `http://${window.location.hostname}:14666`;
 let socket = io(serverUrl);
-socket.on('connect', () => {
-    console.log('socket connect');
-});
-socket.on('disconnect', () => {
-    console.log('socket disconnect');
-});
 
 const MESSAGE_TYPE = {
     BROADCAST : 0,
     NOTIFY : 32,
 };
 
-let SocketClient = {
+const SocketClient = {
     sendMessage: (event, message) => {
         console.log(`event : ${event}, message: ${message}`)
         socket.emit(event, message);
@@ -23,6 +17,7 @@ let SocketClient = {
             fn(msg);
         })
     },
+    socket
 }
 
 class Message {

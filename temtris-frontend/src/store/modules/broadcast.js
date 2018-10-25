@@ -8,6 +8,7 @@ const SET_USER_INFO = 'broadcast/SET_USER_INFO';
 const SET_LOBBY_DATA = 'broadcast/SET_LOBBY_DATA';
 const SET_GAME_ROOM = 'broadcast/SET_GAME_ROOM';
 const CHANGE_TEAM = 'broadcast/CHANGE_TEAM';
+const INIT = 'broadcast/INIT';
 
 // actions creator
 export const addChattingMessage = createAction(ADD_CHATTING_MESSAGE);
@@ -17,6 +18,7 @@ export const setUserInfo = createAction(SET_USER_INFO);
 export const setLobbyData = createAction(SET_LOBBY_DATA);
 export const setGameRoom = createAction(SET_GAME_ROOM);
 export const changeTeam = createAction(CHANGE_TEAM);
+export const init = createAction(INIT);
 
 const initialState = {
   chattingMessages: [],
@@ -78,5 +80,6 @@ export default handleActions({
       ...state,
       team
     }
-  }
+  },
+  [INIT]: (state, action) => JSON.parse(JSON.stringify(initialState)),
 }, initialState);

@@ -13,7 +13,8 @@ class LobbyContainer extends Component {
     this.state = {
       redirect: null
     }
-    this.broadcastActions = this.props.broadcastActions();
+    this.broadcastActions = this.props.BroadCastActions();
+    this.playGroundActions = this.props.PlayGroundActions();
     SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
     // 여기에 이벤트 등록
     SocketClient.addEventOn('lobby/join', (userInfo) => {
@@ -29,17 +30,21 @@ class LobbyContainer extends Component {
         history.push(`/game/${response.gameNumber}`)
       }
     });
+    SocketClient.socket.on('connect', () => {
+      this.props.userInfo.id === "testID" && SocketClient.sendMessage('lobby/join')
+      console.log('connect new');
+    });
+    SocketClient.socket.on('disconnect', () => {
+      this.broadcastActions.init();
+      this.playGroundActions.init();
+      this.props.history.push('/');
+      console.log('disconnected new');
+    });
   }
 
   handleGameJoin(gameNumber) {
     // room number에 방이 있는지 확인 후 바로 입장
     SocketClient.sendMessage('game/check', { gameNumber });
-  }
-
-  componentDidMount() {
-    // 오픈 채팅방 입장
-    // 이쪽에서 SocketIO로 방 정보 가져오도록..
-    SocketClient.sendMessage('lobby/join');
   }
 
   render() {
@@ -63,6 +68,7 @@ export default connect(
     lobbyData: state.broadcast.lobbyData,
   }),
   (dispatch) => ({
-    broadcastActions: () => bindActionCreators(Actions.broadcast, dispatch)
+    PlayGroundActions: () => bindActionCreators(Actions.playGround, dispatch),
+    BroadCastActions: () => bindActionCreators(Actions.broadcast, dispatch)
   })
 )(withRouter(LobbyContainer));
