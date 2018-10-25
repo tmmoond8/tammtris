@@ -27,14 +27,16 @@ class PlayGroundContainer extends Component {
       const { userInfo } = this.props;
       this.playGroundActions.gameItemUse({ ...response, me : userInfo.number });
     });
+
+    document.body.addEventListener('keydown', this.handlePlayerKeyDown);
   }
 
-  handlePlayerKeyDown = (keyCode) => {
+  handlePlayerKeyDown = ({ code }) => {
     if(this.props.gameState !== GAME_STATE.PLAY) return;
-    if(keyCode.startsWith('Digit')) {
+    if(code.startsWith('Digit')) {
       const { allGroundData, userInfo, gameItems } = this.props;
       if(!Array.isArray(gameItems) || gameItems.length === 0) return;
-      const to = Number.parseInt(keyCode.charAt('5'));
+      const to = Number.parseInt(code.charAt('5'));
       if(to > 5 || !allGroundData[to - 1]) return;
       SocketClient.sendMessage('game/itemUse', {
         from: userInfo.number,
@@ -42,9 +44,10 @@ class PlayGroundContainer extends Component {
         item: gameItems[0]
       });
     } else {
-      this.playGroundActions.playerKeyDown(keyCode);
+      this.playGroundActions.playerKeyDown(code);
     }
   }
+
   shouldComponentUpdate(nextProps) {
     if(nextProps.downStop) {
       if(this.props.playerBlocks.baseBlock.equlas(nextProps.playerBlocks.baseBlock)) {

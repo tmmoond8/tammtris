@@ -9,9 +9,6 @@ import GameDataManger, { GAME_STATE } from 'utils/gameDataManager';
 const cx = classNames.bind(styles);
 
 class PlayGround extends Component{
-  handleKeyPress = (e) => {
-    this.props.onPlayerKeyDown(e.nativeEvent.code);
-  }
 
   shouldComponentUpdate(nextProps) {
     const prevUserInfo = this.props.userInfo;
@@ -49,11 +46,10 @@ class PlayGround extends Component{
     const { handleKeyPress } = this;
     const { gameGroundData, userInfo, view, gameState, userIndex, gameItems } = this.props;
     const team = userInfo && userInfo.team;
-    const styles = view ? {} : { tabIndex: "0"};
     return (
       <Fragment>
         <ItemBox gameItems={gameItems} view={view}/>
-        <div className={cx('play-ground', view, team)} onKeyDown={handleKeyPress} {...styles}>  
+        <div className={cx('play-ground', view, team)} onKeyDown={handleKeyPress}>  
           <UserPanel userInfo={userInfo} view={view} userIndex={userIndex}/>
           <div style={{position: 'relative', background: 'white'}}>
             {this.renderAllLine(gameGroundData || GameDataManger.defaultGameData())}
