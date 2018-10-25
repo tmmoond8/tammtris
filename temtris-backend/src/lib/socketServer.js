@@ -48,7 +48,7 @@ module.exports = function(io) {
 		});
 
 		socket.on(GAME_JOIN, (req) => {
-			console.log(`play join ${req}`);
+			console.log(`play join`, req);
 			lobby.out(socket);
 			playGround.join(socket, req);
 		});
@@ -64,6 +64,7 @@ module.exports = function(io) {
 		socket.on('disconnect', () => {
 			playGround.out(socket);
 			lobby.out(socket);
+			console.log(`disconnect :`, socket.userInfo);
 		});
 
 		socket.on(GAME_START, () => {
@@ -92,8 +93,8 @@ module.exports = function(io) {
 			io.to(socket.userInfo.id).emit(LOBBY_JOIN, userInfo);
 			io.to(socket.chattingChannel).emit(LOBBY_DATA, lobbyManager.getLobbyData());
 			lobbyManager.lobbyJoin(userInfo);
-			console.log(`userList : ${userManager.getUserList()}`)
-			console.log(`lobby : ${userInfo.name}`)
+			console.log(`userList :`, userManager.getUserList().map(userInfo => userInfo.name));
+			console.log(`lobby in`, userInfo)
 		},
 		out(socket) {
 			const { userInfo } = socket;
@@ -101,6 +102,8 @@ module.exports = function(io) {
 			lobbyManager.lobbyOut(userInfo);
 			userManager.removeUser(userInfo);
 			io.to(LOBBY).emit(LOBBY_DATA, lobbyManager.getLobbyData());
+			console.log(`userList :`, userManager.getUserList().map(userInfo => userInfo.name));
+			console.log('lobby out', userInfo);
 		}
   }
 
