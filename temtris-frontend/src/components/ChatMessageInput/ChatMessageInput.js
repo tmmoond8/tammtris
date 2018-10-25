@@ -13,13 +13,15 @@ class ChatMessageInput extends Component {
         };
     };
 
-    handleKeyPress = (key) => {
+    handleKeyPress = (e) => {
+        const key = e.key;
         if (key === 'Enter') {
             this.props.onSendMessage(this.state.message);
             this.setState({
                 message: ''
             })
         }
+        e.stopPropagation()
     };
 
     handleChangeMessageInput = (msg) => {
@@ -33,7 +35,7 @@ class ChatMessageInput extends Component {
              <input type="text" className={cx('chat-message-input')} placeholder="Type here..." 
              value={this.state.message}
              onChange={e => this.handleChangeMessageInput(e.target.value)}
-             onKeyPress={e => this.handleKeyPress.bind(this)(e.key)}
+             onKeyDown={e => this.handleKeyPress.bind(this)(e)}
              />
         )
     };
