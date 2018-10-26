@@ -30,6 +30,7 @@ class gameManager {
     userInfo.team = userInfo.team || 'individual';
     const nextIndex = this.find(userInfo.id);
     this.gameData[nextIndex] = userInfo;
+    return nextIndex;
   }
 
   // 유저의 게임 데이터만 업데이트 한다.

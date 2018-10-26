@@ -13,8 +13,11 @@ class LobbyContainer extends Component {
     this.state = {
       redirect: null
     }
+
     this.broadcastActions = this.props.BroadCastActions();
     this.playGroundActions = this.props.PlayGroundActions();
+    if(this.props.userInfo.id !== "testID") this.dissconnect();
+
     SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
     // 여기에 이벤트 등록
     SocketClient.addEventOn('lobby/join', (userInfo) => {
@@ -24,22 +27,25 @@ class LobbyContainer extends Component {
 			this.broadcastActions.setLobbyData(lobbyData);
     });
     SocketClient.addEventOn('game/check', (response) => {
-      if (response !== null) {
-        this.broadcastActions.setGameRoom(response);
-        const { history } = this.props;
-        history.push(`/game/${response.gameNumber}`)
-      }
+      const { gameRoom, userIndex } = response;
+      const { history, userInfo } = this.props;
+      this.broadcastActions.setGameRoom(gameRoom);
+      this.broadcastActions.setUserInfo({...userInfo, number: userIndex + 1});
+      history.push(`/game/${gameRoom.gameNumber}`)
     });
     SocketClient.socket.on('connect', () => {
       this.props.userInfo.id === "testID" && SocketClient.sendMessage('lobby/join')
       console.log('connect new');
     });
     SocketClient.socket.on('disconnect', () => {
-      this.broadcastActions.init();
-      this.playGroundActions.init();
-      this.props.history.push('/');
-      console.log('disconnected new');
+      this.dissconnect();
     });
+  }
+
+  dissconnect() {
+    this.broadcastActions.init();
+    this.playGroundActions.init();
+    setTimeout(() => this.props.history.go('/'), 100);
   }
 
   handleGameJoin(gameNumber) {

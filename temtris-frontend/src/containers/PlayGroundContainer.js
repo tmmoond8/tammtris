@@ -14,12 +14,6 @@ class PlayGroundContainer extends Component {
     SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
     
     SocketClient.addEventOn('game/data', (response) => {
-      const { userInfo } = this.props;
-      if(!userInfo.number) {
-        this.broadcastActions.setUserInfo({ ...userInfo, 
-          number: response.findIndex(item => !!item && item.id === userInfo.id) + 1
-        });
-      }
       this.broadcastActions.setAllPlayData(response);
     });
     SocketClient.addEventOn('game/itemUse', (response) => {
