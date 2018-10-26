@@ -5,7 +5,9 @@ import LobbyControlContainer from 'containers/LobbyControlContainer';
 const LobbyPage = () => {
   const style = {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 
   return (
