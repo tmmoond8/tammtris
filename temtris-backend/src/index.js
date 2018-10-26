@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 const server = require('http').createServer(app);
 const socketIO = require('socket.io')(server);
 const api = require('./api/index');
@@ -12,4 +13,5 @@ app.use((req, res, next) => {
   next();
 });
 app.use('/api', api(app, '/api'));
+app.use(express.static(path.join(__dirname, 'static')))
 server.listen('14666');

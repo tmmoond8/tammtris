@@ -50,7 +50,9 @@ class LobbyContainer extends Component {
   render() {
 		const style = {
 			display: 'flex',
-			flexDirection: 'row'
+      flexDirection: 'row',
+      width: '100%',
+      maxWidth: '70rem',
 		}
     const { lobbyData } = this.props;
     const { handleGameJoin } = this;

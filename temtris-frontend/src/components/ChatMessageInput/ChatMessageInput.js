@@ -21,7 +21,6 @@ class ChatMessageInput extends Component {
                 message: ''
             })
         }
-        e.stopPropagation()
     };
 
     handleChangeMessageInput = (msg) => {

@@ -46,11 +46,11 @@ const lobbyManager = {
 	}
 };
 
-lobbyManager.createGame('winter is comming');
-lobbyManager.createGame('ours is the fury');
-lobbyManager.createGame('here me roar');
-lobbyManager.createGame('fire and blood');
-lobbyManager.createGame('family duty honor');
-lobbyManager.createGame('we do not sow');
+lobbyManager.createGame('tully');
+lobbyManager.createGame('baratheon');
+lobbyManager.createGame('targaryen');
+lobbyManager.createGame('stark');
+lobbyManager.createGame('lannister');
+lobbyManager.createGame('tyrell');
 
 module.exports = lobbyManager;

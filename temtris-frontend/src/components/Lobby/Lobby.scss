@@ -6,8 +6,8 @@
     padding: 2rem;
     grid-template-columns: auto auto auto;
     min-width: 34 * block-sizes-for('normal');
-    background: $oc-gray-2;
     height: 28.6 * block-sizes-for('normal');
+    width: 100%;
 }
 
 .lobby-room {
