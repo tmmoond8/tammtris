@@ -29,8 +29,8 @@ const lobbyManager = {
 	gameCheck(index, userInfo, socketEmit) {
 		userInfo = { ...userInfo, gameData: null, gameState: GAME_STATE.READY}
 		if(gameList[index].isFull()) return null;
-		gameList[index].put(userInfo);
-		socketEmit();
+		const userIndex = gameList[index].put(userInfo);
+		socketEmit(userIndex);
 	},
 
 	getWaitingUserList() {

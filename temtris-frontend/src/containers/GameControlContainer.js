@@ -30,7 +30,7 @@ class GameControlContainer extends Component {
   componentDidMount() {
     const { userInfo, gameRoom, history } = this.props;
     if (userInfo.name === 'guest') {
-      history.push('/');
+      history.replace('/');
       return;
     }
     SocketClient.sendMessage('game/join', {

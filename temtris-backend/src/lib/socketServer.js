@@ -110,12 +110,12 @@ module.exports = function(io) {
   const playGround = {
     check(socket, req) {
       const { gameNumber } = req;
-      lobbyManager.gameCheck(gameNumber, socket.userInfo, () => {
+      lobbyManager.gameCheck(gameNumber, socket.userInfo, (userIndex) => {
 				const gameRoom = {
 					...lobbyManager.getGameManager(gameNumber)
 				};
 				delete gameRoom.gameData;
-				io.to(socket.userInfo.id).emit(GAME_CHECK, gameRoom);
+				io.to(socket.userInfo.id).emit(GAME_CHECK, { gameRoom, userIndex});
 			});
     },
     join(socket, req) {

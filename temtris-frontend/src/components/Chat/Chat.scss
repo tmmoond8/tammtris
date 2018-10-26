@@ -5,8 +5,9 @@
   position: relative;
 }
 .chat-message-list {
-  height: 13 * block-sizes-for('normal');
+  height: 12 * block-sizes-for('normal');
   margin: 0;
   overflow-y: scroll;
   padding: 0.5rem;
+  margin-bottom: 2rem;
 }
