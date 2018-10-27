@@ -1,5 +1,7 @@
 import io from 'socket.io-client';
-const serverUrl = `http://${window.location.hostname}:14666`;
+
+const serverUrl = window.location.origin.replace(':14100', ':14666');
+console.log(`socketClient ${serverUrl}`)
 let socket = io(serverUrl);
 
 const MESSAGE_TYPE = {
