@@ -13,5 +13,9 @@ app.use((req, res, next) => {
   next();
 });
 app.use('/api', api(app, '/api'));
+app.use('/', express.static(path.join(__dirname, 'front/build')))
 app.use(express.static(path.join(__dirname, 'static')))
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'front/build/index.html'));
+})
 server.listen('14666');
