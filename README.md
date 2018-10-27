@@ -1,9 +1,10 @@
 # TEMTRIS
-<br/>
-> 리액트로 만든 테트리스 게임입니다. 최대 6명이서 멀티 플레이 게임을 진행할 수 있습니다.
 
-<br/>
-![게임화면](https://github.com/tmmoond8/temtris/blob/master/screenshot_game.png)
+<br>
+
+> 리액트로 만든 테트리스 게임입니다. 최대 6명이서 멀티 플레이 게임을 진행할 수 있습니다.  <br>
+  
+![](https://i.imgur.com/TAuhiUy.png)
 
 ### DEMO
 [데모 링크](https://dashboard.heroku.com/apps/temtris-tmmoond8)   (heroku 서버에 올려서 다소 시간이 걸릴 수 있습니다.)
