@@ -43,13 +43,12 @@ class PlayGround extends Component{
   }
 
   render() {
-    const { handleKeyPress } = this;
     const { gameGroundData, userInfo, view, gameState, userIndex, gameItems } = this.props;
     const team = userInfo && userInfo.team;
     return (
       <Fragment>
         <ItemBox gameItems={gameItems} view={view}/>
-        <div className={cx('play-ground', view, team)} onKeyDown={handleKeyPress}>  
+        <div className={cx('play-ground', view, team)}>  
           <UserPanel userInfo={userInfo} view={view} userIndex={userIndex}/>
           <div style={{position: 'relative', background: 'white'}}>
             {this.renderAllLine(gameGroundData || GameDataManger.defaultGameData())}
