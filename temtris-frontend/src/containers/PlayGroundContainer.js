@@ -25,55 +25,41 @@ class PlayGroundContainer extends Component {
       this.playGroundActions.gameItemUse({ ...response, me : userInfo.number });
     });
 
-    document.body.addEventListener('keydown', this.handlePlayerKeyDown);
+    this.niceEventLister().addEventListener();
   }
 
-  // switchKeyEvent() {
-  //   if(this.state.keyEvent === 'default') {
-  //     document.body.removeEventListener('keydown', this.handlePlayerKeyDown);
-  //     const expertEvent = this.exportEventLister()
-  //     expertEvent.addEventListener();
-  //     this.setState({ keyEvent: 'expert', expertEvent })
-  //   } else {
-  //     const { expertEvent } = this.state;
-  //     expertEvent.removeEventListener();
-  //     document.body.addEventListener('keydown', this.handlePlayerKeyDown);
-  //     this.setState({ keyEvent: 'default' })
-  //   }
-  // }
-
-  // exportEventLister = () => {
-  //   let keyEvent;
-  //   const keepEvent = ['ArrowRight', 'ArrowLeft'];
-  //   const gameLoop = () => {
-  //     if(keyEvent) {
-  //       if(keepEvent.findIndex(item => item === keyEvent.code) !== -1) {
-  //         this.handlePlayerKeyDown(keyEvent);
-  //       }
-  //     }
-  //   }
-  //   const keydownEvent = (e) => {
-  //     keyEvent = e;
-  //     if(keepEvent.findIndex(item => item === keyEvent.code) === -1) {
-  //       this.handlePlayerKeyDown(e);
-  //     }
-  //   };
-  //   const keyupEvent = (e) => keyEvent = null;
-  //   let interval;
-  //   return {
-  //     addEventListener: () => {
-  //       document.body.addEventListener('keydown', keydownEvent, true);   
-  //       document.body.addEventListener('keyup', keyupEvent, true);
-  //       interval = setInterval(gameLoop, 70);
-  //       return this;
-  //     },
-  //     removeEventListener: () => {
-  //       document.removeEventListener('keydown', keydownEvent);
-  //       document.removeEventListener('keyup', keyupEvent);
-  //       clearInterval(interval);
-  //     }
-  //   }
-  // }
+  niceEventLister = () => {
+    let keyEvent;
+    const keepEvent = ['ArrowRight', 'ArrowLeft'];
+    const gameLoop = () => {
+      if(keyEvent) {
+        if(keepEvent.findIndex(item => item === keyEvent.code) !== -1) {
+          this.handlePlayerKeyDown(keyEvent);
+        }
+      }
+    }
+    const keydownEvent = (e) => {
+      keyEvent = e;
+      if(keepEvent.findIndex(item => item === keyEvent.code) === -1) {
+        this.handlePlayerKeyDown(e);
+      }
+    };
+    const keyupEvent = (e) => keyEvent = null;
+    let interval;
+    return {
+      addEventListener: () => {
+        document.body.addEventListener('keydown', keydownEvent, true);   
+        document.body.addEventListener('keyup', keyupEvent, true);
+        interval = setInterval(gameLoop, 100);
+        return this;
+      },
+      removeEventListener: () => {
+        document.removeEventListener('keydown', keydownEvent);
+        document.removeEventListener('keyup', keyupEvent);
+        clearInterval(interval);
+      }
+    }
+  }
 
 
   handlePlayerKeyDown = ({ code }) => {
