@@ -9,6 +9,9 @@ import { GAME_STATE } from 'utils/gameDataManager';
 class PlayGroundContainer extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      keyEvent: 'default'
+    }
     this.broadcastActions = this.props.BroadCastActions();
     this.playGroundActions = this.props.PlayGroundActions();
     SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
@@ -22,8 +25,42 @@ class PlayGroundContainer extends Component {
       this.playGroundActions.gameItemUse({ ...response, me : userInfo.number });
     });
 
-    document.body.addEventListener('keydown', this.handlePlayerKeyDown);
+    this.niceEventLister().addEventListener();
   }
+
+  niceEventLister = () => {
+    let keyEvent;
+    const keepEvent = ['ArrowRight', 'ArrowLeft'];
+    const gameLoop = () => {
+      if(keyEvent) {
+        if(keepEvent.findIndex(item => item === keyEvent.code) !== -1) {
+          this.handlePlayerKeyDown(keyEvent);
+        }
+      }
+    }
+    const keydownEvent = (e) => {
+      keyEvent = e;
+      if(keepEvent.findIndex(item => item === keyEvent.code) === -1) {
+        this.handlePlayerKeyDown(e);
+      }
+    };
+    const keyupEvent = (e) => keyEvent = null;
+    let interval;
+    return {
+      addEventListener: () => {
+        document.body.addEventListener('keydown', keydownEvent, true);   
+        document.body.addEventListener('keyup', keyupEvent, true);
+        interval = setInterval(gameLoop, 100);
+        return this;
+      },
+      removeEventListener: () => {
+        document.removeEventListener('keydown', keydownEvent);
+        document.removeEventListener('keyup', keyupEvent);
+        clearInterval(interval);
+      }
+    }
+  }
+
 
   handlePlayerKeyDown = ({ code }) => {
     if(this.props.gameState !== GAME_STATE.PLAY) return;
@@ -37,6 +74,8 @@ class PlayGroundContainer extends Component {
         to,
         item: gameItems[0]
       });
+    } else if(code.startsWith('Equal')) {
+      this.switchKeyEvent();
     } else {
       this.playGroundActions.playerKeyDown(code);
     }
