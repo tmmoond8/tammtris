@@ -12,9 +12,10 @@ class PlayGround extends Component{
 
   shouldComponentUpdate(nextProps) {
     const prevUserInfo = this.props.userInfo;
-    if(!nextProps.gameGroundData || !nextProps.userInfo || !this.props.gameGroundData) {
+    if(!this.props.gameGroundData || !nextProps.gameGroundData) {
       return true;
     }
+    console.log('bbbb');
     return prevUserInfo.id !== nextProps.userInfo.id 
       || prevUserInfo.team !== nextProps.userInfo.team 
       || this.props.userIndex !== nextProps.userIndex

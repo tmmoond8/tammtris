@@ -27,6 +27,10 @@ class DotBlock extends Component {
     }
   }
 
+  shouldComponentUpdate(nextProps) {
+    return this.props.dot !== nextProps.dot;
+  }
+
   getItemImage(dot) {
     return this.ITEM[dot];
   }
