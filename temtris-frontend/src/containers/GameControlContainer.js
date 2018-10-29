@@ -15,10 +15,11 @@ class GameControlContainer extends Component {
 
     SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
 
-    SocketClient.addEventOn('game/start', (response) => {
+    SocketClient.addEventOn('game/start', ({ mapData }) => {
       const { playGroundActions } = this;
       playGroundActions.gameStart({
-        autoDown: () => playGroundActions.playerKeyDown('ArrowDown')
+        autoDown: () => playGroundActions.playerKeyDown('ArrowDown'),
+        mapData
       });
     });
     SocketClient.addEventOn('game/result', (response) => {

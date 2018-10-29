@@ -1,5 +1,6 @@
 const userManager = require('./userManager');
 const lobbyManager = require('./lobbyManager');
+const mapManager = require('./mapManager');
 const { GAME_STATE } = require('./variable');
 
 const MESSAGE_TYPE = {
@@ -70,7 +71,7 @@ module.exports = function(io) {
 		socket.on(GAME_START, () => {
 			const gameManager = lobbyManager.getGameManager(socket.chattingChannel);
 			if(gameManager.gameStart()) {
-				io.to(socket.chattingChannel).emit(GAME_START);
+				io.to(socket.chattingChannel).emit(GAME_START, { mapData: mapManager.getRandomMap() });
 			}
 		})
 
