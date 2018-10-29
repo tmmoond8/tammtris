@@ -28,6 +28,7 @@ const initialState = {
   downStop: false,
   gameResult: null,
   gameItems: 'a'.repeat(10).split('').map(item => 0),
+  removedLine: 0,
 }
 
 const gameDataManager = new GameDataManager();
