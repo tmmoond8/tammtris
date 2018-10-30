@@ -24,6 +24,10 @@ class PlayGroundContainer extends Component {
       const { userInfo } = this.props;
       this.playGroundActions.gameItemUse({ ...response, me : userInfo.number });
     });
+    
+    SocketClient.addEventOn('game/blockUp', (response) => {
+      this.playGroundActions.gameBlockUp(response);
+    });
 
     this.niceEventLister().addEventListener();
   }
@@ -68,7 +72,7 @@ class PlayGroundContainer extends Component {
       const { allGroundData, userInfo, gameItems } = this.props;
       if(!Array.isArray(gameItems) || gameItems.length === 0) return;
       const to = Number.parseInt(code.charAt('5'));
-      if(to > 5 || !allGroundData[to - 1]) return;
+      if(to > 6 || !allGroundData[to - 1]) return;
       SocketClient.sendMessage('game/itemUse', {
         from: userInfo.number,
         to,

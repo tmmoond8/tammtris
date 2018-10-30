@@ -11,6 +11,7 @@ const GAME_START = 'gamePlay/GAME_START';
 const GAME_OVER = 'gamePlay/GAME_OVER';
 const GAME_RESULT = 'gamePlay/RESULT';
 const GAME_ITEM_USE = 'gamePlay/ITEM_USE';
+const GAME_BLOCK_UP = 'gamePlay/BLOCK_UP';
 const INIT = 'gamePlay/INIT';
 
 // action creator
@@ -19,6 +20,7 @@ export const gameStart = createAction(GAME_START);
 export const gameOver = createAction(GAME_OVER);
 export const gameResult = createAction(GAME_RESULT);
 export const gameItemUse = createAction(GAME_ITEM_USE);
+export const gameBlockUp = createAction(GAME_BLOCK_UP);
 export const init = createAction(INIT);
 
 const initialState = {
@@ -90,6 +92,14 @@ export default handleActions({
       ...state,
       gameGroundData: nextData || state.gameGroundData,
       gameItems: gameItems || state.gameItems
+    }
+  },
+  
+  [GAME_BLOCK_UP]: (state, action) => {
+    const { gameGroundData: nextData } = gameDataManager.blockUp(state, action.payload);
+    return {
+      ...state,
+      gameGroundData: nextData || state.gameGroundData,
     }
   },
 
