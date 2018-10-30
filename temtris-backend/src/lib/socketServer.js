@@ -17,6 +17,7 @@ const GAME_START = 'game/start';
 const GAME_DATA = 'game/data';
 const GAME_TEAM_CHANGE = 'game/teamChange';
 const GAME_ITEM_USE = 'game/itemUse';
+const GAME_BLOCK_UP = 'game/blockUp';
 const GAME_RESULT = 'game/result';
 
 class Message {
@@ -81,6 +82,10 @@ module.exports = function(io) {
 
 		socket.on(GAME_ITEM_USE, (msg) => {
 			itemUse(socket, msg);
+		})
+
+		socket.on(GAME_BLOCK_UP, (msg) => {
+			blockUp(socket, msg);
 		})
   });
 
@@ -187,8 +192,19 @@ module.exports = function(io) {
 	
 	const itemUse = (socket, msg) => {
 		const { chattingChannel } = socket;
-		lobbyManager.getGameManager(chattingChannel).itemUse(msg, () => {
-			io.to(chattingChannel).emit(GAME_ITEM_USE, msg);
-		})
+		const gameManager = lobbyManager.getGameManager(chattingChannel);
+		const target = gameManager.gameData[msg.to - 1];
+		io.to(target.id).emit(GAME_ITEM_USE, msg);
 	}
+
+	const blockUp = (socket, { removedLineLength }) => {
+		const { chattingChannel, userInfo } = socket;
+		const userId = userInfo.id;
+		const gameManager = lobbyManager.getGameManager(chattingChannel);
+		const exceptTeam = gameManager.gameData.filter(data => !!data && data.id === userId)[0].team;
+		gameManager.gameData.filter(data => !!data && (data.team !== exceptTeam || data.team === 'individual') )
+			.forEach(data => {
+				io.to(data.id).emit(GAME_BLOCK_UP, removedLineLength);
+			});
+		};
 };

@@ -1,6 +1,7 @@
 import block from 'models/shapes/block';
 import ShapeDataManager from './shapeDataManager';
 import ItemDataManager from './itemDataManager';
+import SocketClient from 'lib/SocketClient';
 
 const GAME_STATE = {
   READY: 'READY',
@@ -86,6 +87,8 @@ class GameDataManager {
     while(nextGameData.length < SIZE_Y) {
       nextGameData.unshift(GameDataManager.defaultLine());
     }
+    const removedLineLength = gameGroundData.filter(line => !line.includes(block.EMPTY)).length - 2;
+    removedLineLength > 0 && SocketClient.sendMessage('game/blockUp', { removedLineLength });
 
     const { playerBlocks, nextBlocks } = ShapeDataManager.getNextBlocks();
     let gameState = GAME_STATE.PLAY;
@@ -105,6 +108,40 @@ class GameDataManager {
       gameItems : nextGameItems,
     }
   }
+
+  blockUp = (() => {
+    const upLine = 'a'.repeat(SIZE_X).split('').map((item, idx) => idx === 4 ? 0 : 8);
+    const upper = (() => {
+      const up = (gameGroundData, playerBlocks, number) => {
+        GameDataManager.clearPlayerBlocks(gameGroundData, playerBlocks);
+        for(let i = 0; i < number; i++) {
+          gameGroundData.push(upLine);
+          gameGroundData.shift();
+        };
+        GameDataManager.mergePlayerBlocks(gameGroundData, playerBlocks);
+        return gameGroundData;
+      }
+      return {
+        up1: (gameGroundData, playerBlocks) => {
+          return up(gameGroundData, playerBlocks, 1);
+        },
+        up3: (gameGroundData, playerBlocks) => {
+          return up(gameGroundData, playerBlocks, 3);
+        },
+      }
+    })();
+    return ({ gameGroundData, playerBlocks }, removedLineLength) => {
+      const gameData = GameDataManager.cloneGameGroundData(gameGroundData);
+      const itemUse = [
+        () => {},
+        () => upper.up1(gameData, playerBlocks),
+        () => upper.up3(gameData, playerBlocks)
+      ];
+       return {
+        gameGroundData: itemUse[removedLineLength] ? itemUse[removedLineLength]() : null,
+      }
+    }
+  })();
 
   handleKeyPress(key, state) {
     switch(key) {
