@@ -194,7 +194,7 @@ module.exports = function(io) {
 		const { chattingChannel } = socket;
 		const gameManager = lobbyManager.getGameManager(chattingChannel);
 		const target = gameManager.gameData[msg.to - 1];
-		io.to(target.id).emit(GAME_ITEM_USE, msg);
+		io.to(chattingChannel).emit(GAME_ITEM_USE, msg);
 	}
 
 	const blockUp = (socket, { removedLineLength }) => {
@@ -202,7 +202,7 @@ module.exports = function(io) {
 		const userId = userInfo.id;
 		const gameManager = lobbyManager.getGameManager(chattingChannel);
 		const exceptTeam = gameManager.gameData.filter(data => !!data && data.id === userId)[0].team;
-		gameManager.gameData.filter(data => !!data && (data.team !== exceptTeam || data.team === 'individual') )
+		gameManager.gameData.filter(data => !!data && (data.team !== exceptTeam || (data.team === 'individual') && data.id !== userId) )
 			.forEach(data => {
 				io.to(data.id).emit(GAME_BLOCK_UP, removedLineLength);
 			});
