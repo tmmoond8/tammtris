@@ -10,10 +10,14 @@ const getRandomIndex = (items) => Math.floor(Math.random() * items.length);
 const mapManager = {
   getRandomMap() {
     const MAP = [ rainbow, cherry, piramid, poketball, dna];    
-    const coreMapDat = MAP[getRandomIndex(MAP)].replace(/ /g, '').split(String.fromCharCode(10))
+    
+    const coreMapDat = nothing.replace(/ /g, '').split(String.fromCharCode(10))
                       .map(line => line.split('|'));
-
-    return coreMapDat.map(line => (line.map(item => {
+    
+    // const coreMapDat = MAP[getRandomIndex(MAP)].replace(/ /g, '').split(String.fromCharCode(10))
+    //                   .map(line => line.split('|'));
+    
+                      return coreMapDat.map(line => (line.map(item => {
         item = ITEMS[item] ? ITEMS[item] : item
         return parseInt(item, 10)
       })

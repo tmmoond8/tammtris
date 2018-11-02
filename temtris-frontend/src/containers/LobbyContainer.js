@@ -35,7 +35,6 @@ class LobbyContainer extends Component {
     });
     SocketClient.socket.on('connect', () => {
       this.props.userInfo.id === "testID" && SocketClient.sendMessage('lobby/join')
-      console.log('connect new');
     });
     SocketClient.socket.on('disconnect', () => {
       this.dissconnect();

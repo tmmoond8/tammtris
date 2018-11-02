@@ -55,7 +55,7 @@ export default handleActions({
     const blockGameState = [GAME_STATE.PLAY];
     if(blockGameState.includes(state.gameState)) return state;
     const { autoDown, mapData } = action.payload;
-    const gameGroundData = mapData || GameDataManager.defaultGameData();
+    const gameGroundData = mapData || mapDataManager.getTestMap();// GameDataManager.defaultGameData();
     const { playerBlocks, nextBlocks } = shapeDataManager.getNextBlocks();
     GameDataManager.mergePlayerBlocks(gameGroundData, playerBlocks);
     return {

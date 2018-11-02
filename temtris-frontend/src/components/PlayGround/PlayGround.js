@@ -15,7 +15,6 @@ class PlayGround extends Component{
     if(!this.props.gameGroundData || !nextProps.gameGroundData) {
       return true;
     }
-    console.log('bbbb');
     return prevUserInfo.id !== nextProps.userInfo.id 
       || prevUserInfo.team !== nextProps.userInfo.team 
       || this.props.userIndex !== nextProps.userIndex
