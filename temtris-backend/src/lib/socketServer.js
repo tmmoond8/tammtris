@@ -157,6 +157,7 @@ module.exports = function(io) {
 			gameManger.updateGameData(userInfo);
 			io.to(chattingChannel).emit(GAME_DATA, {index, gameData });
 			gameState === GAME_STATE.GAME_OVER && this.gameOver(socket, req);
+			console.log('game data', userInfo.name);
 		},
 		gameOver(socket, req) {
 			const { chattingChannel } = socket;

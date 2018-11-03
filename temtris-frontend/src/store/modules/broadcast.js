@@ -21,7 +21,7 @@ export const setLobbyData = createAction(SET_LOBBY_DATA);
 export const setGameRoom = createAction(SET_GAME_ROOM);
 export const changeTeam = createAction(CHANGE_TEAM);
 export const init = createAction(INIT);
-
+``
 const initialState = {
   chattingMessages: [],
   allGroundData: [null, null, null, null, null, null],
@@ -71,9 +71,10 @@ export default handleActions({
   },
   [SET_PLAY_DATA]: (state, action) => {
     const { index, gameData } = action.payload;
+    const nextData = (data) => !gameData ? null : { ...data, gameData };
     return {
       ...state,
-      allGroundData : state.allGroundData.map((data, idx) => (idx === index ? {...data, gameData} : data))
+      allGroundData : state.allGroundData.map((data, idx) => (idx === index ? nextData(data) : data))
     }
   },
   [SET_USER_INFO]: (state, action) => {

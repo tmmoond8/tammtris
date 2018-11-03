@@ -17,20 +17,15 @@ class PlayGround extends Component{
 
   shouldComponentUpdate(nextProps) {
     const prevUserInfo = this.props.userInfo;
-    if(!this.props.gameGroundData 
-      && !this.props.gameItems
-      && !this.props.gameState
-      && !nextProps.gameGroundData
-      && !nextProps.gameItems
-      && !nextProps.gameState
-      ) {
-      return true;
-    }
-    return prevUserInfo.team !== nextProps.userInfo.team 
+    if(nextProps.view) {
+      return !!(nextProps.userInfo.id || prevUserInfo.id)
+    } else {
+      return prevUserInfo.team !== nextProps.userInfo.team 
       || !(prevUserInfo.id === nextProps.userInfo.id 
       && this.props.gameGroundData === nextProps.gameGroundData 
       && this.props.userIndex === nextProps.userIndex
       && PlayGround.toString(this.props.gameGroundData) === PlayGround.toString(nextProps.gameGroundData));
+    }
   }
 
   renderAllLine(gameData) {
@@ -55,7 +50,6 @@ class PlayGround extends Component{
   }
 
   render() {
-    console.log(`render ${++this.number}  ${this.props.userInfo.id}`);
     const { gameGroundData, userInfo, view, gameState, userIndex, gameItems } = this.props;
     const team = userInfo && userInfo.team;
     return (
