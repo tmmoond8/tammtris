@@ -4,6 +4,7 @@ import { createAction, handleActions } from 'redux-actions';
 const ADD_CHATTING_MESSAGE = 'broadcast/ADD_CHATTING_MESSAGES';
 const ADD_CHATTING_NOTIFY = 'broadcast/ADD_CHATTING_NOTIFY';
 const SET_ALL_PLAY_DATA = 'broadcast/SET_ALL_PLAY_DATA';
+const SET_PLAY_DATA = 'broadcast/SET_PLAY_DATA';
 const SET_USER_INFO = 'broadcast/SET_USER_INFO';
 const SET_LOBBY_DATA = 'broadcast/SET_LOBBY_DATA';
 const SET_GAME_ROOM = 'broadcast/SET_GAME_ROOM';
@@ -14,6 +15,7 @@ const INIT = 'broadcast/INIT';
 export const addChattingMessage = createAction(ADD_CHATTING_MESSAGE);
 export const addChattingNotify = createAction(ADD_CHATTING_NOTIFY);
 export const setAllPlayData = createAction(SET_ALL_PLAY_DATA);
+export const setPlayData = createAction(SET_PLAY_DATA);
 export const setUserInfo = createAction(SET_USER_INFO);
 export const setLobbyData = createAction(SET_LOBBY_DATA);
 export const setGameRoom = createAction(SET_GAME_ROOM);
@@ -65,6 +67,13 @@ export default handleActions({
     return {
       ...state,
       allGroundData
+    }
+  },
+  [SET_PLAY_DATA]: (state, action) => {
+    const { index, gameData } = action.payload;
+    return {
+      ...state,
+      allGroundData : state.allGroundData.map((data, idx) => (idx === index ? {...data, gameData} : data))
     }
   },
   [SET_USER_INFO]: (state, action) => {

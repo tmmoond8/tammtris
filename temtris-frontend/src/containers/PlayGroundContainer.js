@@ -16,9 +16,14 @@ class PlayGroundContainer extends Component {
     this.playGroundActions = this.props.PlayGroundActions();
     SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
     
-    SocketClient.addEventOn('game/data', (response) => {
+    SocketClient.addEventOn('game/allData', (response) => {
       this.broadcastActions.setAllPlayData(response);
     });
+
+    SocketClient.addEventOn('game/data', (response) => {
+      this.broadcastActions.setPlayData(response);
+    });
+
     SocketClient.addEventOn('game/itemUse', (response) => {
       //TODO 이펙트 broadcast
       const { userInfo } = this.props;

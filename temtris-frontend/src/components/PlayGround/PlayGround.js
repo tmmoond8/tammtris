@@ -9,16 +9,28 @@ import GameDataManger, { GAME_STATE } from 'utils/gameDataManager';
 const cx = classNames.bind(styles);
 
 class PlayGround extends Component{
+  constructor(props) {
+    super(props);
+    this.number= 0;
+  }
+  number = 0;
 
   shouldComponentUpdate(nextProps) {
     const prevUserInfo = this.props.userInfo;
-    if(!this.props.gameGroundData || !nextProps.gameGroundData) {
+    if(!this.props.gameGroundData 
+      && !this.props.gameItems
+      && !this.props.gameState
+      && !nextProps.gameGroundData
+      && !nextProps.gameItems
+      && !nextProps.gameState
+      ) {
       return true;
     }
-    return prevUserInfo.id !== nextProps.userInfo.id 
-      || prevUserInfo.team !== nextProps.userInfo.team 
-      || this.props.userIndex !== nextProps.userIndex
-      || PlayGround.toString(this.props.gameGroundData) !== PlayGround.toString(nextProps.gameGroundData);
+    return prevUserInfo.team !== nextProps.userInfo.team 
+      || !(prevUserInfo.id === nextProps.userInfo.id 
+      && this.props.gameGroundData === nextProps.gameGroundData 
+      && this.props.userIndex === nextProps.userIndex
+      && PlayGround.toString(this.props.gameGroundData) === PlayGround.toString(nextProps.gameGroundData));
   }
 
   renderAllLine(gameData) {
@@ -43,6 +55,7 @@ class PlayGround extends Component{
   }
 
   render() {
+    console.log(`render ${++this.number}  ${this.props.userInfo.id}`);
     const { gameGroundData, userInfo, view, gameState, userIndex, gameItems } = this.props;
     const team = userInfo && userInfo.team;
     return (

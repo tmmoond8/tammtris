@@ -15,6 +15,7 @@ const GAME_CHECK = 'game/check';
 const GAME_JOIN = 'game/join';
 const GAME_START = 'game/start';
 const GAME_DATA = 'game/data';
+const GAME_ALL_DATA = 'game/allData';
 const GAME_TEAM_CHANGE = 'game/teamChange';
 const GAME_ITEM_USE = 'game/itemUse';
 const GAME_BLOCK_UP = 'game/blockUp';
@@ -131,7 +132,7 @@ module.exports = function(io) {
 			notify(socket, `${userInfo.emoji} ${userInfo.name}님께서 입장하였습니다.`);
 			lobbyManager.getGameManager(gameNumber).put(userInfo);
 			io.to(LOBBY).emit(LOBBY_DATA, lobbyManager.getLobbyData());
-			io.to(gameNumber).emit(GAME_DATA, lobbyManager.getGameManager(gameNumber).gameData);
+			io.to(gameNumber).emit(GAME_ALL_DATA, lobbyManager.getGameManager(gameNumber).gameData);
       console.log('---- [JOIN] ----- ', gameNumber);
     },
     out(socket) {
@@ -139,20 +140,22 @@ module.exports = function(io) {
       if (userInfo && !!lobbyManager.getGameManager(chattingChannel)) {
 				this.gameOver(socket, { userInfo });
 				notify(socket, `${userInfo.emoji} ${userInfo.name}님께서 퇴장하셨습니다.`);
-				lobbyManager.getGameManager(chattingChannel).remove(userInfo);
+				const gameManger = lobbyManager.getGameManager(chattingChannel);
+				const index = gameManger.find(userInfo.id);
+				gameManger.remove(userInfo);
 				socket.leave(chattingChannel);
 				userManager.removeUser(userInfo);
-        io.to(chattingChannel).emit(GAME_DATA, lobbyManager.getGameManager(chattingChannel).gameData);
+        io.to(chattingChannel).emit(GAME_DATA, { index, gameData : null });
       }
 		},
 		updateGameData(socket, req) {
 			const { chattingChannel } = socket;
-			const { userInfo, gameData, gameState, gameItems } = req;
-			userInfo.gameData = gameData;
-			userInfo.gameState = gameState;
-			userInfo.gameItems = gameItems;
-			lobbyManager.getGameManager(chattingChannel).updateGameData(userInfo);
-			io.to(chattingChannel).emit(GAME_DATA, lobbyManager.getGameManager(chattingChannel).gameData);
+			let { userInfo, gameData, gameState, gameItems } = req;
+			userInfo = {...userInfo, gameData, gameState, gameItems };
+			const gameManger = lobbyManager.getGameManager(chattingChannel);
+			const index = gameManger.find(userInfo.id);
+			gameManger.updateGameData(userInfo);
+			io.to(chattingChannel).emit(GAME_DATA, {index, gameData });
 			gameState === GAME_STATE.GAME_OVER && this.gameOver(socket, req);
 		},
 		gameOver(socket, req) {
@@ -185,7 +188,7 @@ module.exports = function(io) {
 		const { chattingChannel } = socket;
 		const { userInfo, team } = msg;
 		lobbyManager.getGameManager(chattingChannel).changeTeam (userInfo, team, () => {
-			io.to(chattingChannel).emit(GAME_DATA, lobbyManager.getGameManager(chattingChannel).gameData);
+			io.to(chattingChannel).emit(GAME_ALL_DATA, lobbyManager.getGameManager(chattingChannel).gameData);
 			io.to(userInfo.id).emit(GAME_TEAM_CHANGE, team);
 		});
 	}
