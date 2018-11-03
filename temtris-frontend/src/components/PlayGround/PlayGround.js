@@ -9,17 +9,23 @@ import GameDataManger, { GAME_STATE } from 'utils/gameDataManager';
 const cx = classNames.bind(styles);
 
 class PlayGround extends Component{
+  constructor(props) {
+    super(props);
+    this.number= 0;
+  }
+  number = 0;
 
   shouldComponentUpdate(nextProps) {
     const prevUserInfo = this.props.userInfo;
-    if(!this.props.gameGroundData || !nextProps.gameGroundData) {
-      return true;
+    if(nextProps.view) {
+      return !!(nextProps.userInfo.id || prevUserInfo.id)
+    } else {
+      return prevUserInfo.team !== nextProps.userInfo.team 
+      || !(prevUserInfo.id === nextProps.userInfo.id 
+      && this.props.gameGroundData === nextProps.gameGroundData 
+      && this.props.userIndex === nextProps.userIndex
+      && PlayGround.toString(this.props.gameGroundData) === PlayGround.toString(nextProps.gameGroundData));
     }
-    console.log('bbbb');
-    return prevUserInfo.id !== nextProps.userInfo.id 
-      || prevUserInfo.team !== nextProps.userInfo.team 
-      || this.props.userIndex !== nextProps.userIndex
-      || PlayGround.toString(this.props.gameGroundData) !== PlayGround.toString(nextProps.gameGroundData);
   }
 
   renderAllLine(gameData) {

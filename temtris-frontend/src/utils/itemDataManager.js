@@ -66,7 +66,6 @@ class ItemDataManager {
       return (input) => fn.reduce((accm, currentFn) => currentFn(accm), input)
     }
     const rand = (input, per) => { 
-      console.log(`input ${input}, per ${per}`)
       if (input !== block.EMPTY) return input;
       return (Math.random() * 100) < per
     };
@@ -75,7 +74,6 @@ class ItemDataManager {
     const cleaner = (input) => done(input) ? input : rand(input, 5) ? block.ITEM_CLEANER : input;
     const upDown = (input) => {
       if (input !== block.EMPTY) {
-        console.log(input);
         return input
       };
       const per = Math.random() * 100;

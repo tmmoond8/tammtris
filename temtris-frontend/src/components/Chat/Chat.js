@@ -20,7 +20,6 @@ class Chat extends Component {
     };
 
     componentDidUpdate() {
-        console.log('update');
         this.chattingRef.current.scrollTop = this.chattingRef.current.scrollHeight;
     }
 

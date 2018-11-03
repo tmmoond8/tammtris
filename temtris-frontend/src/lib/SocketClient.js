@@ -1,7 +1,6 @@
 import io from 'socket.io-client';
 
 const serverUrl = window.location.origin.replace(':14100', ':14666');
-console.log(`socketClient ${serverUrl}`)
 let socket = io(serverUrl);
 
 const MESSAGE_TYPE = {
@@ -11,7 +10,6 @@ const MESSAGE_TYPE = {
 
 const SocketClient = {
     sendMessage: (event, message) => {
-        console.log(`event : ${event}, message: ${message}`)
         socket.emit(event, message);
     },
     addEventOn: (event, fn) => {

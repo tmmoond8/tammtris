@@ -110,7 +110,6 @@ class gameManager {
   }
 
   itemUse({ from, to }, socketEmit) {
-    console.log(`from : ${from} to : ${to}`);
     socketEmit()
   }
 }

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import styles from './OtherPlayGrounds.scss';
 import classNames from 'classnames/bind';
 import PlayGround from 'components/PlayGround';
