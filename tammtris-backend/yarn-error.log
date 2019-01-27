@@ -15,7 +15,7 @@ Platform:
 
 npm manifest: 
   {
-    "name": "temtris-backend",
+    "name": "tammtris-backend",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
@@ -716,7 +716,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/yeast/-/yeast-0.1.2.tgz#008e06d8094320c372dbc2f8ed76a0ca6c8ac419"
 
 Trace: 
-  SyntaxError: /Users/moonti/Documents/88study/projects/temtris/temtris-backend/package.json: Unexpected token } in JSON at position 206
+  SyntaxError: /Users/moonti/Documents/88study/projects/tammtris/tammtris-backend/package.json: Unexpected token } in JSON at position 206
       at JSON.parse (<anonymous>)
       at /usr/local/lib/node_modules/yarn/lib/cli.js:764:59
       at Generator.next (<anonymous>)

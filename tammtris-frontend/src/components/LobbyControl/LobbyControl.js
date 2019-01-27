@@ -23,7 +23,7 @@ class LobbyControl extends Component {
 
     return (
       <div className={cx('lobby')}>
-        <div className={cx('lobby-logo')}>temtris</div>
+        <div className={cx('lobby-logo')}>tammtris</div>
         <Chat userInfo={userInfo} chattingMessages={chattingMessages}/>
         {renderUserList(waitingUserList, userInfo)}
       </div>

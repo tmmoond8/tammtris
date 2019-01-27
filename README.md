@@ -1,4 +1,4 @@
-# TEMTRIS
+# TAMMTRIS
 
 <br>
 
@@ -7,7 +7,7 @@
 ![](https://i.imgur.com/TAuhiUy.png)
 
 ### DEMO
-[데모 링크](https://temtris-tmmoond8.herokuapp.com/)   (heroku 서버에 올려서 다소 시간이 걸릴 수 있습니다.)
+[데모 링크](https://tammtris-tmmoond8.herokuapp.com/)   (heroku 서버에 올려서 다소 시간이 걸릴 수 있습니다.)
 
 <br>
 
@@ -35,7 +35,7 @@ ___
 * 채팅 입력창에 두고 키입력을 하면 게임 입력과 중복으로 입력됨
 * 키를 누르고 있으면 처음 딜레이가 생김
 
-[대쉬 보드(trello)](https://trello.com/b/WZ9X6Ery/temtris)
+[대쉬 보드(trello)](https://trello.com/b/WZ9X6Ery/tammtris)
 
 
 <br/>

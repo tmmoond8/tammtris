@@ -16,7 +16,7 @@ class GameControl extends Component {
 
     return (
       <div className={cx('game-control')}>
-        <Link to="/" className={cx('game-control-logo')}>temtris</Link>
+        <Link to="/" className={cx('game-control-logo')}>tammtris</Link>
         <Chat userInfo={userInfo} chattingMessages={chattingMessages}/>
         <TeamSelectButtonsContainer/>
         <StartButton onClickMulti={onClickMulti} gameState={gameState}/>

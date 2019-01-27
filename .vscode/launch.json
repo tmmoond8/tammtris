@@ -8,14 +8,14 @@
     //   "type": "node",
     //   "request": "launch",
     //   "name": "Mocha Tests",
-    //   "program": "${workspaceFolder}/temtris-backend/node_modules/mocha/bin/_mocha",
+    //   "program": "${workspaceFolder}/tammtris-backend/node_modules/mocha/bin/_mocha",
     //   "args": [
     //     "-u",
     //     "tdd",
     //     "--timeout",
     //     "999999",
     //     "--colors",
-    //     "${workspaceFolder}/temtris-backend/test"
+    //     "${workspaceFolder}/tammtris-backend/test"
     //   ],
     //   "internalConsoleOptions": "openOnSessionStart"
     // },
@@ -23,7 +23,7 @@
       "type": "node",
       "request": "launch",
       "name": "프로그램 시작",
-      "program": "${workspaceFolder}/temtris-backend/src/index.js"
+      "program": "${workspaceFolder}/tammtris-backend/src/index.js"
     },
   ]
 }
