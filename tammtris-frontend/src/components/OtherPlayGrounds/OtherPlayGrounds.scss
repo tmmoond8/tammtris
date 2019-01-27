@@ -1,0 +1,17 @@
+@import 'utils';
+
+.other-play-grounds {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  width:100%;
+
+  .other-play-grounds-item {
+    margin: .5rem;
+    width: 11 * block-sizes-for('view');
+    display: flex;
+  }
+  .next-shapes {
+    grid-column: 3;
+    grid-row: 1;
+  }
+}

@@ -1,0 +1,3 @@
+@function block-sizes-for($key) {
+    @return map-get($block-sizes, $key);
+}

@@ -1,1 +1,3 @@
-temtris-frontend/.env
+tammtris-frontend/.env
+tammtris-backend/build
+**/node_modules/
