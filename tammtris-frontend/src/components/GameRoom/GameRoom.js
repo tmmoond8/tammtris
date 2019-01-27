@@ -6,7 +6,7 @@ const cx = classNames.bind(styles);
 
 class GameRoom extends Component {
   render() {
-		const serverUrl = `${window.location.origin}/images/`.replace(':14100', ':14666');
+		const serverUrl = `${window.location.origin}/images/`.replace('14100', '14200');
 		const { title, players, gameNumber, onGameJoin } = this.props;
 		const style = {
 			backgroundImage: `url("${serverUrl}${title}.jpg")`
