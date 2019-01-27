@@ -7,7 +7,7 @@
 ![](https://i.imgur.com/TAuhiUy.png)
 
 ### DEMO
-[데모 링크](https://tammtris-tmmoond8.herokuapp.com/)   (heroku 서버에 올려서 다소 시간이 걸릴 수 있습니다.)
+[데모 링크](http://tammtris.tammolo.com/)
 
 <br>
 
