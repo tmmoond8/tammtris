@@ -1,19 +1,17 @@
 import React from 'react';
 import LobbyContainer from 'containers/LobbyContainer';
 import LobbyControlContainer from 'containers/LobbyControlContainer';
+import styles from './pages.scss';
+import classNames from 'classnames/bind';
+
+const cx = classNames.bind(styles);
 
 const LobbyPage = () => {
-  const style = {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
 
   return (
-    <div style={style}>
-      <LobbyContainer/>
+    <div className={(cx('lobby-page'))}>
       <LobbyControlContainer/>
+      <LobbyContainer/>
     </div>
   )
 }

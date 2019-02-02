@@ -1,0 +1,13 @@
+@import 'utils';
+
+.lobby-page {
+  display: flex;
+  height:100vh;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
+
+  @include media("<large") {
+    display: block;
+  }
+}

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames/bind';
 import styles from './LobbyControl.scss';
 import Chat from 'components/Chat';
+import { GoThreeBars } from 'react-icons/go';
 
 const cx = classNames.bind(styles);
 
@@ -18,14 +19,31 @@ class LobbyControl extends Component {
   }
 
   render() {
-    const { userInfo, chattingMessages, waitingUserList} = this.props;
+    const { userInfo, chattingMessages, waitingUserList, onToggleControl, isVisibleControl} = this.props;
     const { renderUserList } = this;
 
     return (
       <div className={cx('lobby')}>
-        <div className={cx('lobby-logo')}>tammtris</div>
-        <Chat userInfo={userInfo} chattingMessages={chattingMessages}/>
-        {renderUserList(waitingUserList, userInfo)}
+        <div className={cx('lobby-logo')}>
+          <span>tammtris</span>
+          <span className={cx('lobby-hambug')} onClick={onToggleControl}>
+            <GoThreeBars/>
+          </span>
+        </div>
+        {
+          isVisibleControl && (
+            <div className={cx('chtting-wrapper')}>
+              <div className={cx('chtting-close')} onClick={onToggleControl}>
+                <span style={{cursor: 'pointer', padding: '1.6rem'}}>&times;</span>
+              </div>
+              <Chat userInfo={userInfo} chattingMessages={chattingMessages}/>
+              {renderUserList(waitingUserList, userInfo)}
+              <div className={cx('chtting-close')} onClick={onToggleControl}>
+                <span style={{cursor: 'pointer', padding: '1.6rem'}}>&times;</span>
+              </div>
+            </div>
+          )
+        }  
       </div>
     )
   }
