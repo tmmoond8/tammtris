@@ -1,0 +1,18 @@
+$breakpoints: (
+  small: 376px,
+  medium: 764px,
+  large: 1024px,
+  huge: 1200px
+);
+
+@mixin responsive() {
+  width: 1200px;
+  margin: 0 auto;
+  transition: .3s ease-in-out;
+  @include media("<huge") {
+    width: 1024px;
+  }
+  @include media("<large") {
+    width: 100%;
+  }
+}

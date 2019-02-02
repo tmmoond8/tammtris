@@ -12,6 +12,7 @@ const GAME_OVER = 'gamePlay/GAME_OVER';
 const GAME_RESULT = 'gamePlay/RESULT';
 const GAME_ITEM_USE = 'gamePlay/ITEM_USE';
 const GAME_BLOCK_UP = 'gamePlay/BLOCK_UP';
+const TOGGLE_CONTROL = 'gamePlay/TOGGLE_CONTROL';
 const INIT = 'gamePlay/INIT';
 
 // action creator
@@ -21,6 +22,7 @@ export const gameOver = createAction(GAME_OVER);
 export const gameResult = createAction(GAME_RESULT);
 export const gameItemUse = createAction(GAME_ITEM_USE);
 export const gameBlockUp = createAction(GAME_BLOCK_UP);
+export const toggleControl = createAction(TOGGLE_CONTROL);
 export const init = createAction(INIT);
 
 const initialState = {
@@ -31,6 +33,7 @@ const initialState = {
   gameResult: null,
   gameItems: 'a'.repeat(10).split('').map(item => 0),
   removedLine: 0,
+  isVisibleControl: true,
 }
 
 const gameDataManager = new GameDataManager();
@@ -104,4 +107,11 @@ export default handleActions({
   },
 
   [INIT]: (state, action) => JSON.parse(JSON.stringify(initialState)),
+
+  [TOGGLE_CONTROL]: (state, action) => {
+    return {
+      ...state,
+      isVisibleControl: !state.isVisibleControl
+    }
+  },
 }, initialState);

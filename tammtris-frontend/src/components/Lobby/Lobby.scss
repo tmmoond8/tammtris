@@ -21,3 +21,11 @@
     position: relative;
     border-radius: .3rem;
 }
+
+@include media("<large") {
+    .lobby-area {
+        min-width: 100vw;
+        grid-template-columns: auto auto;
+        height: calc(100vh - 3rem);
+    }
+}
