@@ -3,43 +3,23 @@ import PlayGroundContainer from 'containers/PlayGroundContainer';
 import GameControlContainer from 'containers/GameControlContainer';
 import OtherPlayGroundsContainer from 'containers/OtherPlayGroundsContainer';
 import GameResultContainer from 'containers/GameResultContainer';
+import styles from './pages.scss';
+import classNames from 'classnames/bind';
+
+const cx = classNames.bind(styles);
 
 const GamePlayPage = () => {
-  const style = {
-    position: 'relative',
-    display: 'flex',
-    flexDirection: 'row',
-    background: '#f9f9f9',
-    minWidth: '55rem',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100vh',
-  }
-
-  const otherPlayGroundStyle = {
-    flex: 1,
-    maxWidth: '30rem',
-  }
-
-  const myPlayGroundStyle = {
-    margin: 'auto 1rem',
-    flex: 1,
-    maxWidth: '15rem',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
-
   return (
-    <div style={style}>
-      <div style={otherPlayGroundStyle}>
-        <OtherPlayGroundsContainer/>
+    <div className={cx('gameplay-wrapper')}>
+      <div className={cx('gameplay-page')}>
+        <div className={cx('gameplay-header')}>
+          <GameControlContainer/>
+        </div>
+        <div className={cx('otherplayground')}>
+          <OtherPlayGroundsContainer/>
+        </div>
+        <GameResultContainer/>
       </div>
-      <div style={myPlayGroundStyle}>
-        <PlayGroundContainer/>
-      </div>
-      <GameControlContainer/>
-      <GameResultContainer/>
     </div>
   )
 }

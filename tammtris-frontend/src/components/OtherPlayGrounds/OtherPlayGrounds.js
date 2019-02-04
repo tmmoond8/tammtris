@@ -7,7 +7,6 @@ import NextBlocksContainer from 'containers/NextBlocksContainer';
 const cx = classNames.bind(styles);
 
 class OtherPlayGrounds extends Component {
-
   renderPlayGround = (allGroundData) => {
     return allGroundData.map((gameGroundData, idx) => (
       <div className={cx('other-play-grounds-item')} key={idx}>
@@ -25,12 +24,15 @@ class OtherPlayGrounds extends Component {
   }
 
   render() {
-    const { allGroundData } = this.props;
+    const { allGroundData, PlayGroundContainer } = this.props;
     return (
       <div className={cx('other-play-grounds')}> 
         { this.renderPlayGround(allGroundData) }
         <div className={cx('next-shapes')}>
           <NextBlocksContainer/>
+        </div>
+        <div className={cx('myplayground')}>
+          <PlayGroundContainer/>
         </div>
       </div>
     );

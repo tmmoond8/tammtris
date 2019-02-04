@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import classNames from 'classnames/bind';
 import styles from './LobbyControl.scss';
 import Chat from 'components/Chat';
@@ -32,16 +32,16 @@ class LobbyControl extends Component {
         </div>
         {
           isVisibleControl && (
-            <div className={cx('chtting-wrapper')}>
-              <div className={cx('chtting-close')} onClick={onToggleControl}>
-                <span style={{cursor: 'pointer', padding: '1.6rem'}}>&times;</span>
+            <Fragment>
+              <div className={cx('chatting-wrapper')}>
+                <div className={cx('chatting-close')} onClick={onToggleControl}>
+                  <span style={{cursor: 'pointer', padding: '1.6rem'}}>&times;</span>
+                </div>
+                <Chat userInfo={userInfo} chattingMessages={chattingMessages}/>
+                {renderUserList(waitingUserList, userInfo)}
               </div>
-              <Chat userInfo={userInfo} chattingMessages={chattingMessages}/>
-              {renderUserList(waitingUserList, userInfo)}
-              <div className={cx('chtting-close')} onClick={onToggleControl}>
-                <span style={{cursor: 'pointer', padding: '1.6rem'}}>&times;</span>
-              </div>
-            </div>
+              <div className={cx('chatting-dimmed')} onClick={onToggleControl}/>
+            </Fragment>
           )
         }  
       </div>
