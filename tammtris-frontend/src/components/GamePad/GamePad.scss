@@ -1,0 +1,47 @@
+@import 'utils';
+
+$button-size: 3rem;
+
+.gamepad {
+  display: none;
+  width: 86vw;
+  flex: 1;
+  .gamepad-btn {
+    position: absolute;
+    border: 1px solid RGBA(55, 55, 55, .3);
+    border-radius: 50%;
+    height: $button-size;
+    width: $button-size;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: RGBA(55, 55, 55, .3);
+    font-size: 2rem;
+  }
+
+  .gamepad-left {
+    left: 0;
+    top: 0.25 * $button-size;
+  }
+  .gamepad-right {
+    left: 1.5 * $button-size;
+    top: 0.25 * $button-size;
+  }
+  .gamepad-down {
+    left: .75 * $button-size;
+    top: 1.5 * $button-size;
+  }
+  .gamepad-rotation {
+    right: 0;
+    top: 0.25 * $button-size;
+  }
+  .gamepad-space {
+    right: 1 * $button-size;
+    top: 1.5 * $button-size;
+  }
+  @include media("<medium") {
+    display: flex;
+    position: relative;
+    justify-content: space-around;
+  }
+}

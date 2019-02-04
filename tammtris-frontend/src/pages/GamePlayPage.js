@@ -1,8 +1,8 @@
 import React from 'react';
-import PlayGroundContainer from 'containers/PlayGroundContainer';
 import GameControlContainer from 'containers/GameControlContainer';
 import OtherPlayGroundsContainer from 'containers/OtherPlayGroundsContainer';
 import GameResultContainer from 'containers/GameResultContainer';
+import GamePadContainer from 'containers/GamePadContainer';
 import styles from './pages.scss';
 import classNames from 'classnames/bind';
 
@@ -18,6 +18,7 @@ const GamePlayPage = () => {
         <div className={cx('otherplayground')}>
           <OtherPlayGroundsContainer/>
         </div>
+        <GamePadContainer/>
         <GameResultContainer/>
       </div>
     </div>
