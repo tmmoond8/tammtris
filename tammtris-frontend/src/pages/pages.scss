@@ -11,3 +11,47 @@
     display: block;
   }
 }
+
+.gameplay-wrapper {
+  display: flex;
+  justify-content: center;
+  
+  background: $oc-gray-1;
+}
+
+.gameplay-page {
+  display: flex;
+  width: 70rem;
+  min-width: 55rem;
+  height: 100vh;
+  align-items: center;
+  flex-direction: row-reverse;
+  
+  .otherplayground {
+    flex: 1;
+    max-width: 70rem;
+    margin: 0 auto;
+  }
+
+  @include media("<large") {
+    min-width: auto;
+    .otherplayground {
+      max-width: 45rem;
+    }
+  }
+
+  @include media("<medium") {
+    .otherplayground { 
+      transform: scale(.8);
+    }
+    .gameplay-header {
+      display: block;
+    }
+  }
+
+  @include media("<mobile") {
+    .otherplayground { 
+      transform: scale(.5);
+    }
+  }
+}

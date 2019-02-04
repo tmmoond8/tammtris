@@ -39,7 +39,7 @@
         right: 1rem;
         top: .4rem;
     }
-    .chtting-close {
+    .chatting-close {
         display: none;
         text-align: right;
         font-size: 2rem;
@@ -47,8 +47,28 @@
         line-height: 3rem;
         background: $oc-gray-1;
     }
-    @include media("<large") {
+    
+}
+@include media("<large") {
+    .lobby {
         max-width: 100%;
+        .chatting-wrapper {
+            position: absolute;
+            width: 60vw;
+            height: 100vh;
+            max-width: 40rem;
+            background: RGBA(255, 255, 255, .9);
+            right:0;
+            z-index:10;
+        }
+        .chatting-dimmed {
+            position: absolute;
+            z-index: 9;
+            width: 100%;
+            height: 100vh;
+            background: RGBA(44, 44, 44, 0.6);
+        }
+        
         .lobby-logo {
             font-size: 2rem;
             height: 3rem;
@@ -56,17 +76,8 @@
             text-align: start;
             padding: 0 1rem;
         }
-        .chtting-wrapper {
-            width: 60vw;
-            height: 100vh;
-            max-width: 40rem;
-            position: absolute;
-            background: RGBA(255, 255, 255, .95);
-            right:0;
-            z-index:10;
-        }
-
-        .chtting-close {
+    
+        .chatting-close {
             display: block;
         }
         .lobby-hambug {
@@ -77,8 +88,11 @@
             height: 40%vh;
         }
     }
+    
+}
 
-    @include media("<medium") {
+@include media("<medium") {
+    .lobby {
         .lobby-logo {
             font-size: 1.4rem;
         }

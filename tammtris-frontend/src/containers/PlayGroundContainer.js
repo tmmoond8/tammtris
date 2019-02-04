@@ -136,7 +136,7 @@ export default connect(
     chattingMessages: state.broadcast.chattingMessages,
     gameRoom: state.broadcast.gameRoom,
     allGroundData: state.broadcast.allGroundData,   
-    gameItems: state.playGround.gameItems 
+    gameItems: state.playGround.gameItems,
   }),
   (dispatch) => ({
     PlayGroundActions: () => bindActionCreators(Actions.playGround, dispatch),

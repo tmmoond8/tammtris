@@ -24,7 +24,7 @@
 
 @include media("<large") {
     .lobby-area {
-        min-width: 100vw;
+        min-width: calc(100vw - 3rem);
         grid-template-columns: auto auto;
         height: calc(100vh - 3rem);
     }

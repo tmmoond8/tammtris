@@ -2,7 +2,7 @@
 
 .other-play-grounds {
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: auto auto auto auto;
   width:100%;
 
   .other-play-grounds-item {
@@ -11,7 +11,21 @@
     display: flex;
   }
   .next-shapes {
-    grid-column: 3;
-    grid-row: 1;
+    grid-column: 2/ 3;
+    grid-row: 1 / 2;
+  }
+  .myplayground {
+    display: flex;
+    grid-row: 1 / 3;
+    grid-column: 3 / 4;
+    padding: 1.5rem 0 1.5rem 1rem;
+  }
+}
+
+@include media("<medium") {
+  .other-play-grounds {
+    .game-control {
+      visibility: hidden;
+    }
   }
 }

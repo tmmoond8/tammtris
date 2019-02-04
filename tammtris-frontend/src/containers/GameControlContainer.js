@@ -31,7 +31,9 @@ class GameControlContainer extends Component {
   componentDidMount() {
     const { userInfo, gameRoom, history } = this.props;
     if (userInfo.name === 'guest') {
-      history.replace('/');
+      // FIXME UI를 위해 임시 처리
+      this.broadcastActions.setUserInfo(JSON.parse('{"id":"b24763f0-2754-11e9-8d8d-b75a63aa932e","name":"chicken","emoji":"🐔","number":1}'))
+      // history.replace('/');
       return;
     }
     SocketClient.sendMessage('game/join', {
@@ -52,10 +54,14 @@ class GameControlContainer extends Component {
     SocketClient.sendMessage('game/start', { userInfo });
   }
 
+  toggleControlHandler = () => {
+    const { playGroundActions } = this;
+    playGroundActions.toggleControl();
+  }
 
   render() {
-    const { handleSingleGameStart, handleMultiGameStart } = this;
-    const { userInfo, chattingMessages, gameState } = this.props;
+    const { handleSingleGameStart, handleMultiGameStart, toggleControlHandler } = this;
+    const { userInfo, chattingMessages, gameState, isVisibleControl } = this.props;
 
     return (
       <GameControl 
@@ -64,6 +70,8 @@ class GameControlContainer extends Component {
         onClickSingle={handleSingleGameStart}
         onClickMulti={handleMultiGameStart}
         gameState={gameState}
+        isVisibleControl={isVisibleControl}
+        onToggleControl={toggleControlHandler}
       />
     )
   }
@@ -74,7 +82,8 @@ export default connect(
     gameState: state.playGround.gameState,
     userInfo: state.broadcast.userInfo,
     chattingMessages: state.broadcast.chattingMessages,
-    gameRoom: state.broadcast.gameRoom
+    gameRoom: state.broadcast.gameRoom,
+    isVisibleControl: state.playGround.isVisibleControl,
   }),
   (dispatch) => ({
     PlayGroundActions: () => bindActionCreators(Actions.playGround, dispatch),

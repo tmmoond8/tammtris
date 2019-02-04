@@ -62,3 +62,21 @@
     font-size: 1rem;
   }
 }
+
+@include media("<medium") {
+  .play-ground {
+
+    .block-line {
+      height: block-sizes-for('normal');
+      &.view {
+        height: 1 * block-sizes-for('view');
+      }
+    }
+    &.view {
+      padding: .5rem;
+      flex: 1;
+      width: auto;
+      font-size: 0.6rem;
+    }
+  }
+}
