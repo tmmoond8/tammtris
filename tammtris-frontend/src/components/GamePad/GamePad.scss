@@ -17,6 +17,10 @@ $button-size: 3rem;
     align-items: center;
     color: RGBA(55, 55, 55, .3);
     font-size: 2rem;
+    &:active {
+      border: 1px solid RGBA(255, 55, 55, .3);
+      color: RGBA(255, 55, 55, .3);
+    }
   }
 
   .gamepad-left {
@@ -29,7 +33,7 @@ $button-size: 3rem;
   }
   .gamepad-down {
     left: .75 * $button-size;
-    top: 1.5 * $button-size;
+    top: 1.25 * $button-size;
   }
   .gamepad-rotation {
     right: 0;
@@ -37,7 +41,7 @@ $button-size: 3rem;
   }
   .gamepad-space {
     right: 1 * $button-size;
-    top: 1.5 * $button-size;
+    top: 1.25 * $button-size;
   }
   @include media("<medium") {
     display: flex;
