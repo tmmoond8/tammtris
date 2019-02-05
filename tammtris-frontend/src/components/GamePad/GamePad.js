@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styles from './GamePad.scss';
 import classNames from 'classnames/bind';
+import { FaUndoAlt, FaAngleLeft, FaAngleRight, FaAngleDown, FaAngleDoubleDown } from 'react-icons/fa';
 
 const cx = classNames.bind(styles);
 
@@ -69,26 +70,26 @@ class GamePad extends Component {
         <div className={cx('gamepad-arrow')}>
           <div className={cx('gamepad-btn', 'gamepad-left')} 
             onTouchStart={(e) => onTouch(e, 'ArrowLeft')}
-            onTouchEnd={(e) => onTouch(e, 'ArrowLeft')}
-            >⟵</div>
+            // onTouchEnd={(e) => onTouch(e, 'ArrowLeft')}
+            ><FaAngleLeft/></div>
           <div className={cx('gamepad-btn', 'gamepad-down')}
             onTouchStart={(e) => onTouch(e, 'ArrowDown')}
-            onTouchEnd={(e) => onTouch(e, 'ArrowDown')}
-          >↓</div>
+            // onTouchEnd={(e) => onTouch(e, 'ArrowDown')}
+          ><FaAngleDown/></div>
           <div className={cx('gamepad-btn', 'gamepad-right')}
             onTouchStart={(e) => onTouch(e, 'ArrowRight')}
-            onTouchEnd={(e) => onTouch(e, 'ArrowRight')}
-          >⟶</div>
+            // onTouchEnd={(e) => onTouch(e, 'ArrowRight')}
+          ><FaAngleRight/></div>
         </div>
         <div className={cx('gamepad-arrow')}>
           <div className={cx('gamepad-btn', 'gamepad-space')}
             onTouchStart={(e) => onTouch(e, 'Space')}
-            onTouchEnd={(e) => onTouch(e, 'Space')}
-          >⤓</div>
+            // onTouchEnd={(e) => onTouch(e, 'Space')}
+          ><FaAngleDoubleDown/></div>
           <div className={cx('gamepad-btn', 'gamepad-rotation')}
             onTouchStart={(e) => onTouch(e, 'ArrowUp')}
-            onTouchEnd={(e) => onTouch(e, 'ArrowUp')}
-          >↻</div>
+            // onTouchEnd={(e) => onTouch(e, 'ArrowUp')}
+          ><FaUndoAlt/></div>
         </div>
       </div>
     );

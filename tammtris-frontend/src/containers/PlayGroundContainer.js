@@ -35,6 +35,12 @@ class PlayGroundContainer extends Component {
     });
 
     this.niceEventLister().addEventListener();
+    document.body.addEventListener('touchend', function(event) {
+      event.preventDefault();
+      if(typeof event.target.click === 'function') {
+        event.target.click();
+      }
+    })
   }
 
   niceEventLister = () => {
