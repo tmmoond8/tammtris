@@ -1,4 +1,4 @@
 tammtris-frontend/.env
-tammtris-backend/build
-tammtris-frontend/build
+tammtris-backend/build/
+tammtris-frontend/build/
 **/node_modules/
