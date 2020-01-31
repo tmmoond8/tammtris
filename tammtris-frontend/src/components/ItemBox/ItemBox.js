@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styles from './ItemBox.scss';
 import classNames from 'classnames/bind';
-import DotBlock from 'components/DotBlock';
+import DotBlock from '../DotBlock';
 
 const cx = classNames.bind(styles);
 const defaultItemBox = 'a'.repeat(10).split('').map(item => 0);

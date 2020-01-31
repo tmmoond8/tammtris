@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import styles from './OtherPlayGrounds.scss';
 import classNames from 'classnames/bind';
-import PlayGround from 'components/PlayGround';
-import NextBlocksContainer from 'containers/NextBlocksContainer';
+import PlayGround from '../PlayGround';
+import NextBlocksContainer from '../../containers/NextBlocksContainer';
 
 const cx = classNames.bind(styles);
 

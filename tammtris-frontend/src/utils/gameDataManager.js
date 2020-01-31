@@ -1,7 +1,7 @@
-import block from 'models/shapes/block';
+import block from '../models/shapes/block';
 import ShapeDataManager from './shapeDataManager';
 import ItemDataManager from './itemDataManager';
-import SocketClient from 'lib/SocketClient';
+import SocketClient from '../lib/SocketClient';
 
 const GAME_STATE = {
   READY: 'READY',

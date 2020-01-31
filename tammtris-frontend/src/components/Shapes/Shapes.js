@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import styles from './Shapes.scss';
 import classNames from 'classnames/bind';
-import shapeDataManager from 'utils/shapeDataManager';
-import DotBlock from 'components/DotBlock';
+import DotBlock from '../DotBlock';
 
 const cx = classNames.bind(styles);
 

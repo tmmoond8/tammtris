@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import classNames from 'classnames/bind';
 import styles from './LobbyControl.scss';
-import Chat from 'components/Chat';
+import Chat from '../Chat';
 import { GoThreeBars } from 'react-icons/go';
 
 const cx = classNames.bind(styles);

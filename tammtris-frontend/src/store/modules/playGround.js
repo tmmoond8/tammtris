@@ -1,8 +1,8 @@
 import { createAction, handleActions } from 'redux-actions';
-import GameDataManager, { GAME_STATE } from 'utils/gameDataManager';
-import shapeDataManager from 'utils/shapeDataManager';
-import mapDataManager from 'utils/mapDataManager';
-import ItemDataManager from 'utils/itemDataManager';
+import GameDataManager, { GAME_STATE } from '../../utils/gameDataManager';
+import shapeDataManager from '../../utils/shapeDataManager';
+import mapDataManager from '../../utils/mapDataManager';
+import ItemDataManager from '../../utils/itemDataManager';
 
 // actions types
 

@@ -1,11 +1,11 @@
-import sShape from 'models/shapes/sShape';
-import stickShape from 'models/shapes/stickShape';
-import zShape from 'models/shapes/zShape';
-import squareShape from 'models/shapes/squareShape';
-import tankShape from 'models/shapes/tankShape';
-import ganaShape from 'models/shapes/ganaShape';
-import noogooShape from 'models/shapes/noogooShape';
-import emptyShape from 'models/shapes/emptyShape';
+import sShape from '../models/shapes/sShape';
+import stickShape from '../models/shapes/stickShape';
+import zShape from '../models/shapes/zShape';
+import squareShape from '../models/shapes/squareShape';
+import tankShape from '../models/shapes/tankShape';
+import ganaShape from '../models/shapes/ganaShape';
+import noogooShape from '../models/shapes/noogooShape';
+import emptyShape from '../models/shapes/emptyShape';
 
 class shapeDataManager {
   static randomShapeQueue = [];

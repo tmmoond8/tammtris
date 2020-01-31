@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
-import TeamSelectButtons from 'components/TeamSelectButtons';
+import TeamSelectButtons from '../components/TeamSelectButtons';
 import { connect } from 'react-redux';
-import { GAME_STATE } from 'utils/gameDataManager';
-import SocketClient from 'lib/SocketClient';
-import Actions from 'store/modules';
+import { GAME_STATE } from '../utils/gameDataManager';
+import SocketClient from '../lib/SocketClient';
+import Actions from '../store/modules';
 
 class TeamSelectButtonsContainer extends Component {
   constructor(props) {

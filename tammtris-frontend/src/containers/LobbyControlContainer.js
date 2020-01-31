@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import LobbyControl from 'components/LobbyControl';
-import Actions from 'store/modules';
-import SocketClient from 'lib/SocketClient';
+import LobbyControl from '../components/LobbyControl';
+import Actions from '../store/modules';
+import SocketClient from '../lib/SocketClient';
 
 class LobbyControlContainer extends Component {
   constructor(props) {

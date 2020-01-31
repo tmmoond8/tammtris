@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './NextBlocks.scss';
 import classNames from 'classnames/bind';
-import Shapes from 'components/Shapes';
+import Shapes from '../Shapes';
 
 const cx = classNames.bind(styles);
 

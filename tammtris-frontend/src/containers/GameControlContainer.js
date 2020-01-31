@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { bindActionCreators } from 'redux';
-import GameControl from 'components/GameControl';
-import Actions from 'store/modules';
-import SocketClient from 'lib/SocketClient';
+import GameControl from '../components/GameControl';
+import Actions from '../store/modules';
+import SocketClient from '../lib/SocketClient';
 
 
 class GameControlContainer extends Component {

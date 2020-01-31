@@ -2,10 +2,10 @@ import React, { Component, Fragment } from 'react';
 import classNames from 'classnames/bind';
 import styles from './GameControl.scss';
 import { Link } from 'react-router-dom';
-import StartButton from 'components/StartButton';
-import SinglePlayButton from 'components/SinglePlayButton';
-import TeamSelectButtonsContainer from 'containers/TeamSelectButtonsContainer';
-import Chat from 'components/Chat';
+import StartButton from '../StartButton';
+import SinglePlayButton from '../SinglePlayButton';
+import Chat from '../Chat';
+import TeamSelectButtonsContainer from '../../containers/TeamSelectButtonsContainer';
 import { GoThreeBars } from 'react-icons/go';
 
 const cx = classNames.bind(styles);

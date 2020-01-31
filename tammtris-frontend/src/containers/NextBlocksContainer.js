@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Actions from 'store/modules'
-import NextBlocks from 'components/NextBlocks';
+import Actions from '../store/modules'
+import NextBlocks from '../components/NextBlocks';
 
 class NextBlocksContainer extends Component {
 

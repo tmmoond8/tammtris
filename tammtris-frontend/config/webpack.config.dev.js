@@ -18,7 +18,7 @@ const publicPath = '/';
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
-const publicUrl = '';
+const publicUrl = 'http://localhost:14100';
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
 
@@ -199,8 +199,9 @@ module.exports = {
                 loader: require.resolve('css-loader'),
                 options: {
                   importLoaders: 1,
-                  modules: true,
-                  localIdentName: '[name]__[local]__[hash:base64:5]'
+                  modules: {
+                    localIdentName: '[name]__[local]__[hash:base64:5]'
+                  },
                 },
               },
               {
@@ -226,7 +227,9 @@ module.exports = {
               {
                 loader: require.resolve('sass-loader'),
                 options: {
-                  includePaths: [paths.styles]
+                  sassOptions: {
+                    includePaths: [paths.styles]
+                  }
                 }
               }
             ],
@@ -258,7 +261,7 @@ module.exports = {
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     // In development, this will be an empty string.
-    new InterpolateHtmlPlugin(env.raw),
+    new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,

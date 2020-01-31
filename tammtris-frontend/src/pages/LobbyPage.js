@@ -1,6 +1,6 @@
 import React from 'react';
-import LobbyContainer from 'containers/LobbyContainer';
-import LobbyControlContainer from 'containers/LobbyControlContainer';
+import LobbyContainer from '../containers/LobbyContainer';
+import LobbyControlContainer from '../containers/LobbyControlContainer';
 import styles from './pages.scss';
 import classNames from 'classnames/bind';
 

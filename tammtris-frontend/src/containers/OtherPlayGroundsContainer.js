@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import OtherPlayGrounds from 'components/OtherPlayGrounds';
-import SocketClient from 'lib/SocketClient';
-import Actions from 'store/modules';
-import PlayGroundContainer from 'containers/PlayGroundContainer';
+import OtherPlayGrounds from '../components/OtherPlayGrounds';
+import SocketClient from '../lib/SocketClient';
+import Actions from '../store/modules';
+import PlayGroundContainer from './PlayGroundContainer';
 
 class OtherPlayGroundsContainer extends Component {
   constructor(props) {

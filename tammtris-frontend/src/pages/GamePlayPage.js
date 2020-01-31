@@ -1,8 +1,8 @@
 import React from 'react';
-import GameControlContainer from 'containers/GameControlContainer';
-import OtherPlayGroundsContainer from 'containers/OtherPlayGroundsContainer';
-import GameResultContainer from 'containers/GameResultContainer';
-import GamePadContainer from 'containers/GamePadContainer';
+import GameControlContainer from '../containers/GameControlContainer';
+import OtherPlayGroundsContainer from '../containers/OtherPlayGroundsContainer';
+import GameResultContainer from '../containers/GameResultContainer';
+import GamePadContainer from '../containers/GamePadContainer';
 import styles from './pages.scss';
 import classNames from 'classnames/bind';
 

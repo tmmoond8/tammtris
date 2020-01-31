@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import ChatMessageItem from 'components/ChatMessageItem';
-import ChatMessageInput from 'components/ChatMessageInput';
-import SocketClient, { Message } from 'lib/SocketClient';
+import ChatMessageItem from '../ChatMessageItem';
+import ChatMessageInput from '../ChatMessageInput';
+import SocketClient, { Message } from '../../lib/SocketClient';
 import styles from './Chat.scss';
 import className from 'classnames/bind';
 

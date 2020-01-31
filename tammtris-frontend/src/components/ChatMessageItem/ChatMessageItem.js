@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {MESSAGE_TYPE} from 'lib/SocketClient';
+import {MESSAGE_TYPE} from '../../lib/SocketClient';
 import styles from './ChatMessageItem.scss';
 import classNames from 'classnames/bind';
 

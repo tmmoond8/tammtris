@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
-import Lobby from 'components/Lobby';
-import SocketClient from 'lib/SocketClient';
-import Actions from 'store/modules'
+import Lobby from '../components/Lobby';
+import SocketClient from '../lib/SocketClient';
+import Actions from '../store/modules'
 
 class LobbyContainer extends Component {
 

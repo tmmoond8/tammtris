@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styles from './Lobby.scss';
 import classnames from 'classnames/bind';
-import GameRoom from 'components/GameRoom';
+import GameRoom from '../GameRoom';
 
 const cx = classnames.bind(styles);
 

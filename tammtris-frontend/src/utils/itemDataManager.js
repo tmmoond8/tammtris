@@ -1,4 +1,4 @@
-import block from 'models/shapes/block';
+import block from '../models/shapes/block';
 import GameDataManager from './gameDataManager';
 
 const SIZE_X = 10;

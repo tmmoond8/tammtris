@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import GameResult from 'components/GameResult';
-import Actions from 'store/modules';
+import GameResult from '../components/GameResult';
+import Actions from '../store/modules';
 
 class GameResultContainer extends Component {
 
