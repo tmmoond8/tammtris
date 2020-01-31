@@ -98,16 +98,20 @@ class PlayGroundContainer extends Component {
 
   shouldComponentUpdate(nextProps) {
     if(nextProps.downStop) {
-      if(this.props.playerBlocks.baseBlock.equlas(nextProps.playerBlocks.baseBlock)) {
+      const prevBlocks = this.props.playerBlocks.baseBlock;
+      const nextBlocks = nextProps.playerBlocks.baseBlock;
+      if(prevBlocks.x !== nextBlocks.x 
+        || prevBlocks.y !== nextBlocks.y 
+        || prevBlocks.dot !== nextBlocks.dot) {
+          SocketClient.sendMessage('game/data', {
+            userInfo: nextProps.userInfo,
+            gameData: nextProps.gameGroundData,
+            gameState: nextProps.gameState,
+            gameNumber: nextProps.gameRoom.gameNumber,
+            gameItems: nextProps.gameItems
+          });
         return true;
       }
-      SocketClient.sendMessage('game/data', {
-        userInfo: nextProps.userInfo,
-        gameData: nextProps.gameGroundData,
-        gameState: nextProps.gameState,
-        gameNumber: nextProps.gameRoom.gameNumber,
-        gameItems: nextProps.gameItems
-      });
     }
     
     return true;

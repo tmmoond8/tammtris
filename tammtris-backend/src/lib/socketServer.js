@@ -152,12 +152,12 @@ module.exports = function(io) {
 			const { chattingChannel } = socket;
 			let { userInfo, gameData, gameState, gameItems } = req;
 			userInfo = {...userInfo, gameData, gameState, gameItems };
+			console.log('game data');
 			const gameManger = lobbyManager.getGameManager(chattingChannel);
 			const index = gameManger.find(userInfo.id);
 			gameManger.updateGameData(userInfo);
 			io.to(chattingChannel).emit(GAME_DATA, {index, gameData });
 			gameState === GAME_STATE.GAME_OVER && this.gameOver(socket, req);
-			console.log('game data', userInfo.name);
 		},
 		gameOver(socket, req) {
 			const { chattingChannel } = socket;

@@ -21,10 +21,10 @@ class PlayGround extends Component{
       return !!(nextProps.userInfo.id || prevUserInfo.id)
     } else {
       return prevUserInfo.team !== nextProps.userInfo.team 
-      || !(prevUserInfo.id === nextProps.userInfo.id 
-      && this.props.gameGroundData === nextProps.gameGroundData 
-      && this.props.userIndex === nextProps.userIndex
-      && PlayGround.toString(this.props.gameGroundData) === PlayGround.toString(nextProps.gameGroundData));
+      || (prevUserInfo.id !== nextProps.userInfo.id 
+      || this.props.gameGroundData !== nextProps.gameGroundData 
+      || this.props.userIndex !== nextProps.userIndex
+      || PlayGround.toString(this.props.gameGroundData) !== PlayGround.toString(nextProps.gameGroundData));
     }
   }
 
