@@ -34,7 +34,8 @@ class PlayGroundContainer extends Component {
       this.playGroundActions.gameBlockUp(response);
     });
 
-    this.niceEventLister().addEventListener();
+    // this.niceEventLister().addEventListener();
+    this.quickEventListenr();
     document.body.addEventListener('touchend', function(event) {
       event.preventDefault();
       if(typeof event.target.click === 'function') {
@@ -43,39 +44,33 @@ class PlayGroundContainer extends Component {
     })
   }
 
-  niceEventLister = () => {
-    let keyEvent;
-    const keepEvent = ['ArrowRight', 'ArrowLeft'];
-    const gameLoop = () => {
-      if(keyEvent) {
-        if(keepEvent.findIndex(item => item === keyEvent.code) !== -1) {
-          this.handlePlayerKeyDown(keyEvent);
-        }
-      }
-    }
-    const keydownEvent = (e) => {
-      keyEvent = e;
-      if(keepEvent.findIndex(item => item === keyEvent.code) === -1) {
+  quickEventListenr = () => {
+    var keyState = {};
+    document.addEventListener('keydown', (e) => {
+      if (e.code.includes('Arrow') && e.code !== 'ArrowUp') {
+        keyState[e.keyCode] = e.code;
+      } else {
         this.handlePlayerKeyDown(e);
       }
-    };
-    const keyupEvent = (e) => keyEvent = null;
-    let interval;
-    return {
-      addEventListener: () => {
-        document.body.addEventListener('keydown', keydownEvent, true);   
-        document.body.addEventListener('keyup', keyupEvent, true);
-        interval = setInterval(gameLoop, 100);
-        return this;
-      },
-      removeEventListener: () => {
-        document.removeEventListener('keydown', keydownEvent);
-        document.removeEventListener('keyup', keyupEvent);
-        clearInterval(interval);
+    },true);
+    document.addEventListener('keyup',(e) => {
+        keyState[e.keyCode] = '';
+    },true);
+    const timer = 70;
+    const moveLoop = () => {
+      if (keyState[40]){
+        this.handlePlayerKeyDown({ code: keyState[40], keyCode: 40 });
       }
+      if (keyState[39]){
+        this.handlePlayerKeyDown({ code: keyState[39], keyCode: 39 });
+      }
+      if (keyState[37]){
+        this.handlePlayerKeyDown({ code: keyState[37], keyCode: 37 });
+      }
+      setTimeout(moveLoop, timer);
     }
+    moveLoop();
   }
-
 
   handlePlayerKeyDown = ({ code }) => {
     if(this.props.gameState !== GAME_STATE.PLAY) return;
@@ -92,6 +87,7 @@ class PlayGroundContainer extends Component {
     } else if(code.startsWith('Equal')) {
       this.switchKeyEvent();
     } else {
+      debugger;
       this.playGroundActions.playerKeyDown(code);
     }
   }
