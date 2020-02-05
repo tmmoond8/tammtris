@@ -21,13 +21,13 @@ class LobbyControlContainer extends Component {
   componentDidMount() {
     if(document.body.scrollWidth < 1024) {
       const { playGroundActions } = this;
-      playGroundActions.toggleControl();
+      playGroundActions.toggleControl(false);
     }
   }
 
-  toggleControlHandler = () => {
+  toggleControlHandler = (isVisible) => {
     const { playGroundActions } = this;
-    playGroundActions.toggleControl();
+    playGroundActions.toggleControl(isVisible);
   }
 
   render() {

@@ -35,6 +35,13 @@ class LobbyContainer extends Component {
     });
     SocketClient.socket.on('connect', () => {
       this.props.userInfo.id === "testID" && SocketClient.sendMessage('lobby/join')
+      window.addEventListener('resize', () => {
+        if (window.outerWidth > 1023) {
+          this.playGroundActions.toggleControl(true);
+        } else {
+          this.playGroundActions.toggleControl(false);
+        }
+      })
     });
     SocketClient.socket.on('disconnect', () => {
       this.dissconnect();

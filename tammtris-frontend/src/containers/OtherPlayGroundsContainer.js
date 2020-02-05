@@ -15,10 +15,8 @@ class OtherPlayGroundsContainer extends Component {
   }
 
   componentDidMount() {
-    if(document.body.scrollWidth < 1024) {
-      const { playGroundActions } = this;
-      playGroundActions.toggleControl();
-    }
+    const { playGroundActions } = this;
+    playGroundActions.toggleControl(document.body.scrollWidth > 1024);
   }
 
   render() {

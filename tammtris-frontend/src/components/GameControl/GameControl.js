@@ -19,7 +19,7 @@ class GameControl extends Component {
       <div className={cx('game-control')}>
         <div to="/" className={cx('game-control-logo')}>
           <Link to="/">tammtris</Link>
-            <span className={cx('game-control-hambug')} onClick={onToggleControl}>
+            <span className={cx('game-control-hambug')} onClick={() => onToggleControl(true)}>
               <GoThreeBars/>
           </span>
         </div>
@@ -27,7 +27,7 @@ class GameControl extends Component {
           isVisibleControl && (
             <Fragment>
               <div className={cx('chatting-wrapper')}>
-                <div className={cx('chatting-close')} onClick={onToggleControl}>
+                <div className={cx('chatting-close')} onClick={() => onToggleControl(false)}>
                   <span style={{cursor: 'pointer', padding: '1.6rem'}}>&times;</span>
                 </div>
                 <Chat userInfo={userInfo} chattingMessages={chattingMessages}/>
@@ -35,7 +35,7 @@ class GameControl extends Component {
                 <StartButton onClickMulti={onClickMulti} gameState={gameState}/>
                 <SinglePlayButton onClickSingle={onClickSingle} gameState={gameState}/>
               </div>
-              <div className={cx('chatting-dimmed')} onClick={onToggleControl}/>
+              <div className={cx('chatting-dimmed')} onClick={() => onToggleControl(false)}/>
             </Fragment>
           )
         }

@@ -17,7 +17,6 @@ class GamePad extends Component {
     const gameLoop = () => {
       if(this.statekeyCode) {
         if(GamePad.keepEvent.findIndex(item => item === this.state.keyCode) !== -1) {
-          console.log('start', this.state);;
           this.setState({
             log: this.state.log + ' touch'
           })

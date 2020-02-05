@@ -111,7 +111,7 @@ export default handleActions({
   [TOGGLE_CONTROL]: (state, action) => {
     return {
       ...state,
-      isVisibleControl: !state.isVisibleControl
+      isVisibleControl: action.payload
     }
   },
 }, initialState);

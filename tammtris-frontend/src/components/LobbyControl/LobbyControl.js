@@ -26,7 +26,7 @@ class LobbyControl extends Component {
       <div className={cx('lobby')}>
         <div className={cx('lobby-logo')}>
           <span>tammtris</span>
-          <span className={cx('lobby-hambug')} onClick={onToggleControl}>
+          <span className={cx('lobby-hambug')} onClick={() => onToggleControl(true)}>
             <GoThreeBars/>
           </span>
         </div>
@@ -34,13 +34,13 @@ class LobbyControl extends Component {
           isVisibleControl && (
             <Fragment>
               <div className={cx('chatting-wrapper')}>
-                <div className={cx('chatting-close')} onClick={onToggleControl}>
+                <div className={cx('chatting-close')} onClick={() => onToggleControl(false)}>
                   <span style={{cursor: 'pointer', padding: '1.6rem'}}>&times;</span>
                 </div>
                 <Chat userInfo={userInfo} chattingMessages={chattingMessages}/>
                 {renderUserList(waitingUserList, userInfo)}
               </div>
-              <div className={cx('chatting-dimmed')} onClick={onToggleControl}/>
+              <div className={cx('chatting-dimmed')} onClick={() => onToggleControl(false)}/>
             </Fragment>
           )
         }  

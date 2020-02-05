@@ -54,9 +54,9 @@ class GameControlContainer extends Component {
     SocketClient.sendMessage('game/start', { userInfo });
   }
 
-  toggleControlHandler = () => {
+  toggleControlHandler = (isVisible) => {
     const { playGroundActions } = this;
-    playGroundActions.toggleControl();
+    playGroundActions.toggleControl(isVisible);
   }
 
   render() {
