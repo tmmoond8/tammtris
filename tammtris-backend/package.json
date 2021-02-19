@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "start": "node ./src/index.js",
+  "scripts": { 
+    "start": "pm2 start ./src/index.js",
+    "stop": "pm2 stop all",
+    "dev": "node ./src/index.js",
     "test": "./node_modules/.bin/mocha --reporter spec"
   },
   "keywords": [],

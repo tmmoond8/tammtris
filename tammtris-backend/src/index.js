@@ -17,7 +17,7 @@ app.use((req, res, next) => {
 app.use('/api', api(app, '/api'));
 app.use('/', express.static(path.join(__dirname, '../build')))
 app.use(express.static(path.join(__dirname, 'static')))
-
+app.use('*', express.static(path.join(__dirname, '../build')))
 console.log(process.env.PORT);
 var port = process.env.PORT || 14666; //*
 server.listen(port, () => {
