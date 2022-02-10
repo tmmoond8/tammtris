@@ -30,7 +30,7 @@
     "html-webpack-plugin": "^4.0.0-beta.11",
     "include-media": "^1.4.9",
     "jest": "^25.1.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "object-assign": "^4.1.1",
     "open-color": "^1.7.0",
     "postcss-flexbugs-fixes": "^4.1.0",
